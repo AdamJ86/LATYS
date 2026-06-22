@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LATYS — Privacy Policy</title>
+  <link rel="icon" type="image/png" href="./icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#0b0a0c; --copper:#c99e68; --copper-soft:#e6c79c; --sage:#8a9460; --cream:#ede3d2; --text:#e9e0d1; --muted:#9c9184; --line:rgba(201,158,104,0.16); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; -webkit-font-smoothing:antialiased; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 24px; }
+    header { border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(11,10,12,0.7); backdrop-filter:blur(12px); }
+    .nav { display:flex; align-items:center; gap:10px; height:62px; }
+    .nav a { display:flex; align-items:center; gap:10px; color:var(--cream); text-decoration:none; font-family:"Space Grotesk"; font-weight:700; letter-spacing:3px; }
+    .back { margin-left:auto; font-family:Inter; font-weight:600; letter-spacing:0; font-size:14px; color:var(--muted); }
+    .back:hover { color:var(--cream); }
+    main { padding:54px 0 90px; }
+    h1 { font-family:"Space Grotesk"; font-size:40px; color:var(--cream); font-weight:700; }
+    .meta { color:var(--muted); font-size:14px; margin:10px 0 30px; font-style:italic; }
+    .summary { border:1px solid var(--line); border-left:3px solid var(--copper); background:rgba(201,158,104,0.05); border-radius:12px; padding:18px 22px; color:var(--text); margin-bottom:34px; }
+    h2 { font-family:"Space Grotesk"; color:var(--cream); font-size:21px; margin:34px 0 10px; font-weight:600; }
+    p, li { color:var(--text); font-size:15.5px; }
+    ul { padding-left:22px; margin:10px 0; display:grid; gap:7px; }
+    a.inline { color:var(--copper); }
+    strong { color:var(--cream); }
+    footer { border-top:1px solid var(--line); padding:30px 0; color:var(--muted); font-size:13.5px; text-align:center; }
+  </style>
+</head>
+<body>
+  <header><div class="wrap nav">
+    <a href="./index.html"><svg width="26" height="26" viewBox="0 0 64 64"><defs>
+      <linearGradient id="cu" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e6c79c"/><stop offset="100%" stop-color="#c99e68"/></linearGradient>
+      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9aa476"/><stop offset="100%" stop-color="#6e7748"/></linearGradient></defs>
+      <path d="M32 5 L55.4 18.5 L55.4 45.5 L32 59 L8.6 45.5 L8.6 18.5 Z" fill="none" stroke="url(#cu)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M16.5 14 L47.5 50 M47.5 14 L16.5 50 M32 9 L32 55" stroke="url(#cu)" stroke-width="2.1" stroke-linecap="round" opacity="0.78"/>
+      <rect x="24" y="24" width="16" height="16" rx="2.6" transform="rotate(45 32 32)" fill="url(#sg)" stroke="url(#cu)" stroke-width="1.5"/></svg>
+      <span>LATYS</span></a>
+    <a class="back" href="./index.html">← Back to home</a>
+  </div></header>
+
+  <main><div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: June 21, 2026 · Operated by Adam James ("we", "us"). Contact: ajamespt86@gmail.com</p>
+
+    <div class="summary">LATYS runs on your computer. Your code, prompts, files, and terminals stay on your machine. You connect your own AI accounts and we never see your AI passwords or keys. We don't sell data. The only things that leave your device are: a license check (offline), payment (handled by Stripe), and — only if you opt in — your community profile and chat messages.</div>
+
+    <h2>1. What runs locally (and never leaves your device)</h2>
+    <p>LATYS is a desktop app. Your source code, prompts, file names, folders, terminal output, and command history stay on your computer and are never transmitted to us. API keys you enter are stored <strong>encrypted at rest</strong> using your operating system's secure storage (Windows DPAPI via Electron safeStorage). CLI logins are handled by those tools' own official sign-in — we never capture or store your passwords.</p>
+
+    <h2>2. Licensing</h2>
+    <p>Your license key is verified <strong>offline</strong> on your device. We do not phone home to use the app. Payments are processed by <strong>Stripe</strong>; we never receive or store your card details. Stripe shares only your email and payment status so we can issue your license. See <a class="inline" href="https://stripe.com/privacy">Stripe's privacy policy</a>.</p>
+
+    <h2>3. Community ("Vibe Coding Universe") — opt-in only</h2>
+    <p>The community is <strong>off by default</strong>. You are invisible until you choose to join and go visible. If you opt in, the following are stored on our community backend (Supabase) and shown to other signed-in members:</p>
+    <ul>
+      <li>The email + password you create for the community (the password is hashed; we never see it).</li>
+      <li>Only what you choose to share: display name, avatar, a status message, your AI provider <strong>name</strong> (e.g. "Claude") if enabled, an optional generic project label, and chat messages you send (including GIFs).</li>
+    </ul>
+    <p>We <strong>never</strong> receive your code, prompts, file paths, folder names, terminal contents, or command history through the community — there is no field for them. GIF search is provided by <strong>Giphy</strong> (your search terms go to Giphy when you use the picker).</p>
+
+    <h2>4. Your choices and rights</h2>
+    <ul>
+      <li>Turn community presence off, or hide yourself, at any time.</li>
+      <li>Edit or delete your community profile, which removes your profile and messages.</li>
+      <li>Disconnect any AI provider; delete locally stored keys.</li>
+      <li>Request deletion of community data by emailing ajamespt86@gmail.com.</li>
+    </ul>
+
+    <h2>5. Diagnostics</h2>
+    <p>The app keeps local logs for troubleshooting. Logs are scrubbed of secrets (API keys, tokens, license keys, credentials) and are not sent to us automatically.</p>
+
+    <h2>6. Children</h2>
+    <p>LATYS is not directed to children under 13 (or the minimum age in your jurisdiction).</p>
+
+    <h2>7. Changes</h2>
+    <p>We may update this policy; the "Last updated" date will change. Material changes will be communicated to founders.</p>
+  </div></main>
+
+  <footer>© 2026 LATYS · <a class="inline" href="./terms.html" style="color:var(--muted)">Terms</a></footer>
+</body>
+</html>

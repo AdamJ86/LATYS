@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LATYS — Your AI Command Center</title>
+  <meta name="description" content="LATYS is a desktop command center for running and supervising your AI coding agents. Bring your own AI. $5 lifetime founder license." />
+  <meta property="og:title" content="LATYS — Your AI Command Center" />
+  <meta property="og:description" content="Command. Connect. Create. Run multiple AI coding agents from one premium desktop cockpit. Bring your own AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://latys.app" />
+  <link rel="icon" type="image/png" href="./icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0a0c;
+      --bg-2: #100d12;
+      --panel: rgba(28, 23, 31, 0.55);
+      --panel-solid: #18141b;
+      --copper: #c99e68;
+      --copper-soft: #e6c79c;
+      --sage: #8a9460;
+      --sage-deep: #6e7748;
+      --cream: #ede3d2;
+      --text: #e9e0d1;
+      --muted: #9c9184;
+      --line: rgba(201, 158, 104, 0.16);
+      --line-strong: rgba(201, 158, 104, 0.32);
+      --maxw: 1120px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .wordmark { font-family: "Space Grotesk", Inter, sans-serif; letter-spacing: -0.01em; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    /* Ambient glow field */
+    .bg-fx { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; }
+    .blob.a { width: 620px; height: 620px; top: -240px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(201,158,104,0.22), transparent 65%); }
+    .blob.b { width: 460px; height: 460px; top: 540px; left: -160px;
+      background: radial-gradient(circle, rgba(138,148,96,0.16), transparent 65%); }
+    .blob.c { width: 520px; height: 520px; bottom: -120px; right: -180px;
+      background: radial-gradient(circle, rgba(201,158,104,0.14), transparent 65%); }
+    .grain { position: absolute; inset: 0; opacity: 0.035;
+      background-image: radial-gradient(rgba(255,255,255,0.6) 0.5px, transparent 0.5px);
+      background-size: 3px 3px; }
+
+    /* Nav */
+    header.nav { position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px); background: rgba(11,10,12,0.62);
+      border-bottom: 1px solid var(--line); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand .wordmark { font-weight: 700; font-size: 19px; letter-spacing: 3px; color: var(--cream); }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a.link { color: var(--muted); font-size: 14.5px; font-weight: 500; transition: color .18s; }
+    .nav-links a.link:hover { color: var(--cream); }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14.5px;
+      padding: 11px 20px; border-radius: 11px; cursor: pointer; transition: transform .16s, box-shadow .2s, background .2s, border-color .2s;
+      border: 1px solid transparent; white-space: nowrap; }
+    .btn-primary { color: #1a1206;
+      background: linear-gradient(135deg, var(--copper-soft), var(--copper));
+      box-shadow: 0 8px 26px -8px rgba(201,158,104,0.55); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -8px rgba(201,158,104,0.7); }
+    .btn-ghost { color: var(--cream); border-color: var(--line-strong); background: rgba(201,158,104,0.05); }
+    .btn-ghost:hover { border-color: var(--copper); background: rgba(201,158,104,0.1); transform: translateY(-2px); }
+    .btn-lg { padding: 15px 28px; font-size: 16px; border-radius: 13px; }
+
+    /* Hero */
+    .hero { padding: 92px 0 70px; text-align: center; position: relative; }
+    .hero .mark-xl { width: 132px; height: 132px; margin: 0 auto 30px;
+      filter: drop-shadow(0 14px 40px rgba(201,158,104,0.35)); animation: float 7s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    .hero h1 { font-size: clamp(42px, 7vw, 76px); font-weight: 700; line-height: 1.04; color: var(--cream); }
+    .hero h1 .accent { background: linear-gradient(120deg, var(--copper-soft), var(--copper));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12.5px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--copper);
+      border: 1px solid var(--line-strong); border-radius: 100px; padding: 7px 16px; margin-bottom: 26px;
+      background: rgba(201,158,104,0.06); }
+    .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 8px var(--sage); }
+    .hero p.sub { max-width: 600px; margin: 22px auto 0; font-size: clamp(16px, 2.2vw, 19px); color: var(--muted); }
+    .hero .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 38px; }
+    .hero .note { margin-top: 18px; font-size: 13px; color: var(--muted); }
+    .hero .note b { color: var(--sage); font-weight: 600; }
+
+    /* Section scaffolding */
+    section { padding: 78px 0; position: relative; }
+    .sec-head { text-align: center; max-width: 640px; margin: 0 auto 52px; }
+    .sec-head .tag { font-size: 12.5px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--copper); font-weight: 600; }
+    .sec-head h2 { font-size: clamp(28px, 4.4vw, 42px); font-weight: 700; color: var(--cream); margin-top: 12px; }
+    .sec-head p { color: var(--muted); margin-top: 14px; font-size: 16.5px; }
+
+    /* Feature grid */
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px;
+      backdrop-filter: blur(10px); transition: transform .22s, border-color .22s, box-shadow .22s; position: relative; overflow: hidden; }
+    .card::after { content: ""; position: absolute; inset: 0; border-radius: 18px; opacity: 0; transition: opacity .22s;
+      box-shadow: inset 0 0 36px rgba(201,158,104,0.08); pointer-events: none; }
+    .card:hover { transform: translateY(-5px); border-color: var(--line-strong);
+      box-shadow: 0 22px 50px -22px rgba(0,0,0,0.7); }
+    .card:hover::after { opacity: 1; }
+    .card .ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px;
+      background: rgba(201,158,104,0.1); border: 1px solid var(--line-strong); }
+    .card h3 { font-size: 18px; color: var(--cream); font-weight: 600; }
+    .card .kicker { font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--copper); font-weight: 600; margin-bottom: 4px; }
+    .card p { color: var(--muted); font-size: 14.5px; margin-top: 9px; }
+
+    /* Split feature rows */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .split .panel-art { aspect-ratio: 4/3; border-radius: 20px; border: 1px solid var(--line);
+      background: linear-gradient(160deg, #1b171f, #0d0b0f); position: relative; overflow: hidden;
+      display: grid; place-items: center; }
+    .split .panel-art .mark-md { width: 120px; height: 120px; opacity: 0.9; filter: drop-shadow(0 8px 28px rgba(201,158,104,0.3)); }
+    .split h2 { font-size: clamp(26px, 3.6vw, 36px); color: var(--cream); font-weight: 700; line-height: 1.1; }
+    .split p { color: var(--muted); margin-top: 16px; font-size: 16px; }
+    .checklist { list-style: none; margin-top: 22px; display: grid; gap: 12px; }
+    .checklist li { display: flex; gap: 11px; align-items: flex-start; color: var(--text); font-size: 15px; }
+    .checklist .ck { flex: none; width: 21px; height: 21px; border-radius: 6px; display: grid; place-items: center; margin-top: 2px;
+      background: rgba(138,148,96,0.16); border: 1px solid rgba(138,148,96,0.4); color: var(--sage); font-size: 12px; }
+
+    /* Pricing */
+    .price-wrap { max-width: 480px; margin: 0 auto; }
+    .price-card { background: var(--panel); border: 1px solid var(--line-strong); border-radius: 22px; padding: 40px 34px; text-align: center;
+      position: relative; box-shadow: 0 30px 80px -40px rgba(201,158,104,0.4); }
+    .price-card .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--copper-soft), var(--copper)); color: #1a1206; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; }
+    .price-card .amount { font-family: "Space Grotesk"; font-size: 64px; font-weight: 700; color: var(--cream); line-height: 1; margin: 8px 0; }
+    .price-card .amount span { font-size: 22px; color: var(--muted); }
+    .price-card .lifetime { color: var(--sage); font-weight: 600; font-size: 15px; }
+    .price-card ul { list-style: none; text-align: left; margin: 26px 0; display: grid; gap: 12px; }
+    .price-card ul li { display: flex; gap: 11px; color: var(--text); font-size: 15px; }
+    .price-card ul li .ck { color: var(--copper); flex: none; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 46px 0 40px; margin-top: 30px; }
+    .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
+    .foot-links { display: flex; gap: 26px; flex-wrap: wrap; }
+    .foot-links a { color: var(--muted); font-size: 14px; transition: color .18s; }
+    .foot-links a:hover { color: var(--cream); }
+    .foot-copy { color: var(--muted); font-size: 13.5px; }
+    .smallprint { color: var(--muted); font-size: 12.5px; text-align: center; margin-top: 28px; opacity: 0.8; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      .nav-links .link { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .split { grid-template-columns: 1fr; gap: 30px; }
+      .split .panel-art { order: -1; }
+    }
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-fx" aria-hidden="true">
+    <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- Reusable mark -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="cu" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#e6c79c"/><stop offset="100%" stop-color="#c99e68"/>
+      </linearGradient>
+      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#9aa476"/><stop offset="100%" stop-color="#6e7748"/>
+      </linearGradient>
+      <symbol id="latys-mark" viewBox="0 0 64 64">
+        <path d="M32 5 L55.4 18.5 L55.4 45.5 L32 59 L8.6 45.5 L8.6 18.5 Z" fill="none" stroke="url(#cu)" stroke-width="2.6" stroke-linejoin="round"/>
+        <path d="M16.5 14 L47.5 50 M47.5 14 L16.5 50 M32 9 L32 55" stroke="url(#cu)" stroke-width="2.1" stroke-linecap="round" opacity="0.78"/>
+        <rect x="24" y="24" width="16" height="16" rx="2.6" transform="rotate(45 32 32)" fill="url(#sg)" stroke="url(#cu)" stroke-width="1.5"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <img src="./icon.png" alt="LATYS" width="30" height="30" style="border-radius:8px;display:block" />
+        <span class="wordmark">LATYS</span>
+      </a>
+      <nav class="nav-links">
+        <a class="link" href="#features">Features</a>
+        <a class="link" href="#byo">Your AI</a>
+        <a class="link" href="#community">Community</a>
+        <a class="link" href="#pricing">Pricing</a>
+        <a class="btn btn-primary" href="#download">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <img class="mark-xl" src="./icon.png" alt="LATYS logo" />
+        <div class="eyebrow"><span class="dot"></span> AI Command · Connect · Create</div>
+        <h1>Your <span class="accent">AI command center.</span><br/>One cockpit. Every agent.</h1>
+        <p class="sub">LATYS runs and supervises multiple AI coding agents and terminals from a single premium desktop app — on <b style="color:var(--cream)">your own</b> AI accounts.</p>
+        <div class="cta-row" id="download">
+          <a class="btn btn-primary btn-lg" href="/downloads/LATYS-0.1.0-setup.exe">↓ Download for Windows</a>
+          <a class="btn btn-ghost btn-lg" href="#pricing">Get a founder license — $5</a>
+        </div>
+        <p class="note">Bring your own AI · <b>Offline-first</b> · Lifetime license · No subscription</p>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="tag">The lattice</div>
+          <h2>Four moves, one flow</h2>
+          <p>LATYS is built around how vibe coders actually work — direct, connect, route, and ship.</p>
+        </div>
+        <div class="grid">
+          <div class="card reveal">
+            <div class="ico"><svg width="22" height="22"><use href="#latys-mark"/></svg></div>
+            <div class="kicker">Command</div>
+            <h3>Central hub</h3>
+            <p>Drive a roster of specialised agents — Architect, Builder, Debugger, Reviewer — from one intelligent cockpit.</p>
+          </div>
+          <div class="card reveal">
+            <div class="ico"><svg width="22" height="22"><use href="#latys-mark"/></svg></div>
+            <div class="kicker">Connect</div>
+            <h3>Lattice network</h3>
+            <p>Plug in Claude, OpenAI, Cursor, and more. Join an opt-in community of builders in the Vibe Coding Universe.</p>
+          </div>
+          <div class="card reveal">
+            <div class="ico"><svg width="22" height="22"><use href="#latys-mark"/></svg></div>
+            <div class="kicker">Route</div>
+            <h3>Smart routing</h3>
+            <p>Send a task and LATYS coordinates the right agents and terminals, with safety snapshots before risky work.</p>
+          </div>
+          <div class="card reveal">
+            <div class="ico"><svg width="22" height="22"><use href="#latys-mark"/></svg></div>
+            <div class="kicker">Create</div>
+            <h3>Build together</h3>
+            <p>Generate, edit, and run code with live terminals, git, and voice control — then ship it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="byo">
+      <div class="wrap split">
+        <div class="reveal">
+          <div class="tag" style="color:var(--copper);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;font-size:12.5px">Bring your own AI</div>
+          <h2 style="margin-top:12px">Your machine.<br/>Your keys. Your tokens.</h2>
+          <p>LATYS never pays for — or sees — your AI usage. It orchestrates the official CLIs and APIs you already have. Your code, prompts, and credentials never leave your device.</p>
+          <ul class="checklist">
+            <li><span class="ck">✓</span> Connect Claude, OpenAI, Cursor, Antigravity & custom providers</li>
+            <li><span class="ck">✓</span> Credentials encrypted at rest with Windows DPAPI</li>
+            <li><span class="ck">✓</span> Offline-first Local Voice Mode — no cloud transcription</li>
+            <li><span class="ck">✓</span> Every command logged; dangerous actions flagged</li>
+          </ul>
+        </div>
+        <div class="panel-art reveal">
+          <img class="mark-md" src="./icon.png" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section id="community">
+      <div class="wrap split">
+        <div class="panel-art reveal" style="order:-1">
+          <img class="mark-md" src="./icon.png" alt="" />
+        </div>
+        <div class="reveal">
+          <div class="tag" style="color:var(--copper);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;font-size:12.5px">Vibe Coding Universe</div>
+          <h2 style="margin-top:12px">A community of builders — opt-in, always.</h2>
+          <p>Go visible when you want to. Share a status, chat, and trade GIFs with other founders. It's off by default, and your code, prompts, and file paths never leave your machine — there's no field for them.</p>
+          <ul class="checklist">
+            <li><span class="ck">✓</span> Live presence — only what you choose to share</li>
+            <li><span class="ck">✓</span> Block, report & privacy controls built in</li>
+            <li><span class="ck">✓</span> Invisible until you join. Leave anytime.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="tag">Pricing</div>
+          <h2>One price. Forever.</h2>
+          <p>No subscription. No token bills from us. Just a lifetime founder license.</p>
+        </div>
+        <div class="price-wrap reveal">
+          <div class="price-card">
+            <span class="badge">Founder</span>
+            <div class="lifetime">Lifetime access</div>
+            <div class="amount"><span>$</span>5</div>
+            <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
+            <ul>
+              <li><span class="ck">✓</span> The full LATYS desktop app for Windows</li>
+              <li><span class="ck">✓</span> All future updates included</li>
+              <li><span class="ck">✓</span> Vibe Coding Universe community access</li>
+              <li><span class="ck">✓</span> Offline, signed license — no account, no server</li>
+            </ul>
+            <a class="btn btn-primary btn-lg" style="width:100%;justify-content:center" href="https://buy.stripe.com/3cIcN5a791f76fW0vWaIM00">Become a founder — $5</a>
+            <p style="color:var(--muted);font-size:12.5px;margin-top:14px">Your license key is emailed after purchase. Paste it into LATYS to unlock.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <a class="brand" href="#top">
+          <img src="./icon.png" alt="LATYS" width="26" height="26" style="border-radius:7px;display:block" />
+          <span class="wordmark" style="font-size:17px">LATYS</span>
+        </a>
+        <div class="foot-links">
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="mailto:ajamespt86@gmail.com">Contact</a>
+        </div>
+        <div class="foot-copy">© <span id="yr">2026</span> LATYS</div>
+      </div>
+      <p class="smallprint">LATYS runs on your own AI accounts. You are responsible for your AI providers' costs, usage, and terms. Windows installer is currently unsigned — SmartScreen may show an "unknown publisher" notice.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+  </script>
+</body>
+</html>
