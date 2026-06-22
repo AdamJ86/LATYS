@@ -97,6 +97,31 @@
     .hero .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 38px; }
     .hero .note { margin-top: 18px; font-size: 13px; color: var(--muted); }
     .hero .note b { color: var(--sage); font-weight: 600; }
+    .install-note {
+      max-width: 760px;
+      margin: 24px auto 0;
+      padding: 16px 18px;
+      border: 1px solid rgba(201,158,104,0.28);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(201,158,104,0.09), rgba(138,148,96,0.07));
+      color: var(--muted);
+      font-size: 13.5px;
+      text-align: left;
+      box-shadow: 0 18px 46px -34px rgba(201,158,104,0.65);
+    }
+    .install-note strong {
+      color: var(--cream);
+      font-weight: 700;
+    }
+    .install-note a {
+      color: var(--copper-soft);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(230,199,156,0.32);
+    }
+    .install-note a:hover {
+      color: var(--cream);
+      border-bottom-color: var(--cream);
+    }
 
     /* Section scaffolding */
     section { padding: 78px 0; position: relative; }
@@ -223,6 +248,9 @@
           <a class="btn btn-ghost btn-lg" href="#pricing">Get a founder license — $5</a>
         </div>
         <p class="note">Bring your own AI · <b>Offline-first</b> · Lifetime license · No subscription</p>
+        <div class="install-note" role="note" aria-label="Windows installation note">
+          <strong>Windows install note:</strong> LATYS is currently an early unsigned founder build. Microsoft Defender SmartScreen may show a “Windows protected your PC” or “unknown publisher” notice on first launch. Only install LATYS from <a href="https://latys.app">latys.app</a> or the official <a href="https://github.com/adamj86/LATYS/releases/latest">GitHub release</a>.
+        </div>
       </div>
     </section>
 
