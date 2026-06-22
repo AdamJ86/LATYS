@@ -81,10 +81,11 @@
 
     /* Hero */
     .hero { padding: 92px 0 70px; text-align: center; position: relative; }
-    .hero .mark-xl { width: 132px; height: 132px; margin: 0 auto 30px;
-      filter: drop-shadow(0 14px 40px rgba(201,158,104,0.35)); animation: float 7s ease-in-out infinite; }
+    .hero .mark-xl { width: 138px; height: 138px; margin: 0 auto 12px; mix-blend-mode: screen;
+      filter: drop-shadow(0 10px 30px rgba(201,158,104,0.3)); animation: float 7s ease-in-out infinite; }
+    .hero .wordmark-img { display: block; width: min(450px, 86%); height: auto; margin: 0 auto 6px; mix-blend-mode: screen; }
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-    .hero h1 { font-size: clamp(42px, 7vw, 76px); font-weight: 700; line-height: 1.04; color: var(--cream); }
+    .hero h1 { font-size: clamp(27px, 4.3vw, 48px); font-weight: 700; line-height: 1.07; color: var(--cream); margin-top: 22px; }
     .hero h1 .accent { background: linear-gradient(120deg, var(--copper-soft), var(--copper));
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12.5px; font-weight: 600;
@@ -213,9 +214,9 @@
   <main id="top">
     <section class="hero">
       <div class="wrap">
-        <img class="mark-xl" src="./icon.png" alt="LATYS logo" />
-        <div class="eyebrow"><span class="dot"></span> AI Command · Connect · Create</div>
-        <h1>Your <span class="accent">AI command center.</span><br/>One cockpit. Every agent.</h1>
+        <img class="mark-xl" src="./latys-mark.png" alt="LATYS icon" />
+        <img class="wordmark-img" src="./latys-wordmark.png" alt="LATYS — AI Command. Connect. Create." />
+        <h1>Your AI command center.<br/>One cockpit. Every agent.</h1>
         <p class="sub">LATYS runs and supervises multiple AI coding agents and terminals from a single premium desktop app — on <b style="color:var(--cream)">your own</b> AI accounts.</p>
         <div class="cta-row" id="download">
           <a class="btn btn-primary btn-lg" href="/downloads/LATYS-0.1.0-setup.exe">↓ Download for Windows</a>
