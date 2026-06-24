@@ -1,5 +1,5 @@
 {
-  "version": "0.1.11",
+  "version": "0.1.12",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Smoother updates — LATYS now updates cleanly even while it's open, no more install errors. Plus Community Voice Lounge, live founder-seats counter, and security hardening."
+  "notes": "Local voice now tells you exactly why transcription couldn't run (e.g. mic muted or wrong input device) instead of a generic error. Plus file preview, smoother updates, and security hardening."
 }
