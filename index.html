@@ -85,6 +85,54 @@
       filter: drop-shadow(0 12px 34px rgba(201,158,104,0.32)); animation: float 7s ease-in-out infinite; }
     .hero .wordmark-img { display: block; width: min(450px, 86%); height: auto; margin: 0 auto 6px; }
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+    /* Hero showcase video — replaces the static logo mark */
+    @property --ring-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    .hero-video {
+      position: relative;
+      width: min(760px, 94%);
+      aspect-ratio: 16 / 9;
+      margin: 4px auto 16px;
+      border-radius: 24px;
+      background: linear-gradient(160deg, #1b171f, #0d0b0f);
+      opacity: 0;
+      animation: heroFade .9s ease forwards, heroFloat 8s ease-in-out .9s infinite;
+      will-change: transform;
+    }
+    /* Rotating copper/sage glow ring hugging the frame */
+    .hero-video::before {
+      content: "";
+      position: absolute; inset: -1.5px;
+      border-radius: inherit; padding: 1.5px;
+      background: conic-gradient(from var(--ring-angle),
+        transparent 0deg, var(--copper-soft) 70deg, var(--sage) 140deg,
+        transparent 210deg, var(--copper) 290deg, transparent 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: ringspin 6s linear infinite;
+      z-index: 2; pointer-events: none;
+    }
+    /* Soft ambient glow + crisp inner hairline */
+    .hero-video::after {
+      content: "";
+      position: absolute; inset: 0; border-radius: inherit;
+      box-shadow: 0 36px 100px -36px rgba(201,158,104,0.55), inset 0 0 0 1px var(--line-strong);
+      pointer-events: none; z-index: 3;
+    }
+    .hero-video video {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; border-radius: inherit;
+      position: relative; z-index: 1;
+      animation: heroVideoIn 1.1s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes ringspin { to { --ring-angle: 360deg; } }
+    @keyframes heroFade { to { opacity: 1; } }
+    @keyframes heroFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes heroVideoIn { from { transform: scale(.965); opacity: .35; } to { transform: scale(1); opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-video { animation: heroFade .6s ease forwards; }
+      .hero-video::before, .hero-video video { animation: none; }
+    }
     .hero h1 { font-size: clamp(27px, 4.3vw, 48px); font-weight: 700; line-height: 1.07; color: var(--cream); margin-top: 22px; }
     .hero h1 .accent { background: linear-gradient(120deg, var(--copper-soft), var(--copper));
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
@@ -240,7 +288,9 @@
   <main id="top">
     <section class="hero">
       <div class="wrap">
-        <img class="mark-xl" src="./latys-mark.png?v=3" alt="LATYS icon" />
+        <div class="hero-video">
+          <video src="./website.mp4?v=1" autoplay loop muted playsinline preload="auto" aria-label="LATYS in motion"></video>
+        </div>
         <img class="wordmark-img" src="./latys-wordmark.png?v=3" alt="LATYS — AI Command. Connect. Create." />
         <h1>Your AI command center.<br/>One cockpit. Every agent.</h1>
         <p class="sub">LATYS runs and supervises multiple AI coding agents and terminals from a single premium desktop app — on <b style="color:var(--cream)">your own</b> AI accounts.</p>
