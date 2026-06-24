@@ -3,7 +3,7 @@
 Static site for **latys.app**. No build step — plain HTML/CSS/JS.
 
 ## Files
-- `index.html` — landing page (hero, features, BYO-AI, community, $5 pricing).
+- `index.html` — landing page (hero, features, BYO-AI, community, $10 pricing).
 - `privacy.html` / `terms.html` — legal pages linked from the footer.
 - `icon.png` — favicon + share image (regenerate with `npm run icons`).
 - `latys-latest.json` — the update feed the app polls (`UPDATE_FEED_URL` in
