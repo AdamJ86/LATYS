@@ -172,6 +172,26 @@
     .price-card ul li { display: flex; gap: 11px; color: var(--text); font-size: 15px; }
     .price-card ul li .ck { color: var(--copper); flex: none; }
 
+    /* Founder seats counter (live, Stripe-backed) */
+    .seats { margin: 16px 0 2px; }
+    .seats-row { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 13.5px; font-weight: 600; color: var(--copper-soft); }
+    .seats-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
+    .seats-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); }
+    .seats-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); animation: seatsPing 1.8s ease-out infinite; }
+    @keyframes seatsPing { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(2.6); opacity: 0; } }
+    .seats-bar { margin-top: 9px; height: 6px; border-radius: 100px; background: rgba(201,158,104,0.14); border: 1px solid var(--line); overflow: hidden; }
+    .seats-fill { height: 100%; width: 0%; border-radius: 100px; background: linear-gradient(90deg, var(--sage), var(--copper)); transition: width .8s cubic-bezier(.22,1,.36,1); }
+    .seats.sold-out .seats-row { color: #e6927e; }
+    .seats.sold-out .seats-dot::before, .seats.sold-out .seats-dot::after { background: #d9534f; }
+    .seats.sold-out .seats-fill { background: #d9534f; }
+    /* Hero seats pill */
+    .seats-pill { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 7px 15px; border-radius: 100px;
+      border: 1px solid var(--line-strong); background: rgba(201,158,104,0.06); font-size: 12.5px; font-weight: 600; color: var(--copper-soft); letter-spacing: .3px; }
+    .seats-pill.sold-out { color: #e6927e; border-color: rgba(217,83,79,0.4); }
+    .seats-pill.sold-out .seats-dot::before, .seats-pill.sold-out .seats-dot::after { background: #d9534f; }
+    /* Sold-out buy button */
+    .btn.disabled { opacity: .55; pointer-events: none; filter: grayscale(.35); }
+
     /* Footer */
     footer { border-top: 1px solid var(--line); padding: 46px 0 40px; margin-top: 30px; }
     .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
@@ -249,6 +269,7 @@
           <a class="btn btn-ghost btn-lg" href="#pricing">Get a founder license — $10</a>
         </div>
         <p class="note">Bring your own AI · <b>Offline-first</b> · Lifetime license · No subscription</p>
+        <div class="seats-pill" data-seats><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
         <div class="install-note" role="note" aria-label="Windows installation note">
           <strong>Windows install note:</strong> LATYS is currently an early unsigned founder build. Microsoft Defender SmartScreen may show a “Windows protected your PC” or “unknown publisher” notice on first launch. Only install LATYS from <a href="https://latys.app">latys.app</a> or the official <a href="https://github.com/adamj86/LATYS/releases/latest">GitHub release</a>.
         </div>
@@ -341,13 +362,17 @@
             <div class="lifetime">Lifetime access</div>
             <div class="amount"><span>$</span>10</div>
             <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
+            <div class="seats" data-seats>
+              <div class="seats-row"><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
+              <div class="seats-bar"><div class="seats-fill" data-seats-fill></div></div>
+            </div>
             <ul>
               <li><span class="ck">✓</span> The full LATYS desktop app for Windows</li>
               <li><span class="ck">✓</span> All future updates included</li>
               <li><span class="ck">✓</span> Vibe Coding Universe community access</li>
               <li><span class="ck">✓</span> Offline, signed license — no account, no server</li>
             </ul>
-            <a class="btn btn-primary btn-lg" style="width:100%;justify-content:center" href="https://buy.stripe.com/28E3cv2EHe1T0VC1A0aIM01">Become a founder — $10</a>
+            <a class="btn btn-primary btn-lg" data-buy style="width:100%;justify-content:center" href="https://buy.stripe.com/28E3cv2EHe1T0VC1A0aIM01">Become a founder — $10</a>
             <p style="color:var(--muted);font-size:12.5px;margin-top:14px">Your license key is emailed after purchase. Paste it into LATYS to unlock.</p>
           </div>
         </div>
@@ -381,6 +406,38 @@
       for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+
+    // ── Live founder-seats counter ───────────────────────────────────────────
+    // Data comes from the Stripe-backed Cloudflare Worker (see
+    // community/SEATS-COUNTER-SETUP.md). Until SEATS_ENDPOINT is set, the page
+    // keeps the static "Only 10 founder seats" label.
+    const SEATS_ENDPOINT = 'https://latys-seats.latys.workers.dev';
+    const SEATS_TOTAL = 10;
+    function paintSeats(total, left, soldOut) {
+      const t = total || SEATS_TOTAL;
+      const l = Math.max(0, left == null ? t : left);
+      document.querySelectorAll('[data-seats-text]').forEach((el) => {
+        el.textContent = soldOut ? 'Founder run — sold out' : (l + ' of ' + t + ' founder seats left');
+      });
+      const pct = t ? Math.round(((t - l) / t) * 100) : 0;
+      document.querySelectorAll('[data-seats-fill]').forEach((el) => { el.style.width = pct + '%'; });
+      document.querySelectorAll('[data-seats]').forEach((el) => el.classList.toggle('sold-out', !!soldOut));
+      if (soldOut) {
+        document.querySelectorAll('[data-buy]').forEach((b) => {
+          b.classList.add('disabled'); b.removeAttribute('href'); b.textContent = 'Sold out — founder run closed';
+        });
+      }
+    }
+    async function refreshSeats() {
+      if (!SEATS_ENDPOINT) return; // not wired yet → keep the static label
+      try {
+        const r = await fetch(SEATS_ENDPOINT, { cache: 'no-store' });
+        const d = await r.json();
+        paintSeats(d.total, d.left, d.soldOut);
+      } catch (e) { /* keep last value on any hiccup */ }
+    }
+    refreshSeats();
+    setInterval(refreshSeats, 30000);
   </script>
 </body>
 </html>
