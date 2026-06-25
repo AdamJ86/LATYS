@@ -1,5 +1,5 @@
 {
-  "version": "0.1.15",
+  "version": "0.1.16",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Big Community upgrade: message reactions + typing indicators, grouped chat with a hover toolbar and unread marker, clickable profile cards (message/call anyone), a live activity feed with status presets, model-colored presence on the globe, and Chat + Messages merged into one place."
+  "notes": "The launcher command bar now takes general commands — type 'open a debugger and 2 claude agents' and LATYS does it, even with nothing open. Plus a new Settings → Feedback to send bugs and ideas straight to the team."
 }
