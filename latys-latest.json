@@ -1,5 +1,5 @@
 {
-  "version": "0.1.17",
+  "version": "0.1.18",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "NVIDIA Parakeet speech-to-text is now built in — install and use voice commands immediately, fully on-device with no model download or setup. (Larger download as the speech model now ships with the app.)"
+  "notes": "Fixes built-in NVIDIA Parakeet voice: it now reliably transcribes on a fresh install (previously a leftover Whisper path could make it return \"No speech detected\"). Fully on-device, no setup."
 }
