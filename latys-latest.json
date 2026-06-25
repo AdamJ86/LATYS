@@ -1,5 +1,5 @@
 {
-  "version": "0.1.16",
+  "version": "0.1.17",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "The launcher command bar now takes general commands — type 'open a debugger and 2 claude agents' and LATYS does it, even with nothing open. Plus a new Settings → Feedback to send bugs and ideas straight to the team."
+  "notes": "NVIDIA Parakeet speech-to-text is now built in — install and use voice commands immediately, fully on-device with no model download or setup. (Larger download as the speech model now ships with the app.)"
 }
