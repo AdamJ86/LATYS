@@ -1,5 +1,5 @@
 {
-  "version": "0.1.13",
+  "version": "0.1.14",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Direct and group voice calls now connect properly, plus community and UI improvements and stability fixes."
+  "notes": "Smoother setup — LATYS now reliably detects your Claude/Codex/Gemini CLIs and shows exact install commands. Pick your mic with a live level meter, plus model-usage rings in the top bar."
 }
