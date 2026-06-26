@@ -1,5 +1,5 @@
 {
-  "version": "0.1.19",
+  "version": "0.1.20",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "NVIDIA GPU acceleration for voice: if you have an NVIDIA GPU, Settings → Voice now offers an optional one-click CUDA pack so Parakeet transcribes much faster on your GPU. Everyone else is unchanged — the CPU build still ships built in. Plus command-bar and community cleanups."
+  "notes": "Voice calling fixes: direct and group calls now connect (no more \"couldn't get a call pass\"), and screen sharing in calls works instead of spinning forever."
 }
