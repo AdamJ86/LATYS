@@ -1,5 +1,5 @@
 {
-  "version": "0.1.18",
+  "version": "0.1.19",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Fixes built-in NVIDIA Parakeet voice: it now reliably transcribes on a fresh install (previously a leftover Whisper path could make it return \"No speech detected\"). Fully on-device, no setup."
+  "notes": "NVIDIA GPU acceleration for voice: if you have an NVIDIA GPU, Settings → Voice now offers an optional one-click CUDA pack so Parakeet transcribes much faster on your GPU. Everyone else is unchanged — the CPU build still ships built in. Plus command-bar and community cleanups."
 }
