@@ -1,5 +1,5 @@
 {
-  "version": "0.1.22",
+  "version": "0.1.23",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Fixes a bug where the mouse cursor could get stuck (showing a \"grab\" hand) and clicks stopped working on the dashboard after opening and closing the community chat."
+  "notes": "Fully fixes the community overlay leaving parts of the dashboard unclickable after opening the community/chat — the top toolbar (project menu, Command button) and the rest of the screen now work normally once you return."
 }
