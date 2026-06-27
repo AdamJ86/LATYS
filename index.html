@@ -187,6 +187,20 @@
     .seats.sold-out .seats-row { color: #e6927e; }
     .seats.sold-out .seats-dot::before, .seats.sold-out .seats-dot::after { background: #d9534f; }
     .seats.sold-out .seats-fill { background: #d9534f; }
+    /* Founder price-rise indicator + live roll-up to the next price */
+    .price-rise { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 2px; padding: 7px 14px; border-radius: 100px;
+      background: rgba(201,158,104,0.10); border: 1px solid var(--line); color: var(--copper-soft); font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .price-rise strong { color: var(--cream); }
+    .price-rise-arrow { display: inline-flex; color: var(--copper); font-weight: 800; }
+    .price-rise.urgent { border-color: rgba(201,158,104,0.5); animation: riseGlow 1.7s ease-in-out infinite; }
+    .price-rise.urgent .price-rise-arrow { animation: riseBob 1.2s ease-in-out infinite; }
+    .price-rise.closed { background: rgba(201,158,104,0.16); border-color: rgba(201,158,104,0.5); color: var(--cream); }
+    @keyframes riseGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(201,158,104,0); } 50% { box-shadow: 0 0 20px 0 rgba(201,158,104,0.32); } }
+    @keyframes riseBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    .price-card .amount.rising { color: var(--copper); animation: pricePulse .55s ease; }
+    @keyframes pricePulse { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
+    .price-card.closed { border-color: rgba(201,158,104,0.45); box-shadow: 0 0 44px -8px rgba(201,158,104,0.28); }
+    .price-card.closed .badge { background: var(--copper); color: #1a1410; }
     /* Hero seats pill */
     .seats-pill { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 7px 15px; border-radius: 100px;
       border: 1px solid var(--line-strong); background: rgba(201,158,104,0.06); font-size: 12.5px; font-weight: 600; color: var(--copper-soft); letter-spacing: .3px; }
@@ -361,10 +375,11 @@
         </div>
         <div class="price-wrap reveal">
           <div class="price-card">
-            <span class="badge">Founder</span>
+            <span class="badge" data-badge>Founder</span>
             <div class="lifetime">Lifetime access</div>
-            <div class="amount"><span>$</span>10</div>
+            <div class="amount"><span>$</span><b data-amount>10</b></div>
             <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
+            <div class="price-rise" data-price-rise><span class="price-rise-arrow">↑</span><span>Rises to <strong>$79</strong> when the founder run sells out</span></div>
             <div class="seats" data-seats>
               <div class="seats-row"><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
               <div class="seats-bar"><div class="seats-fill" data-seats-fill></div></div>
@@ -416,6 +431,26 @@
     // keeps the static "Only 10 founder seats" label.
     const SEATS_ENDPOINT = 'https://latys-seats.latys.workers.dev';
     const SEATS_TOTAL = 10;
+    const NEXT_PRICE = 79;   // founder price rises to this once the run sells out
+    const URGENT_AT = 4;     // start the "almost gone" pulse at/under this many seats
+
+    // Count the headline price up 10 → NEXT_PRICE when the run sells out (once).
+    let priceRolled = false;
+    function rollPriceUp() {
+      if (priceRolled) return; priceRolled = true;
+      const el = document.querySelector('[data-amount]');
+      if (!el) return;
+      const amount = el.closest('.amount');
+      if (amount) amount.classList.add('rising');
+      const start = 10, end = NEXT_PRICE, dur = 1300, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        el.textContent = Math.round(start + (end - start) * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    }
+
     function paintSeats(total, left, soldOut) {
       const t = total || SEATS_TOTAL;
       const l = Math.max(0, left == null ? t : left);
@@ -425,7 +460,25 @@
       const pct = t ? Math.round(((t - l) / t) * 100) : 0;
       document.querySelectorAll('[data-seats-fill]').forEach((el) => { el.style.width = pct + '%'; });
       document.querySelectorAll('[data-seats]').forEach((el) => el.classList.toggle('sold-out', !!soldOut));
+
+      // Live price-rise indicator — gets urgent as the run nears sellout.
+      const urgent = !soldOut && l > 0 && l <= URGENT_AT;
+      document.querySelectorAll('[data-price-rise]').forEach((el) => {
+        if (soldOut) {
+          el.classList.remove('urgent'); el.classList.add('closed');
+          el.innerHTML = '<span>Founder run ended — lifetime is now <strong>$' + NEXT_PRICE + '</strong></span>';
+        } else {
+          el.classList.toggle('urgent', urgent);
+          el.innerHTML = urgent
+            ? '<span class="price-rise-arrow">↑</span><span>Only <strong>' + l + ' left</strong> at $10 — then it rises to <strong>$' + NEXT_PRICE + '</strong></span>'
+            : '<span class="price-rise-arrow">↑</span><span>Rises to <strong>$' + NEXT_PRICE + '</strong> when the founder run sells out</span>';
+        }
+      });
+
       if (soldOut) {
+        rollPriceUp();
+        document.querySelectorAll('[data-badge]').forEach((b) => { b.textContent = 'Founder price closed'; });
+        document.querySelectorAll('.price-card').forEach((c) => c.classList.add('closed'));
         document.querySelectorAll('[data-buy]').forEach((b) => {
           b.classList.add('disabled'); b.removeAttribute('href'); b.textContent = 'Sold out — founder run closed';
         });
