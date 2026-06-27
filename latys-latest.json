@@ -1,5 +1,5 @@
 {
-  "version": "0.1.21",
+  "version": "0.1.22",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Voice call upgrades: choose what to share — your whole screen or a single application window — and move/resize the call and lounge windows to any size. You can also add people to an existing group chat. Plus a UI polish pass: crisper numeric readouts and better text contrast."
+  "notes": "Fixes a bug where the mouse cursor could get stuck (showing a \"grab\" hand) and clicks stopped working on the dashboard after opening and closing the community chat."
 }
