@@ -24,3 +24,5 @@ Then upload the installer so the download button resolves:
 - [ ] Upload the signed (or unsigned) installer to `/downloads/`.
 - [ ] Bump `version` + `url` in `latys-latest.json` on each release to light up
       the in-app update banner.
+
+<!-- pages redeploy 0.1.28 @ 2026-07-03T21:24:52Z -->
