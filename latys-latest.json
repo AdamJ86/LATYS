@@ -1,5 +1,5 @@
 {
-  "version": "0.1.27",
+  "version": "0.1.28",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Voice Command now has a lifelike 3D avatar that lip-syncs to LATYS's realtime voice — set in an office, it turns to face you and zooms in as it speaks."
+  "notes": "Hands-free voice: push-to-talk and voice commands now work without opening the Voice panel — the 3D avatar pops up from the launcher dock while you talk. Plus snappier, more reliable voice commands (no more double responses or lag)."
 }
