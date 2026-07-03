@@ -1,5 +1,5 @@
 {
-  "version": "0.1.28",
+  "version": "0.1.29",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Hands-free voice: push-to-talk and voice commands now work without opening the Voice panel — the 3D avatar pops up from the launcher dock while you talk. Plus snappier, more reliable voice commands (no more double responses or lag)."
+  "notes": "Dave talks back in his own voice: on GPT Realtime, agent-completion and command feedback now speak in Dave's realtime voice instead of the system voice. Plus a lighter, faster Voice panel."
 }
