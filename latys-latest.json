@@ -1,5 +1,5 @@
 {
-  "version": "0.1.26",
+  "version": "0.1.27",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Mission Director: just describe what you want built and a team of AI agents plans it, assigns the work, and builds it — running in parallel with a live swarm view, voice input, self-correcting retries, and one-click rollback."
+  "notes": "Voice Command now has a lifelike 3D avatar that lip-syncs to LATYS's realtime voice — set in an office, it turns to face you and zooms in as it speaks."
 }
