@@ -1,5 +1,5 @@
 {
-  "version": "0.1.29",
+  "version": "0.1.30",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Dave talks back in his own voice: on GPT Realtime, agent-completion and command feedback now speak in Dave's realtime voice instead of the system voice. Plus a lighter, faster Voice panel."
+  "notes": "Mission Mode goes hands-free: control missions by voice ('how's the mission going?', 'approve', 'retry that step'), queue missions for the overnight Night Shift and wake up to Dave's Morning Briefing, and replay any mission wave-by-wave — or fork from a wave to re-run it with new guidance."
 }
