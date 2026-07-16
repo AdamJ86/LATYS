@@ -1,5 +1,5 @@
 {
-  "version": "0.1.30",
+  "version": "0.1.31",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Mission Mode goes hands-free: control missions by voice ('how's the mission going?', 'approve', 'retry that step'), queue missions for the overnight Night Shift and wake up to Dave's Morning Briefing, and replay any mission wave-by-wave — or fork from a wave to re-run it with new guidance."
+  "notes": "LATYS Remote: pair your phone in seconds at latys.app/remote (no install) and approve, retry, or cancel missions from anywhere — plus start the Night Shift remotely. Also in this build: the ⌘K command palette, a calmer idle cockpit, mission summary cards with diff review, a truly beat-reactive waveform visualizer, a quick notepad, and canvas drawing."
 }
