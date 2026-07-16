@@ -1,5 +1,5 @@
 {
-  "version": "0.1.32",
+  "version": "0.1.33",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Important fix: updating LATYS no longer wipes your settings — the installer now runs fully isolated from your app data and closes the running app gracefully before copying files. Includes everything from 0.1.31: LATYS Remote phone control (latys.app/remote), the ⌘K command palette, calmer idle cockpit, mission summary cards with diff review, beat-reactive waveform visualizer, quick notepad, and canvas drawing."
+  "notes": "Work on multiple projects at once: switching projects no longer stops your running agents — they keep working in the background and are exactly where you left them when you switch back. Plus: agents can now generate images with gpt-image-2 (⌘K → 'Brief agents on image generation'), and you can drop or paste any screenshot onto the canvas as a visual reference your agents can actually see — even by voice: 'use the screenshot and build this'."
 }
