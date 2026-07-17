@@ -1,5 +1,5 @@
 {
-  "version": "0.1.33",
+  "version": "0.1.34",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Work on multiple projects at once: switching projects no longer stops your running agents — they keep working in the background and are exactly where you left them when you switch back. Plus: agents can now generate images with gpt-image-2 (⌘K → 'Brief agents on image generation'), and you can drop or paste any screenshot onto the canvas as a visual reference your agents can actually see — even by voice: 'use the screenshot and build this'."
+  "notes": "Visual references got sharper: dropping or pasting a screenshot now announces it to your agents instantly — just say 'look at the screenshot' and they know exactly what you mean. Codex agents on Windows can now genuinely view your screenshots too (its sandbox was blocking the image viewer), and broadcast commands stay scoped to the active project so background projects' agents are never interrupted."
 }
