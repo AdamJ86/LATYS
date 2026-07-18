@@ -1,5 +1,5 @@
 {
-  "version": "0.1.35",
+  "version": "0.1.36",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Agent relay: chain agents with one voice command — 'Kai, make a plan, then open a claude agent and have it verify and summarize it back to me.' Each agent runs in turn, hands its result to the next, and Dave speaks the final summary aloud. Your named agents are always respected, chains run quietly on the canvas, and agent launches now wait for the CLI to be fully ready before delivering instructions (no more lost handoffs). Plus: Moonshot's Kimi K3 (Kimi Code) joins as a first-class provider, Codex responds to routed commands without a manual Enter, and voice waits for you to finish speaking before acting."
+  "notes": "A brand-new gamified onboarding: animated in-app scenes for every step, a quest tracker with XP as you set up, and a confetti finish. The whole app is smoother too - lighter glass blur and panel paint containment keep opens, drags and animations at full refresh rate. Also fixed: long voice prompts can no longer accidentally close working agents - close commands must be short and deliberate, and the voice model is now vetoed against your actual words before it can close anything."
 }
