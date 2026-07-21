@@ -1,5 +1,5 @@
 {
-  "version": "0.1.37",
+  "version": "0.1.38",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Meet your new AI lineup. OpenCode joins as a first-class agent (bring your own model - including Alibaba's brand-new Qwen 3.8), and every Claude agent can now be pinned to a specific model: run the new Orchestrator on Fable 5 to plan and delegate while Kimi, OpenCode and your other agents do the heavy lifting. The top bar now shows your real Claude usage - live token counts and cost from your actual sessions, with a full breakdown (5-hour window, today, all-time, per-model) one click away. Plus: long voice prompts can no longer accidentally close working agents."
+  "notes": "Stability and performance improvements."
 }
