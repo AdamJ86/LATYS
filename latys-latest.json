@@ -1,5 +1,5 @@
 {
-  "version": "0.1.47",
+  "version": "0.1.48",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Community chat is now a full Discord-style client: channel and DM rails, member list, pinned messages, quick switcher, search, message editing, code blocks, spoilers and mentions. Voice gets its own panel with mute, deafen, camera, screen share and a shared sound board. Plus a new RainbowTree background and social dock cards in each network's own colours."
+  "notes": "Maintenance release. No functional changes since v0.1.47 - this is the same app, rebuilt and republished so the installer and update feed stay in sync. Updating is optional."
 }
