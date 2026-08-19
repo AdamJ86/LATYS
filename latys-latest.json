@@ -1,5 +1,5 @@
 {
-  "version": "0.1.46",
+  "version": "0.1.47",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Social shelf — connect YouTube, X, Facebook, TikTok and Instagram right from the project dock. Signing in is an ordinary browser login in its own window (no API keys, OAuth apps or developer accounts), and each platform keeps a persistent profile so you stay signed in between launches. Once connected, a card can open that platform's own composer to post, or pull its live logged-in feed onto the canvas as a browser panel. Sign out wipes that platform's profile."
+  "notes": "Community chat is now a full Discord-style client: channel and DM rails, member list, pinned messages, quick switcher, search, message editing, code blocks, spoilers and mentions. Voice gets its own panel with mute, deafen, camera, screen share and a shared sound board. Plus a new RainbowTree background and social dock cards in each network's own colours."
 }
