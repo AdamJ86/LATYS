@@ -1,5 +1,5 @@
 {
-  "version": "0.1.48",
+  "version": "0.1.49",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Maintenance release. No functional changes since v0.1.47 - this is the same app, rebuilt and republished so the installer and update feed stay in sync. Updating is optional."
+  "notes": "Stability and performance improvements."
 }
