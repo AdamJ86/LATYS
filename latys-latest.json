@@ -1,5 +1,5 @@
 {
-  "version": "0.1.54",
+  "version": "0.1.55",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Stability and performance improvements."
+  "notes": "New cinematic home screen and Atom dashboard with a live learning brain, an app-wide theme and media player fixes. Security hardening throughout: Electron 44, stricter permissions, safer remote pairing, and credentials scrubbed from logs and history. The installer now updates the app folder cleanly."
 }
