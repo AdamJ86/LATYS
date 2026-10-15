@@ -1,5 +1,5 @@
 {
-  "version": "0.1.59",
+  "version": "0.1.60",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "New in the video tour: a narrated walkthrough of installing Claude Code, Codex, OpenCode and Grok on Windows, with the official links and PowerShell commands. The Connect AI setup step now shows each agent's install command with a Copy button, how to sign in, and a docs link."
+  "notes": "Cursor now launches with its own cursor-agent command, so it can't be confused with Grok's 'agent' command (existing settings update automatically). Build and Test now report pass/fail correctly when your default shell is cmd.exe, Git Bash or WSL, not just PowerShell."
 }
