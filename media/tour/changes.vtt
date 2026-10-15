@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.961
+Every change your agents make shows up under Changes.
+
+00:00:04.710 --> 00:00:09.496
+Review the diff, file by file, before you keep it. And revert anything you don't want.
+
+00:00:17.470 --> 00:00:21.985
+Test and build with a single click. The results land right in the status bar.
+
+00:00:23.300 --> 00:00:28.405
+And press Dev, to start your dev server and preview the running app, right inside LATYS.

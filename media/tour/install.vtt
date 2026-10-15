@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:10.987
+Before anything else, LATYS needs at least one AI coding agent installed on your computer. Here's how to set up the big four on Windows: Claude Code, Codex, OpenCode and Grok.
+
+00:00:11.440 --> 00:00:16.943
+First, you'll need a terminal. Search for PowerShell in the Start menu, or open one right here in LATYS.
+
+00:00:17.770 --> 00:00:24.097
+Claude Code first. Anthropic's setup page gives you a one-line PowerShell command. Paste it in, and press Enter.
+
+00:00:28.230 --> 00:00:32.011
+When it's done, run claude once, and sign in with your Anthropic account.
+
+00:00:37.750 --> 00:00:46.424
+Codex is just as quick. Copy the PowerShell command from OpenAI's Codex page, run it, then launch codex, and choose Sign in with ChatGPT.
+
+00:00:52.930 --> 00:01:03.715
+OpenCode installs with npm, so install Node.js first, if you don't have it. Then it's one command. Inside OpenCode, type slash connect to add a model.
+
+00:01:06.870 --> 00:01:12.703
+And for Grok, run xAI's installer from their Grok Build page, then grok login, to sign in.
+
+00:01:19.470 --> 00:01:26.328
+Back in LATYS, hit Re-check, and your agents are ready. If a command isn't found, just open a new terminal window first.

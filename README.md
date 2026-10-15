@@ -3,11 +3,18 @@
 Static site for **latys.app**. No build step — plain HTML/CSS/JS.
 
 ## Files
-- `index.html` — landing page (hero, features, BYO-AI, community, $10 pricing).
+- `index.html` — landing page: hero, the film, features, bring-your-own-AI,
+  get started (agent install commands), the narrated tour, community, pricing.
 - `privacy.html` / `terms.html` — legal pages linked from the footer.
-- `icon.png` — favicon + share image (regenerate with `npm run icons`).
+- `remote.html` — the phone remote (`latys.app/remote`).
+- `icon.png` — favicon (the app icon).
+- `media/` — trailer, hero backdrop, feature loops, narrated tour chapters
+  (+ captions), icons and the share image. Regenerate from the app repo:
+  `python scripts/landing/trailer.py .artifacts/landing/out/trailer.mp4 --poster .artifacts/landing/out/trailer-poster.jpg`
+  then `python scripts/landing/media.py landing`.
 - `latys-latest.json` — the update feed the app polls (`UPDATE_FEED_URL` in
   `shared/constants/index.ts` points at `https://latys.app/latys-latest.json`).
+  The page also reads it to show the current version on the download buttons.
 
 ## Deploy
 Drop this folder on any static host (Netlify, Vercel, Cloudflare Pages, GitHub
