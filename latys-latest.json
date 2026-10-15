@@ -1,5 +1,5 @@
 {
-  "version": "0.1.56",
+  "version": "0.1.57",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "The classic LATYS layout is back: the project canvas with floating panels, the dock, the status bar and the Vibe Coding Universe (globe, chat and voice lounge). The media player now lives in the status bar and keeps playing across projects. All recent security and stability improvements are kept."
+  "notes": "A brand-new cinematic onboarding: a full-screen welcome, quick setup, and a nine-chapter video tour of LATYS (agents, the command bar, voice commands, missions, reviews and previews, music, the Universe and settings). Watch it again any time from Settings > General. Also: command history now shows just what you typed."
 }
