@@ -4,253 +4,211 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LATYS — Your AI Command Center</title>
-  <meta name="description" content="LATYS is a desktop command center for running and supervising your AI coding agents: Claude Code, Codex, OpenCode, Grok and more, side by side. Bring your own AI. $10 lifetime founder license." />
-  <meta name="theme-color" content="#0a0908" />
+  <meta name="description" content="Every AI coding agent, one command center. Run Claude Code, Codex, OpenCode, Grok and more side by side, on your own AI accounts. $10 lifetime founder license." />
+  <meta name="theme-color" content="#050505" />
   <meta property="og:title" content="LATYS — Your AI Command Center" />
-  <meta property="og:description" content="Every AI coding agent. One command center. Run Claude Code, Codex, OpenCode and Grok side by side, by keyboard or by voice. Bring your own AI." />
+  <meta property="og:description" content="Every AI coding agent. One command center." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://latys.app" />
   <meta property="og:image" content="https://latys.app/media/og.jpg" />
   <meta property="og:video" content="https://latys.app/media/trailer.mp4" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://latys.app/media/og.jpg" />
-  <link rel="icon" type="image/png" href="./icon.png?v=4" />
-  <link rel="apple-touch-icon" href="./media/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" href="./icon.png?v=5" />
+  <link rel="apple-touch-icon" href="./media/apple-touch-icon.png?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0908;
-      --bg-2: #110e0d;
-      --panel: rgba(26, 21, 19, 0.62);
-      --panel-solid: #171311;
+      --bg: #050505;
+      --panel: rgba(22, 19, 17, 0.6);
       --gold: #e8b662;
       --gold-soft: #f3d39b;
       --copper: #c99e68;
       --sage: #8a9460;
       --cream: #f0e6d6;
       --text: #e6dccd;
-      --muted: #a39788;
-      --faint: #6f665c;
+      --muted: #a09587;
+      --faint: #6b6259;
       --line: rgba(232, 182, 98, 0.14);
       --line-strong: rgba(232, 182, 98, 0.32);
-      --blossom: #e7849f;
-      --maxw: 1180px;
+      --maxw: 1200px;
       --display: "Exo 2", Inter, system-ui, sans-serif;
       --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+      --ease: cubic-bezier(.2, .8, .2, 1);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     img, video { display: block; max-width: 100%; }
-    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
     @media (max-width: 520px) { .wrap { padding: 0 16px; } }
 
-    /* Ambient glow + grain behind everything below the hero */
-    .bg-fx { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-    .bg-fx .glow { position: absolute; border-radius: 50%; filter: blur(110px); }
-    .bg-fx .g1 { width: 720px; height: 720px; top: 40vh; left: -260px; background: radial-gradient(circle, rgba(232,182,98,0.10), transparent 65%); }
-    .bg-fx .g2 { width: 620px; height: 620px; top: 140vh; right: -220px; background: radial-gradient(circle, rgba(231,132,159,0.07), transparent 65%); }
-    .bg-fx .grain { position: absolute; inset: 0; opacity: 0.035; background-image: radial-gradient(rgba(255,255,255,0.6) 0.5px, transparent 0.5px); background-size: 3px 3px; }
+    .grain { position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: 0.03; background-image: radial-gradient(rgba(255,255,255,0.7) 0.5px, transparent 0.5px); background-size: 3px 3px; }
 
     /* Nav */
-    header.nav { position: fixed; inset: 0 0 auto 0; z-index: 60; transition: background .3s, border-color .3s, backdrop-filter .3s; border-bottom: 1px solid transparent; }
-    header.nav.solid { background: rgba(10,9,8,0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--line); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    header.nav { position: fixed; inset: 0 0 auto 0; z-index: 60; border-bottom: 1px solid transparent; transition: background .4s, border-color .4s; }
+    header.nav.solid { background: rgba(5,5,5,0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--line); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
     .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { width: 32px; height: 32px; filter: drop-shadow(0 0 10px rgba(232,182,98,0.35)); }
-    .wordmark { font-family: var(--display); font-weight: 200; letter-spacing: 0.42em; color: var(--cream); font-size: 17px; padding-left: 0.1em; }
-    .nav-links { display: flex; align-items: center; gap: 28px; }
-    .nav-links a.link { color: var(--muted); font-size: 14px; font-weight: 500; transition: color .18s; }
+    .brand img { width: 34px; height: 34px; filter: drop-shadow(0 0 10px rgba(232,182,98,0.45)); }
+    .wordmark { font-family: var(--display); font-weight: 200; letter-spacing: 0.42em; color: var(--cream); font-size: 17px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a.link { color: var(--muted); font-size: 14px; font-weight: 500; transition: color .2s; }
     .nav-links a.link:hover { color: var(--cream); }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font-weight: 600; font-size: 14.5px;
-      padding: 11px 20px; border-radius: 12px; cursor: pointer; transition: transform .16s, box-shadow .2s, background .2s, border-color .2s, color .2s;
-      border: 1px solid transparent; white-space: nowrap; font-family: inherit; background: none; color: inherit; }
-    .btn svg { flex: none; }
-    .btn-primary { color: #1c1306; background: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--copper));
-      box-shadow: 0 10px 30px -10px rgba(232,182,98,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(232,182,98,0.8), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .btn-ghost { color: var(--cream); border-color: rgba(240,230,214,0.22); background: rgba(10,9,8,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(232,182,98,0.1); transform: translateY(-2px); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 600 14.5px Inter, sans-serif; padding: 11px 20px; border-radius: 12px; cursor: pointer;
+      transition: transform .2s var(--ease), box-shadow .25s, background .25s, border-color .25s; border: 1px solid transparent; white-space: nowrap; background: none; color: inherit; }
+    .btn-primary { color: #1c1306; background: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--copper)); box-shadow: 0 10px 30px -10px rgba(232,182,98,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -12px rgba(232,182,98,0.85), inset 0 1px 0 rgba(255,255,255,0.35); }
+    .btn-ghost { color: var(--cream); border-color: rgba(240,230,214,0.2); background: rgba(5,5,5,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(232,182,98,0.08); transform: translateY(-2px); }
     .btn-lg { padding: 15px 28px; font-size: 16px; border-radius: 14px; }
-    .btn .ver { font-weight: 500; opacity: 0.7; font-size: 0.86em; }
+    .btn .ver { font-weight: 500; opacity: 0.65; font-size: 0.86em; }
 
-    /* Hero */
-    .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; overflow: hidden; padding: 120px 0 90px; isolation: isolate; }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transform: scale(1.06); animation: heroDrift 26s ease-in-out infinite alternate; }
-    @keyframes heroDrift { from { transform: scale(1.06) translateY(0); } to { transform: scale(1.12) translateY(-1.5%); } }
-    .hero-shade { position: absolute; inset: 0; z-index: -1;
-      background:
-        radial-gradient(ellipse 60% 55% at 50% 42%, rgba(10,9,8,0.30), rgba(10,9,8,0.72) 70%),
-        linear-gradient(180deg, rgba(10,9,8,0.55) 0%, rgba(10,9,8,0.15) 30%, rgba(10,9,8,0.45) 70%, var(--bg) 100%); }
-    .hero-icon { width: 108px; height: 108px; margin: 0 auto; filter: drop-shadow(0 0 28px rgba(232,182,98,0.55)) drop-shadow(0 20px 40px rgba(0,0,0,0.6));
-      animation: float 7s ease-in-out infinite, rise 1.2s cubic-bezier(.2,.8,.2,1) both; }
-    .hero-word { font-family: var(--display); font-weight: 200; font-size: clamp(44px, 9vw, 104px); letter-spacing: 0.42em; padding-left: 0.42em;
-      color: var(--cream); line-height: 1; margin-top: 26px; text-shadow: 0 0 40px rgba(232,182,98,0.35);
-      animation: rise 1.2s .15s cubic-bezier(.2,.8,.2,1) both; }
-    .hero-tag { margin-top: 18px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold);
-      animation: rise 1.2s .3s cubic-bezier(.2,.8,.2,1) both; }
-    .hero-tag span { color: var(--sage); }
-    .hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.18; color: var(--cream); margin-top: 34px;
-      animation: rise 1.2s .45s cubic-bezier(.2,.8,.2,1) both; }
+    /* Hero: the Rainbow Tree on the right, the brand on the left */
+    .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; isolation: isolate; padding: 110px 0 80px; background: #000; }
+    .hero-bg { position: absolute; top: 0; bottom: 0; right: -6%; width: 78%; height: 100%; object-fit: cover; object-position: center; z-index: -2; opacity: 0; transition: opacity 1.6s ease; }
+    .hero-bg.ready { opacity: 1; }
+    .hero-shade { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(90deg, #000 0%, #000 22%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 62%),
+                  linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 12%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 74%, var(--bg) 100%); }
+    .hero-copy { max-width: 560px; }
+    .hero-icon { position: relative; width: 168px; height: 168px; margin-left: -6px; }
+    .hero-icon::before { content: ""; position: absolute; inset: -38%; border-radius: 50%; background: radial-gradient(closest-side, rgba(232,182,98,0.42), rgba(232,182,98,0.1) 55%, transparent); filter: blur(6px); z-index: -1; animation: breathe 6s ease-in-out infinite; }
+    .hero-icon img { width: 100%; height: 100%; filter: drop-shadow(0 0 2px rgba(255,214,150,0.55)) drop-shadow(0 24px 40px rgba(0,0,0,0.75)); }
+    @keyframes breathe { 0%,100% { opacity: .75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+    .hero-word { font-family: var(--display); font-weight: 200; font-size: clamp(46px, 7vw, 88px); letter-spacing: 0.4em; color: var(--cream); line-height: 1; margin-top: 28px; text-shadow: 0 0 40px rgba(232,182,98,0.3); }
+    .hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.22; color: var(--cream); margin-top: 26px; }
     .hero h1 .gold { color: var(--gold-soft); }
-    .hero .sub { max-width: 640px; margin: 18px auto 0; font-size: clamp(15.5px, 1.9vw, 18px); color: rgba(240,230,214,0.78);
-      animation: rise 1.2s .55s cubic-bezier(.2,.8,.2,1) both; }
-    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 36px; animation: rise 1.2s .65s cubic-bezier(.2,.8,.2,1) both; }
-    .hero .note { margin-top: 18px; font-size: 13px; color: rgba(240,230,214,0.62); animation: rise 1.2s .75s cubic-bezier(.2,.8,.2,1) both; }
-    .hero .note b { color: var(--sage); font-weight: 600; }
-    .hero-meta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center; margin-top: 18px; animation: rise 1.2s .85s cubic-bezier(.2,.8,.2,1) both; }
-    @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
-    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    .scroll-cue { position: absolute; left: 50%; bottom: 26px; translate: -50% 0; width: 24px; height: 38px; border-radius: 14px; border: 1.5px solid rgba(240,230,214,0.35); }
+    .hero .sub { margin-top: 14px; font-size: 16.5px; color: rgba(240,230,214,0.7); max-width: 470px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 20px; }
+    .tiny { font-size: 12.5px; color: rgba(240,230,214,0.5); }
+    .tiny a { color: var(--gold-soft); border-bottom: 1px solid rgba(243,211,155,0.3); }
+    .hero .tiny { margin-top: 16px; max-width: 460px; }
+    .hero-copy > * { animation: rise 1.1s var(--ease) both; }
+    .hero-copy > :nth-child(2) { animation-delay: .1s; } .hero-copy > :nth-child(3) { animation-delay: .2s; }
+    .hero-copy > :nth-child(4) { animation-delay: .3s; } .hero-copy > :nth-child(5) { animation-delay: .4s; }
+    .hero-copy > :nth-child(6) { animation-delay: .5s; } .hero-copy > :nth-child(7) { animation-delay: .6s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    .scroll-cue { position: absolute; left: 50%; bottom: 26px; margin-left: -12px; width: 24px; height: 38px; border-radius: 14px; border: 1.5px solid rgba(240,230,214,0.3); }
     .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--gold); animation: cue 1.8s ease-in-out infinite; }
     @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
 
-    /* Section scaffolding */
-    section { padding: 96px 0; position: relative; }
-    .sec-head { text-align: center; max-width: 700px; margin: 0 auto 52px; }
-    .tag { font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-    h2 { font-family: var(--display); font-weight: 300; font-size: clamp(30px, 4.4vw, 48px); line-height: 1.12; color: var(--cream); letter-spacing: -0.005em; }
-    .sec-head h2 { margin-top: 14px; }
-    .sec-head p { color: var(--muted); margin-top: 16px; font-size: 17px; }
+    /* Seats */
+    .seats-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 100px; border: 1px solid rgba(240,230,214,0.18); background: rgba(5,5,5,0.5); font-size: 12.5px; font-weight: 600; color: var(--gold-soft); }
+    .seats-pill.sold-out { color: #e6927e; border-color: rgba(217,83,79,0.4); }
+    .seats-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
+    .seats-dot::before, .seats-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); }
+    .seats-dot::after { animation: seatsPing 1.8s ease-out infinite; }
+    @keyframes seatsPing { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(2.6); opacity: 0; } }
+    .sold-out .seats-dot::before, .sold-out .seats-dot::after { background: #d9534f; }
 
-    /* The film */
-    .film { padding-top: 40px; }
-    .theater { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; background: #000;
-      border: 1px solid var(--line-strong);
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 50px 120px -40px rgba(232,182,98,0.45), 0 30px 80px -30px rgba(0,0,0,0.9); }
-    .theater::before { content: ""; position: absolute; inset: -40%; z-index: -1; background: radial-gradient(closest-side, rgba(232,182,98,0.18), transparent); }
+    /* Sections */
+    section { padding: 110px 0; position: relative; }
+    .head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+    .tag { font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    h2 { font-family: var(--display); font-weight: 300; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.1; color: var(--cream); }
+    .head h2 { margin-top: 12px; }
+    .head p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+
+    /* Film */
+    .theater { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--line-strong);
+      box-shadow: 0 60px 140px -50px rgba(232,182,98,0.45), 0 30px 80px -30px rgba(0,0,0,0.9); }
     .theater video { width: 100%; height: 100%; object-fit: cover; }
-    .theater-ui { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(0,0,0,0.05), rgba(0,0,0,0.45)); transition: opacity .35s; }
+    .theater-ui { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(0,0,0,0), rgba(0,0,0,0.45)); transition: opacity .4s; }
     .theater.playing .theater-ui { opacity: 0; pointer-events: none; }
-    .play-big { display: inline-flex; align-items: center; gap: 14px; padding: 14px 26px 14px 16px; border-radius: 100px; cursor: pointer;
-      background: rgba(10,9,8,0.55); border: 1px solid rgba(240,230,214,0.25); color: var(--cream); font: 600 15px Inter, sans-serif;
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .2s, border-color .2s, background .2s; }
-    .play-big:hover { transform: scale(1.04); border-color: var(--gold); background: rgba(10,9,8,0.7); }
+    .play-big { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px 12px 12px; border-radius: 100px; cursor: pointer; background: rgba(5,5,5,0.55); border: 1px solid rgba(240,230,214,0.25);
+      color: var(--cream); font: 600 15px Inter, sans-serif; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .25s var(--ease), border-color .25s; }
+    .play-big:hover { transform: scale(1.04); border-color: var(--gold); }
     .play-big .disc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #1c1306; box-shadow: 0 0 30px rgba(232,182,98,0.6); }
     .theater-bar { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; gap: 10px; align-items: center; opacity: 0; transition: opacity .3s; }
     .theater.playing:hover .theater-bar, .theater.playing:focus-within .theater-bar { opacity: 1; }
-    .icon-btn { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; cursor: pointer; color: var(--cream);
-      background: rgba(10,9,8,0.6); border: 1px solid rgba(240,230,214,0.18); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .icon-btn { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; cursor: pointer; color: var(--cream); background: rgba(5,5,5,0.6); border: 1px solid rgba(240,230,214,0.18); }
     .icon-btn:hover { border-color: var(--gold); }
     .progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(240,230,214,0.18); overflow: hidden; cursor: pointer; }
     .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-soft)); }
-    .film-caption { text-align: center; color: var(--faint); font-size: 13px; margin-top: 18px; }
 
     /* Feature rows */
-    .rows { display: grid; gap: 120px; }
-    .row { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; }
-    .row.flip { grid-template-columns: 1fr 1.05fr; }
+    .rows { display: grid; gap: 130px; }
+    .row { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+    .row.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); }
     .row.flip .shot { order: 2; }
-    .shot { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; background: #0d0b0a;
-      border: 1px solid var(--line); box-shadow: 0 40px 90px -45px rgba(0,0,0,0.95), 0 30px 70px -50px rgba(232,182,98,0.5); }
+    .shot { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; background: #0b0a09; border: 1px solid var(--line);
+      box-shadow: 0 40px 90px -45px rgba(0,0,0,0.95), 0 30px 80px -55px rgba(232,182,98,0.55); }
     .shot video, .shot img { width: 100%; height: 100%; object-fit: cover; }
-    .shot::after { content: ""; position: absolute; inset: 0; border-radius: 18px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); pointer-events: none; }
+    .shot .label { position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 100px; font-size: 11.5px; font-weight: 600; color: rgba(240,230,214,0.8); background: rgba(5,5,5,0.65); border: 1px solid rgba(240,230,214,0.14); }
     .copy .kicker { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-    .copy h3 { font-family: var(--display); font-weight: 300; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.14; color: var(--cream); margin-top: 12px; }
-    .copy p { color: var(--muted); margin-top: 16px; font-size: 16px; }
-    .checklist { list-style: none; margin-top: 22px; display: grid; gap: 11px; }
-    .checklist li { display: flex; gap: 11px; align-items: flex-start; color: var(--text); font-size: 15px; }
-    .ck { flex: none; width: 21px; height: 21px; border-radius: 6px; display: grid; place-items: center; margin-top: 2px;
-      background: rgba(138,148,96,0.16); border: 1px solid rgba(138,148,96,0.42); color: #b3bd86; font-size: 12px; }
-    kbd { font-family: var(--mono); font-size: 0.84em; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line-strong); background: rgba(232,182,98,0.07); color: var(--gold-soft); }
+    .copy h3 { font-family: var(--display); font-weight: 300; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; color: var(--cream); margin-top: 12px; }
+    .copy p { color: var(--muted); margin-top: 14px; font-size: 17px; max-width: 420px; }
+    kbd { font-family: var(--mono); font-size: 0.82em; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line-strong); background: rgba(232,182,98,0.07); color: var(--gold-soft); }
 
-    /* Bring your own AI: provider lattice */
-    .byo { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    /* Bring your own AI */
+    .byo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
     .lattice { position: relative; aspect-ratio: 1; max-width: 500px; width: 100%; margin: 0 auto; }
-    .lattice svg.lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lattice .core { position: absolute; left: 50%; top: 50%; width: 22%; translate: -50% -50%; filter: drop-shadow(0 0 30px rgba(232,182,98,0.55)); }
-    .node { position: absolute; translate: -50% -50%; padding: 8px 13px; border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap;
-      background: rgba(23,19,17,0.85); border: 1px solid var(--line-strong); box-shadow: 0 10px 30px -12px rgba(0,0,0,0.8); }
-    .node i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; background: var(--c, var(--gold)); box-shadow: 0 0 10px var(--c, var(--gold)); }
+    .lattice svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lattice .core { position: absolute; left: 50%; top: 50%; width: 24%; transform: translate(-50%, -50%); filter: drop-shadow(0 0 30px rgba(232,182,98,0.55)); }
+    .node { position: absolute; transform: translate(-50%, -50%); padding: 8px 13px; border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap; background: rgba(18,15,13,0.9); border: 1px solid var(--line-strong); }
+    .node i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; background: var(--c); box-shadow: 0 0 10px var(--c); }
     .pulse { stroke-dasharray: 1.2 2; animation: flow 1.4s linear infinite; }
     @keyframes flow { to { stroke-dashoffset: -6.4; } }
 
     /* Get started */
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 40px; }
-    .step { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--panel); }
-    .step .n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 600 13px var(--mono); color: #1c1306; background: linear-gradient(135deg, var(--gold-soft), var(--gold)); }
-    .step h4 { font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--cream); margin-top: 14px; }
-    .step p { color: var(--muted); font-size: 14.5px; margin-top: 6px; }
-    .start-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
-    .agents { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
-    .agent { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 16px; background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: border-color .2s; }
+    .start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+    .agents { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .agent { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; background: var(--panel); transition: border-color .25s; }
     .agent:hover { border-color: var(--line-strong); }
     .agent-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .agent-name { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--cream); }
     .agent-name i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
-    .agent-head a { font-size: 13px; color: var(--muted); border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
-    .agent-head a:hover { color: var(--gold-soft); border-bottom-color: currentColor; }
-    .cmd { margin-top: 12px; display: flex; align-items: stretch; border-radius: 10px; border: 1px solid rgba(240,230,214,0.12); background: #0c0a09; overflow: hidden; }
-    .cmd code { flex: 1; min-width: 0; padding: 11px 13px; font: 13px/1.5 var(--mono); color: #e9dcc6; white-space: normal; overflow-wrap: anywhere; }
+    .agent-head a { font-size: 13px; color: var(--muted); transition: color .2s; }
+    .agent-head a:hover { color: var(--gold-soft); }
+    .cmd { margin-top: 10px; display: flex; align-items: stretch; border-radius: 10px; border: 1px solid rgba(240,230,214,0.1); background: #0a0908; overflow: hidden; }
+    .cmd code { flex: 1; min-width: 0; padding: 10px 13px; font: 13px/1.5 var(--mono); color: #e9dcc6; overflow-wrap: anywhere; }
     .cmd code::before { content: "PS> "; color: var(--faint); }
-    .cmd button { flex: none; border: 0; border-left: 1px solid rgba(240,230,214,0.12); background: rgba(232,182,98,0.06); color: var(--gold-soft); font: 600 12.5px Inter, sans-serif; padding: 0 14px; cursor: pointer; transition: background .2s; }
+    .cmd button { flex: none; border: 0; border-left: 1px solid rgba(240,230,214,0.1); background: rgba(232,182,98,0.06); color: var(--gold-soft); font: 600 12.5px Inter, sans-serif; padding: 0 14px; cursor: pointer; transition: background .2s; }
     .cmd button:hover { background: rgba(232,182,98,0.16); }
     .cmd button.done { color: #b3bd86; }
-    .agent .then { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
-    .agent .then b { color: var(--text); font-weight: 600; }
-    .agent .warn { margin-top: 8px; font-size: 13px; color: var(--gold-soft); }
-    .agent .warn a { border-bottom: 1px solid currentColor; }
-    .side-video { position: sticky; top: 92px; }
-    .side-video .shot { aspect-ratio: 16/9; }
-    .side-video p { color: var(--faint); font-size: 13px; margin-top: 12px; text-align: center; }
-    .clickplay { position: absolute; inset: 0; display: grid; place-items: center; cursor: pointer; background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.5)); border: 0; transition: opacity .3s; }
+    .then { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    .then b { color: var(--text); font-weight: 600; }
+    .then a { color: var(--gold-soft); }
+    .side { position: sticky; top: 96px; }
+    .clickplay { position: absolute; inset: 0; display: grid; place-items: center; cursor: pointer; background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.5)); border: 0; transition: opacity .3s; }
     .clickplay.hide { opacity: 0; pointer-events: none; }
     .clickplay .play-big { pointer-events: none; }
 
     /* Tour */
-    .tour { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 26px; align-items: start; }
-    .tour .theater { box-shadow: 0 40px 100px -50px rgba(232,182,98,0.4), 0 30px 80px -30px rgba(0,0,0,0.9); }
+    .tour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; align-items: start; }
     .tour .theater video { object-fit: contain; }
-    .chapters { list-style: none; display: grid; gap: 6px; max-height: 560px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
-    .chapters button { width: 100%; text-align: left; display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: start; padding: 12px 14px; border-radius: 12px;
-      border: 1px solid transparent; background: transparent; color: var(--text); cursor: pointer; font: inherit; transition: background .2s, border-color .2s; }
+    .chapters { list-style: none; display: grid; gap: 4px; }
+    .chapters button { width: 100%; display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: center; padding: 11px 14px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: var(--text); cursor: pointer; font: inherit; text-align: left; transition: background .2s, border-color .2s; }
     .chapters button:hover { background: rgba(232,182,98,0.06); }
     .chapters button[aria-current="true"] { background: rgba(232,182,98,0.1); border-color: var(--line-strong); }
-    .chapters .num { font: 500 12px var(--mono); color: var(--faint); padding-top: 3px; }
+    .chapters .num { font: 500 12px var(--mono); color: var(--faint); }
     .chapters button[aria-current="true"] .num { color: var(--gold); }
-    .chapters .t { font-weight: 600; color: var(--cream); font-size: 15px; }
-    .chapters .b { color: var(--muted); font-size: 13px; margin-top: 2px; line-height: 1.45; }
-    .chapters .d { font: 12px var(--mono); color: var(--faint); padding-top: 3px; }
-    video::cue { background: rgba(10,9,8,0.78); color: #f0e6d6; font-family: Inter, sans-serif; }
+    .chapters .t { font-weight: 500; color: var(--cream); font-size: 15px; }
+    .chapters .d { font: 12px var(--mono); color: var(--faint); }
+    video::cue { background: rgba(5,5,5,0.78); color: #f0e6d6; font-family: Inter, sans-serif; }
 
-    /* Pricing (unchanged behaviour) */
-    .price-wrap { max-width: 480px; margin: 0 auto; }
-    .price-card { background: var(--panel); border: 1px solid var(--line-strong); border-radius: 22px; padding: 40px 34px; text-align: center;
-      position: relative; box-shadow: 0 30px 80px -40px rgba(232,182,98,0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-    .price-card .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #1c1306; font-size: 11.5px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; white-space: nowrap; }
-    .price-card .amount { font-family: var(--display); font-size: 68px; font-weight: 300; color: var(--cream); line-height: 1; margin: 8px 0; }
+    /* Pricing */
+    .price-card { max-width: 440px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 22px; padding: 40px 34px; text-align: center; position: relative; box-shadow: 0 30px 90px -40px rgba(232,182,98,0.45); }
+    .price-card .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #1c1306; font-size: 11.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; white-space: nowrap; }
+    .price-card .amount { font-family: var(--display); font-size: 72px; font-weight: 300; color: var(--cream); line-height: 1; margin: 10px 0 6px; }
     .price-card .amount span { font-size: 24px; color: var(--muted); }
-    .price-card .lifetime { color: var(--sage); font-weight: 600; font-size: 15px; }
-    .price-card ul { list-style: none; text-align: left; margin: 26px 0; display: grid; gap: 12px; }
+    .price-card .lifetime { color: var(--sage); font-weight: 600; font-size: 14px; letter-spacing: .04em; }
+    .price-card ul { list-style: none; text-align: left; margin: 24px 0; display: grid; gap: 10px; }
     .price-card ul li { display: flex; gap: 11px; color: var(--text); font-size: 15px; }
     .price-card ul li .ck2 { color: var(--gold); flex: none; }
-
     .seats { margin: 16px 0 2px; }
     .seats-row { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 13.5px; font-weight: 600; color: var(--gold-soft); }
-    .seats-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
-    .seats-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); }
-    .seats-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); animation: seatsPing 1.8s ease-out infinite; }
-    @keyframes seatsPing { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(2.6); opacity: 0; } }
     .seats-bar { margin-top: 9px; height: 6px; border-radius: 100px; background: rgba(232,182,98,0.14); border: 1px solid var(--line); overflow: hidden; }
-    .seats-fill { height: 100%; width: 0%; border-radius: 100px; background: linear-gradient(90deg, var(--sage), var(--gold)); transition: width .8s cubic-bezier(.22,1,.36,1); }
+    .seats-fill { height: 100%; width: 0%; border-radius: 100px; background: linear-gradient(90deg, var(--sage), var(--gold)); transition: width .8s var(--ease); }
     .seats.sold-out .seats-row { color: #e6927e; }
-    .seats.sold-out .seats-dot::before, .seats.sold-out .seats-dot::after { background: #d9534f; }
     .seats.sold-out .seats-fill { background: #d9534f; }
-    .price-rise { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 2px; padding: 7px 14px; border-radius: 100px;
-      background: rgba(232,182,98,0.10); border: 1px solid var(--line); color: var(--gold-soft); font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .price-rise { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 2px; padding: 7px 14px; border-radius: 100px; background: rgba(232,182,98,0.1); border: 1px solid var(--line); color: var(--gold-soft); font-size: 13px; font-weight: 600; line-height: 1.3; }
     .price-rise strong { color: var(--cream); }
     .price-rise-arrow { display: inline-flex; color: var(--gold); font-weight: 800; }
     .price-rise.urgent { border-color: rgba(232,182,98,0.5); animation: riseGlow 1.7s ease-in-out infinite; }
@@ -262,128 +220,107 @@
     @keyframes pricePulse { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
     .price-card.closed { border-color: rgba(232,182,98,0.45); box-shadow: 0 0 44px -8px rgba(232,182,98,0.28); }
     .price-card.closed .badge { background: var(--gold); color: #1a1410; }
-    .seats-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px; border-radius: 100px;
-      border: 1px solid rgba(240,230,214,0.2); background: rgba(10,9,8,0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; font-weight: 600; color: var(--gold-soft); letter-spacing: .3px; }
-    .seats-pill.sold-out { color: #e6927e; border-color: rgba(217,83,79,0.4); }
-    .seats-pill.sold-out .seats-dot::before, .seats-pill.sold-out .seats-dot::after { background: #d9534f; }
-    .hero-meta .price-rise { margin: 0; background: rgba(10,9,8,0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-color: rgba(240,230,214,0.2); }
     .btn.disabled { opacity: .55; pointer-events: none; filter: grayscale(.35); }
 
-    .install-note { max-width: 760px; margin: 26px auto 0; padding: 14px 18px; border: 1px solid rgba(232,182,98,0.24); border-radius: 14px;
-      background: rgba(10,9,8,0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: rgba(240,230,214,0.7); font-size: 13px; text-align: left;
-      animation: rise 1.2s .95s cubic-bezier(.2,.8,.2,1) both; }
-    .install-note strong { color: var(--cream); font-weight: 700; }
-    .install-note a { color: var(--gold-soft); font-weight: 600; border-bottom: 1px solid rgba(243,211,155,0.32); }
-    .install-note a:hover { color: var(--cream); border-bottom-color: var(--cream); }
-
-    /* Final CTA */
-    .finale { text-align: center; padding: 120px 0 110px; overflow: hidden; }
-    .finale .halo { position: absolute; left: 50%; top: 50%; width: 900px; height: 520px; translate: -50% -50%; background: radial-gradient(closest-side, rgba(232,182,98,0.16), transparent); pointer-events: none; }
-    .finale img { width: 84px; height: 84px; margin: 0 auto 22px; filter: drop-shadow(0 0 26px rgba(232,182,98,0.5)); }
-    .finale h2 { position: relative; }
-    .finale .cta-row { animation: none; }
-
-    /* Footer */
-    footer { border-top: 1px solid var(--line); padding: 46px 0 40px; }
-    .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
-    .foot-links { display: flex; gap: 26px; flex-wrap: wrap; }
-    .foot-links a { color: var(--muted); font-size: 14px; transition: color .18s; }
+    /* Finale + footer */
+    .finale { text-align: center; padding: 130px 0 120px; overflow: hidden; }
+    .finale .halo { position: absolute; left: 50%; top: 50%; width: 900px; height: 520px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(232,182,98,0.16), transparent); pointer-events: none; }
+    .finale img { width: 120px; height: 120px; margin: 0 auto 26px; filter: drop-shadow(0 0 2px rgba(255,214,150,0.5)) drop-shadow(0 0 34px rgba(232,182,98,0.5)); }
+    .finale .cta-row { justify-content: center; }
+    footer { border-top: 1px solid var(--line); padding: 40px 0 36px; }
+    .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
+    .foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .foot-links a { color: var(--muted); font-size: 14px; transition: color .2s; }
     .foot-links a:hover { color: var(--cream); }
-    .foot-copy { color: var(--muted); font-size: 13.5px; }
-    .smallprint { color: var(--muted); font-size: 12.5px; text-align: center; margin-top: 28px; opacity: 0.8; }
+    .smallprint { color: var(--faint); font-size: 12px; text-align: center; margin-top: 24px; }
 
     /* Reveal */
-    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s var(--ease); }
     .reveal.in { opacity: 1; transform: none; }
 
     @media (max-width: 960px) {
       .nav-links .link { display: none; }
-      .row, .row.flip, .byo, .start-grid, .tour { grid-template-columns: 1fr; gap: 32px; }
+      .hero { align-items: flex-end; text-align: center; padding-bottom: 70px; }
+      .hero-bg { right: 0; width: 100%; opacity: 0; }
+      .hero-bg.ready { opacity: 0.7; }
+      .hero-shade { background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.75) 60%, var(--bg) 100%); }
+      .hero-copy { margin: 0 auto; }
+      .hero-icon { margin: 0 auto; width: 132px; height: 132px; }
+      .hero .sub, .hero .tiny { margin-left: auto; margin-right: auto; }
+      .cta-row, .hero-meta { justify-content: center; }
+      .row, .row.flip, .byo, .start, .tour { grid-template-columns: minmax(0, 1fr); gap: 30px; }
       .row.flip .shot { order: 0; }
-      .rows { gap: 84px; }
-      .side-video { position: static; }
-      .steps { grid-template-columns: 1fr; }
-      .chapters { max-height: none; }
-      section { padding: 76px 0; }
+      .rows { gap: 90px; }
+      .side { position: static; }
+      section { padding: 84px 0; }
+      .scroll-cue { display: none; }
     }
     @media (max-width: 520px) {
-      .hero { padding: 100px 0 80px; }
-      .hero-icon { width: 84px; height: 84px; }
-      .hero-tag { font-size: 11px; letter-spacing: 0.2em; }
       .btn-lg { width: 100%; }
-      .node { font-size: 11.5px; padding: 6px 10px; }
+      .node { font-size: 11px; padding: 6px 9px; }
       .price-card { padding: 36px 22px; }
-      .play-big { padding: 10px 18px 10px 10px; font-size: 14px; }
+      .play-big { padding: 8px 16px 8px 8px; font-size: 14px; }
       .play-big .disc { width: 38px; height: 38px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
       .reveal { opacity: 1; transform: none; }
+      .hero-bg { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-fx" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="grain"></div></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="LATYS home">
-        <img src="./media/latys-icon.png" alt="" width="32" height="32" />
-        <span class="wordmark">LATYS</span>
-      </a>
+      <a class="brand" href="#top" aria-label="LATYS home"><img src="./media/latys-icon.png" alt="" width="34" height="34" /><span class="wordmark">LATYS</span></a>
       <nav class="nav-links" aria-label="Primary">
         <a class="link" href="#film">Film</a>
         <a class="link" href="#features">Features</a>
         <a class="link" href="#start">Get started</a>
         <a class="link" href="#tour">Tour</a>
         <a class="link" href="#pricing">Pricing</a>
-        <a class="btn btn-primary" href="#download">Download</a>
+        <a class="btn btn-primary" href="#top">Download</a>
       </nav>
     </div>
   </header>
 
   <main id="top">
-    <!-- Hero -->
     <section class="hero">
       <video class="hero-bg" src="./media/hero-backdrop.mp4" poster="./media/hero-backdrop.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="wrap">
-        <img class="hero-icon" src="./media/latys-icon.png" alt="LATYS icon" width="108" height="108" />
-        <div class="hero-word" aria-hidden="true">LATYS</div>
-        <p class="hero-tag">AI Command <span>·</span> Connect <span>·</span> Create</p>
-        <h1>Every AI coding agent.<br /><span class="gold">One command center.</span></h1>
-        <p class="sub">Run Claude Code, Codex, OpenCode, Grok and more side by side, by keyboard or by voice, from one premium desktop cockpit, on <b style="color:var(--cream)">your own</b> AI accounts.</p>
-        <div class="cta-row" id="download">
-          <a class="btn btn-primary btn-lg" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-            Download for Windows <span class="ver" data-version></span>
-          </a>
-          <button class="btn btn-ghost btn-lg" type="button" data-watch>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>
-            Watch the film
-          </button>
-        </div>
-        <p class="note">Bring your own AI · <b>Offline-first</b> · Lifetime license · No subscription</p>
-        <div class="hero-meta">
-          <div class="seats-pill" data-seats><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
-          <div class="price-rise" data-price-rise><span class="price-rise-arrow">↑</span><span>Rises to <strong>$79</strong> when the founder run sells out</span></div>
-        </div>
-        <div class="install-note" role="note" aria-label="Windows installation note">
-          <strong>Windows install note:</strong> LATYS is currently an early unsigned founder build. Microsoft Defender SmartScreen may show a “Windows protected your PC” or “unknown publisher” notice on first launch. Only install LATYS from <a href="https://latys.app">latys.app</a> or the official <a href="https://github.com/adamj86/LATYS/releases/latest">GitHub release</a>.
+        <div class="hero-copy">
+          <div class="hero-icon"><img src="./media/latys-icon.png" alt="LATYS icon" width="168" height="168" /></div>
+          <div class="hero-word">LATYS</div>
+          <h1>Every AI coding agent.<br /><span class="gold">One command center.</span></h1>
+          <p class="sub">Claude Code, Codex, OpenCode and Grok, side by side. On your own AI accounts.</p>
+          <div class="cta-row" id="download">
+            <a class="btn btn-primary btn-lg" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
+              Download for Windows <span class="ver" data-version></span>
+            </a>
+            <button class="btn btn-ghost btn-lg" type="button" data-watch>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>
+              Watch the film
+            </button>
+          </div>
+          <div class="hero-meta">
+            <div class="seats-pill" data-seats><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
+            <span class="tiny">$10 lifetime · no subscription</span>
+          </div>
+          <p class="tiny">Early unsigned build: Windows may show a SmartScreen notice. Download only from latys.app or the official <a href="https://github.com/adamj86/LATYS/releases/latest">GitHub release</a>.</p>
         </div>
       </div>
       <a class="scroll-cue" href="#film" aria-label="Scroll to the film"></a>
     </section>
 
-    <!-- The film -->
-    <section class="film" id="film">
+    <section id="film" style="padding-top:60px">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="tag">The film</div>
-          <h2>Forty seconds inside LATYS</h2>
-        </div>
+        <div class="head reveal"><div class="tag">The film</div><h2>See it in action</h2></div>
         <div class="theater reveal" id="theater">
-          <video id="trailer" src="./media/trailer.mp4" poster="./media/trailer-poster.jpg" muted loop playsinline preload="metadata" aria-label="LATYS showcase film">
+          <video id="trailer" src="./media/trailer.mp4" poster="./media/trailer-poster.jpg" muted loop playsinline preload="metadata" aria-label="LATYS film">
             <track kind="captions" src="./media/trailer.vtt" srclang="en" label="English" />
           </video>
           <div class="theater-ui">
@@ -393,254 +330,142 @@
             </button>
           </div>
           <div class="theater-bar">
-            <button class="icon-btn" type="button" data-film-toggle aria-label="Pause">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
-            </button>
+            <button class="icon-btn" type="button" data-film-toggle aria-label="Pause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
             <div class="progress" data-film-progress role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" tabindex="0"><i></i></div>
-            <button class="icon-btn" type="button" data-film-cc aria-label="Captions" aria-pressed="false">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M17 10.2a2.2 2.2 0 1 0 0 3.6"/></svg>
-            </button>
-            <button class="icon-btn" type="button" data-film-mute aria-label="Mute">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" data-waves/></svg>
-            </button>
+            <button class="icon-btn" type="button" data-film-cc aria-label="Captions" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M17 10.2a2.2 2.2 0 1 0 0 3.6"/></svg></button>
+            <button class="icon-btn" type="button" data-film-mute aria-label="Mute"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" data-waves/></svg></button>
           </div>
         </div>
-        <p class="film-caption">Filmed in the real app. Narrated, with the sound on.</p>
       </div>
     </section>
 
-    <!-- Features -->
     <section id="features">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="tag">One cockpit</div>
-          <h2>Everything your agents need, in one place</h2>
-          <p>LATYS is built around how you actually work with AI: launch, direct, review and ship, without juggling a dozen terminal windows.</p>
+      <div class="wrap rows">
+        <div class="row">
+          <div class="shot reveal"><video data-loop src="./media/loop-agents.mp4" poster="./media/loop-agents.jpg" muted loop playsinline preload="none" aria-label="Launching an agent"></video></div>
+          <div class="copy reveal"><div class="kicker">Agents</div><h3>Every agent,<br />side by side.</h3><p>Launch Claude Code, Codex, OpenCode, Grok and more, each in its own live session.</p></div>
         </div>
-        <div class="rows">
-          <div class="row">
-            <div class="shot reveal"><video data-loop src="./media/loop-agents.mp4" poster="./media/loop-agents.jpg" muted loop playsinline preload="none" aria-label="Launching an agent and watching it work"></video></div>
-            <div class="copy reveal">
-              <div class="kicker">Agents</div>
-              <h3>Every agent. Side by side.</h3>
-              <p>Launch Claude Code, Codex, OpenCode, Grok, Cursor, Gemini and more. Each one gets a codename you can call by name, and its own live session on the canvas.</p>
-              <ul class="checklist">
-                <li><span class="ck">✓</span> Real terminals, real CLIs: the official tools you already use</li>
-                <li><span class="ck">✓</span> A brief for every session: the task, the result, the files it changed</li>
-                <li><span class="ck">✓</span> Hand a task to one agent, or to all of them at once</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row flip">
-            <div class="shot reveal"><video data-loop src="./media/loop-voice.mp4" poster="./media/loop-voice.jpg" muted loop playsinline preload="none" aria-label="Giving agents voice commands"></video></div>
-            <div class="copy reveal">
-              <div class="kicker">Voice</div>
-              <h3>Just say it.</h3>
-              <p>Hold <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>V</kbd> anywhere and talk. “Open two Codex agents.” “Nova, make the toggle follow the system theme.” Speech is transcribed on your own machine.</p>
-              <ul class="checklist">
-                <li><span class="ck">✓</span> Local speech-to-text, no cloud transcription</li>
-                <li><span class="ck">✓</span> Address any agent by its name</li>
-                <li><span class="ck">✓</span> Or press <kbd>Ctrl</kbd> <kbd>K</kbd> and route anything from the command bar</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="shot reveal"><video data-loop src="./media/loop-missions.mp4" poster="./media/loop-missions.jpg" muted loop playsinline preload="none" aria-label="Starting a mission"></video></div>
-            <div class="copy reveal">
-              <div class="kicker">Missions</div>
-              <h3>Hand off the whole job.</h3>
-              <p>Describe the outcome. The Director works out which agents do what, runs them in order or in parallel, and loops until the tests pass. Ask several models at once with the Council.</p>
-              <ul class="checklist">
-                <li><span class="ck">✓</span> Chains like “build it, then have a reviewer check it”</li>
-                <li><span class="ck">✓</span> A safety snapshot before autonomous work, so you can roll back</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row flip">
-            <div class="shot reveal"><video data-loop src="./media/loop-review.mp4" poster="./media/loop-review.jpg" muted loop playsinline preload="none" aria-label="Reviewing a diff and previewing the app"></video></div>
-            <div class="copy reveal">
-              <div class="kicker">Review &amp; ship</div>
-              <h3>See every change. Then ship it.</h3>
-              <p>Review diffs file by file, run Build and Test with real pass/fail results, and preview your app live, right next to the agents that built it.</p>
-              <ul class="checklist">
-                <li><span class="ck">✓</span> Working tree vs HEAD, hunk by hunk</li>
-                <li><span class="ck">✓</span> Dev, Build, Test and Release in the toolbar</li>
-                <li><span class="ck">✓</span> Live preview of your web app inside LATYS</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="shot reveal"><video data-loop src="./media/loop-themes.mp4" poster="./media/loop-themes.jpg" muted loop playsinline preload="none" aria-label="Switching themes and backdrops"></video></div>
-            <div class="copy reveal">
-              <div class="kicker">Make it yours</div>
-              <h3>A cockpit worth sitting in.</h3>
-              <p>Themes, cinematic video backdrops, a music player that follows you, and a dock that stays out of the way. Premium by default, yours in a click.</p>
-            </div>
-          </div>
+        <div class="row flip">
+          <div class="shot reveal"><video data-loop src="./media/loop-voice.mp4" poster="./media/loop-voice.jpg" muted loop playsinline preload="none" aria-label="Voice commands"></video></div>
+          <div class="copy reveal"><div class="kicker">Voice</div><h3>Just say it.</h3><p>Hold <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>V</kbd> and talk. Speech stays on your machine.</p></div>
+        </div>
+        <div class="row">
+          <div class="shot reveal"><video data-loop src="./media/loop-missions.mp4" poster="./media/loop-missions.jpg" muted loop playsinline preload="none" aria-label="Starting a mission"></video></div>
+          <div class="copy reveal"><div class="kicker">Missions</div><h3>Hand off<br />the whole job.</h3><p>Describe the outcome. LATYS runs the agents until it's done.</p></div>
+        </div>
+        <div class="row flip">
+          <div class="shot reveal"><video data-loop src="./media/loop-review.mp4" poster="./media/loop-review.jpg" muted loop playsinline preload="none" aria-label="Reviewing changes"></video></div>
+          <div class="copy reveal"><div class="kicker">Review &amp; ship</div><h3>Review. Test.<br />Ship.</h3><p>Diffs, real test results and a live preview, right next to your agents.</p></div>
+        </div>
+        <div class="row" id="community">
+          <div class="shot reveal"><video data-loop src="./media/community.mp4" poster="./media/community.jpg" muted loop playsinline preload="none" aria-label="Community chat"></video><span class="label">Sample conversation</span></div>
+          <div class="copy reveal"><div class="kicker">Community</div><h3>Chat with<br />other builders.</h3><p>Channels, DMs, GIFs and a voice lounge, built right in.</p></div>
+        </div>
+        <div class="row flip">
+          <div class="shot reveal"><video data-loop src="./media/loop-themes.mp4" poster="./media/loop-themes.jpg" muted loop playsinline preload="none" aria-label="Themes and backdrops"></video></div>
+          <div class="copy reveal"><div class="kicker">Make it yours</div><h3>Set the scene.</h3><p>Themes and cinematic backdrops, one click away.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Bring your own AI -->
     <section id="byo">
       <div class="wrap byo">
         <div class="lattice reveal" aria-hidden="true">
-          <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <radialGradient id="lg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b662" stop-opacity="0.9"/><stop offset="100%" stop-color="#e8b662" stop-opacity="0.15"/></radialGradient>
-            </defs>
-            <g stroke="url(#lg)" stroke-width="0.35" fill="none">
-              <circle cx="50" cy="50" r="38" stroke-opacity="0.35" stroke-dasharray="1 2"/>
-              <circle cx="50" cy="50" r="24" stroke-opacity="0.25"/>
-            </g>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs><radialGradient id="lg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b662" stop-opacity="0.9"/><stop offset="100%" stop-color="#e8b662" stop-opacity="0.15"/></radialGradient></defs>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="url(#lg)" stroke-width="0.35" stroke-opacity="0.35" stroke-dasharray="1 2"/>
             <g stroke="#e8b662" stroke-width="0.45" stroke-linecap="round" id="spokes"></g>
           </svg>
           <img class="core" src="./media/latys-icon.png" alt="" />
         </div>
-        <div class="copy reveal">
-          <div class="kicker">Bring your own AI</div>
-          <h3>Your machine. Your keys. Your tokens.</h3>
-          <p>LATYS never pays for, or sees, your AI usage. It orchestrates the official CLIs and APIs you already have. Your code, prompts and credentials never leave your device.</p>
-          <ul class="checklist">
-            <li><span class="ck">✓</span> Claude Code, Codex, OpenCode, Grok, Cursor, Gemini, Antigravity, Kimi, Hermes and custom agents</li>
-            <li><span class="ck">✓</span> Each agent signs in through its own official login</li>
-            <li><span class="ck">✓</span> Credentials encrypted at rest with Windows DPAPI</li>
-            <li><span class="ck">✓</span> Every command logged; dangerous actions flagged</li>
-          </ul>
-        </div>
+        <div class="copy reveal"><div class="kicker">Bring your own AI</div><h3>Your AI.<br />Your keys.</h3><p>LATYS runs the official tools you already use. Your code and credentials never leave your machine.</p></div>
       </div>
     </section>
 
-    <!-- Get started -->
     <section id="start">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="tag">Get started</div>
-          <h2>Up and running in minutes</h2>
-          <p>LATYS runs the agents you already use. New to them? Each one installs with a single PowerShell command.</p>
-        </div>
-        <div class="steps">
-          <div class="step reveal"><div class="n">1</div><h4>Install LATYS</h4><p>Download the Windows app and run it. No account needed.</p></div>
-          <div class="step reveal"><div class="n">2</div><h4>Install an agent</h4><p>Paste one command into PowerShell, from the official installers below.</p></div>
-          <div class="step reveal"><div class="n">3</div><h4>Sign in and go</h4><p>Sign in once with the agent's own login, hit Re-check in LATYS, and launch.</p></div>
-        </div>
-        <div class="start-grid">
+        <div class="head reveal"><div class="tag">Get started</div><h2>Set up in minutes</h2><p>One PowerShell command per agent.</p></div>
+        <div class="start">
           <div class="agents">
             <div class="agent reveal" style="--c:#d97757">
-              <div class="agent-head"><div class="agent-name"><i></i>Claude Code</div><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Setup guide ↗</a></div>
+              <div class="agent-head"><div class="agent-name"><i></i>Claude Code</div><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Docs ↗</a></div>
               <div class="cmd"><code>irm https://claude.ai/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>claude</b> once and sign in with your Anthropic account.</p>
+              <p class="then">Then run <b>claude</b> to sign in.</p>
             </div>
             <div class="agent reveal" style="--c:#10a37f">
-              <div class="agent-head"><div class="agent-name"><i></i>Codex</div><a href="https://github.com/openai/codex" target="_blank" rel="noopener">Codex on GitHub ↗</a></div>
+              <div class="agent-head"><div class="agent-name"><i></i>Codex</div><a href="https://github.com/openai/codex" target="_blank" rel="noopener">Docs ↗</a></div>
               <div class="cmd"><code>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>codex</b> and choose Sign in with ChatGPT.</p>
+              <p class="then">Then run <b>codex</b> to sign in.</p>
             </div>
             <div class="agent reveal" style="--c:#f0883e">
-              <div class="agent-head"><div class="agent-name"><i></i>OpenCode</div><a href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode docs ↗</a></div>
+              <div class="agent-head"><div class="agent-name"><i></i>OpenCode</div><a href="https://opencode.ai/docs/" target="_blank" rel="noopener">Docs ↗</a></div>
               <div class="cmd"><code>npm install -g opencode-ai</code><button type="button" data-copy>Copy</button></div>
-              <p class="warn">Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> first, if you don't have it.</p>
-              <p class="then">Then run <b>opencode</b> and type <b>/connect</b> to add a model provider.</p>
+              <p class="then">Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a>. Then run <b>opencode</b> and type <b>/connect</b>.</p>
             </div>
             <div class="agent reveal" style="--c:#cfd4dc">
-              <div class="agent-head"><div class="agent-name"><i></i>Grok</div><a href="https://x.ai/build" target="_blank" rel="noopener">Grok Build by xAI ↗</a></div>
+              <div class="agent-head"><div class="agent-name"><i></i>Grok</div><a href="https://x.ai/build" target="_blank" rel="noopener">Docs ↗</a></div>
               <div class="cmd"><code>irm https://x.ai/cli/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>grok login</b> and sign in with your xAI account.</p>
+              <p class="then">Then run <b>grok login</b>.</p>
             </div>
           </div>
-          <div class="side-video reveal">
+          <div class="side reveal">
             <div class="shot" data-clickplay>
-              <video src="./media/tour/install.mp4" poster="./media/tour/install.jpg" playsinline preload="none" controls aria-label="Narrated walkthrough: installing your AI agents">
+              <video src="./media/tour/install.mp4" poster="./media/tour/install.jpg" playsinline preload="none" controls aria-label="Install walkthrough">
                 <track kind="captions" src="./media/tour/install.vtt" srclang="en" label="English" />
               </video>
-              <button class="clickplay" type="button" aria-label="Play the install walkthrough">
-                <span class="play-big"><span class="disc"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg></span>Watch the walkthrough · 1:27</span>
-              </button>
+              <button class="clickplay" type="button" aria-label="Play the install walkthrough"><span class="play-big"><span class="disc"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg></span>Walkthrough · 1:27</span></button>
             </div>
-            <p>A narrated walkthrough of all four installs, straight from the in-app tour.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Tour -->
     <section id="tour">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="tag">The tour</div>
-          <h2>Take the full guided tour</h2>
-          <p>Ten short, narrated chapters, filmed in the real app. The same tour plays inside LATYS on first launch.</p>
-        </div>
+        <div class="head reveal"><div class="tag">The tour</div><h2>Ten short chapters</h2></div>
         <div class="tour">
-          <div class="theater reveal" style="aspect-ratio:16/9">
-            <video id="tourPlayer" controls playsinline preload="none" poster="./media/tour/install.jpg" aria-label="LATYS tour chapter"></video>
-          </div>
+          <div class="theater reveal"><video id="tourPlayer" controls playsinline preload="none" poster="./media/tour/install.jpg" aria-label="LATYS tour chapter"></video></div>
           <ol class="chapters reveal" id="chapters"></ol>
         </div>
       </div>
     </section>
 
-    <!-- Community -->
-    <section id="community">
-      <div class="wrap row">
-        <div class="shot reveal"><video data-loop src="./media/community.mp4" poster="./media/community.jpg" muted loop playsinline preload="none" aria-label="The Vibe Coding Universe"></video></div>
-        <div class="copy reveal">
-          <div class="kicker">Vibe Coding Universe</div>
-          <h3>A community of builders. Opt-in, always.</h3>
-          <p>Go visible when you want to. Share a status, chat, and trade GIFs with other founders on a live globe. It's off by default, and your code, prompts and file paths never leave your machine: there's no field for them.</p>
-          <ul class="checklist">
-            <li><span class="ck">✓</span> Live presence: only what you choose to share</li>
-            <li><span class="ck">✓</span> Block, report and privacy controls built in</li>
-            <li><span class="ck">✓</span> Invisible until you join. Leave anytime.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
     <section id="pricing">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="tag">Pricing</div>
-          <h2>One price. Forever.</h2>
-          <p>No subscription. No token bills from us. Just a lifetime founder license.</p>
-        </div>
-        <div class="price-wrap reveal">
-          <div class="price-card">
-            <span class="badge" data-badge>Founder</span>
-            <div class="lifetime">Lifetime access</div>
-            <div class="amount"><span>$</span><b data-amount>10</b></div>
-            <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
-            <div class="price-rise" data-price-rise><span class="price-rise-arrow">↑</span><span>Rises to <strong>$79</strong> when the founder run sells out</span></div>
-            <div class="seats" data-seats>
-              <div class="seats-row"><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
-              <div class="seats-bar"><div class="seats-fill" data-seats-fill></div></div>
-            </div>
-            <ul>
-              <li><span class="ck2">✓</span> The full LATYS desktop app for Windows</li>
-              <li><span class="ck2">✓</span> All future updates included</li>
-              <li><span class="ck2">✓</span> Vibe Coding Universe community access</li>
-              <li><span class="ck2">✓</span> Offline, signed license — no account, no server</li>
-            </ul>
-            <a class="btn btn-primary btn-lg" data-buy style="width:100%;justify-content:center" href="https://buy.stripe.com/28E3cv2EHe1T0VC1A0aIM01">Become a founder — $10</a>
-            <p style="color:var(--muted);font-size:12.5px;margin-top:14px">Your license key is emailed after purchase. Paste it into LATYS to unlock.</p>
+        <div class="head reveal"><div class="tag">Pricing</div><h2>One price. Forever.</h2></div>
+        <div class="price-card reveal">
+          <span class="badge" data-badge>Founder</span>
+          <div class="lifetime">LIFETIME ACCESS</div>
+          <div class="amount"><span>$</span><b data-amount>10</b></div>
+          <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
+          <div class="price-rise" data-price-rise><span class="price-rise-arrow">↑</span><span>Rises to <strong>$79</strong> when the founder run sells out</span></div>
+          <div class="seats" data-seats>
+            <div class="seats-row"><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
+            <div class="seats-bar"><div class="seats-fill" data-seats-fill></div></div>
           </div>
+          <ul>
+            <li><span class="ck2">✓</span> The full LATYS app for Windows</li>
+            <li><span class="ck2">✓</span> All future updates</li>
+            <li><span class="ck2">✓</span> Community access</li>
+            <li><span class="ck2">✓</span> Offline license, no account</li>
+          </ul>
+          <a class="btn btn-primary btn-lg" data-buy style="width:100%" href="https://buy.stripe.com/28E3cv2EHe1T0VC1A0aIM01">Become a founder — $10</a>
+          <p style="color:var(--muted);font-size:12.5px;margin-top:14px">Your license key is emailed after purchase.</p>
         </div>
       </div>
     </section>
 
-    <!-- Finale -->
     <section class="finale">
       <div class="halo" aria-hidden="true"></div>
       <div class="wrap reveal">
-        <img src="./media/latys-icon.png" alt="" width="84" height="84" />
-        <h2>Your AI command center<br />is ready.</h2>
+        <img src="./media/latys-icon.png" alt="" width="120" height="120" />
+        <h2>Ready when you are.</h2>
         <div class="cta-row">
           <a class="btn btn-primary btn-lg" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
             Download for Windows <span class="ver" data-version></span>
           </a>
-          <a class="btn btn-ghost btn-lg" href="#pricing">Get a founder license — $10</a>
+          <a class="btn btn-ghost btn-lg" href="#pricing">Founder license — $10</a>
         </div>
       </div>
     </section>
@@ -648,45 +473,41 @@
 
   <footer>
     <div class="wrap">
-      <div class="foot-inner">
-        <a class="brand" href="#top">
-          <img src="./media/latys-icon.png" alt="LATYS" width="28" height="28" />
-          <span class="wordmark" style="font-size:15px">LATYS</span>
-        </a>
+      <div class="foot">
+        <a class="brand" href="#top"><img src="./media/latys-icon.png" alt="LATYS" width="28" height="28" /><span class="wordmark" style="font-size:15px">LATYS</span></a>
         <div class="foot-links">
-          <a href="#features">Features</a>
-          <a href="#tour">Tour</a>
-          <a href="#pricing">Pricing</a>
-          <a href="./privacy.html">Privacy</a>
-          <a href="./terms.html">Terms</a>
-          <a href="mailto:ajamespt86@gmail.com">Contact</a>
+          <a href="#features">Features</a><a href="#tour">Tour</a><a href="#pricing">Pricing</a>
+          <a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="mailto:ajamespt86@gmail.com">Contact</a>
         </div>
-        <div class="foot-copy">© <span id="yr">2026</span> LATYS</div>
+        <div class="foot-links" style="color:var(--muted);font-size:13.5px">© <span id="yr">2026</span> LATYS</div>
       </div>
-      <p class="smallprint">LATYS runs on your own AI accounts. You are responsible for your AI providers' costs, usage, and terms. Windows installer is currently unsigned — SmartScreen may show an "unknown publisher" notice. Claude Code, Codex, OpenCode, Grok and other names are trademarks of their owners; LATYS is an independent app.</p>
+      <p class="smallprint">LATYS runs on your own AI accounts; their costs and terms apply. Product names are trademarks of their owners.</p>
     </div>
   </footer>
 
   <script>
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // Nav turns solid once you scroll past the top of the hero.
     const nav = document.getElementById('nav');
     const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Reveal on scroll.
+    // Hero backdrop fades in once it is actually playing (no flash of a frozen frame).
+    const heroBg = document.querySelector('.hero-bg');
+    const showBg = () => heroBg.classList.add('ready');
+    if (heroBg.readyState >= 3) showBg(); else heroBg.addEventListener('playing', showBg, { once: true });
+    setTimeout(showBg, 2500);
+
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io.observe(el); });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-    // Current version from the same feed the app uses.
     fetch('./latys-latest.json', { cache: 'no-store' }).then((r) => r.json()).then((d) => {
       if (d && d.version) document.querySelectorAll('[data-version]').forEach((el) => { el.textContent = 'v' + d.version; });
     }).catch(() => {});
 
-    // Feature loops: play only while on screen.
+    // Loops play only while on screen.
     const loopIo = new IntersectionObserver((entries) => {
       for (const e of entries) {
         const v = e.target;
@@ -695,23 +516,21 @@
     }, { threshold: 0.35 });
     document.querySelectorAll('video[data-loop]').forEach((v) => loopIo.observe(v));
 
-    // The film: a silent preview loop on screen; "Play with sound" restarts it with audio.
+    // The film: silent preview on screen; "Play with sound" restarts it with audio.
     const theater = document.getElementById('theater');
     const film = document.getElementById('trailer');
     const filmBar = theater.querySelector('[data-film-progress] i');
     let filmWithSound = false;
-    const filmIo = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) film.play().catch(() => {});
-        else { film.pause(); }
-      }
-    }, { threshold: 0.4 });
-    filmIo.observe(film);
+    new IntersectionObserver((entries) => {
+      for (const e of entries) e.isIntersecting ? film.play().catch(() => {}) : film.pause();
+    }, { threshold: 0.4 }).observe(film);
+    const muteBtn = theater.querySelector('[data-film-mute]');
+    const setMuteIcon = () => {
+      muteBtn.querySelector('[data-waves]').style.display = film.muted ? 'none' : '';
+      muteBtn.setAttribute('aria-label', film.muted ? 'Unmute' : 'Mute');
+    };
     function playFilmWithSound() {
-      filmWithSound = true;
-      film.loop = false;
-      film.currentTime = 0;
-      film.muted = false;
+      filmWithSound = true; film.loop = false; film.currentTime = 0; film.muted = false;
       theater.classList.add('playing');
       film.play().catch(() => { film.muted = true; film.play().catch(() => {}); });
       setMuteIcon();
@@ -724,7 +543,6 @@
     film.addEventListener('click', () => { if (!filmWithSound) playFilmWithSound(); else film.paused ? film.play() : film.pause(); });
     film.addEventListener('timeupdate', () => { filmBar.style.width = (film.currentTime / (film.duration || 1)) * 100 + '%'; });
     film.addEventListener('ended', () => {
-      // Back to the silent preview loop.
       filmWithSound = false; film.muted = true; film.loop = true; theater.classList.remove('playing');
       film.currentTime = 0; film.play().catch(() => {});
     });
@@ -734,40 +552,27 @@
     film.addEventListener('play', () => { toggleBtn.innerHTML = pauseSvg; toggleBtn.setAttribute('aria-label', 'Pause'); });
     film.addEventListener('pause', () => { toggleBtn.innerHTML = playSvg; toggleBtn.setAttribute('aria-label', 'Play'); });
     toggleBtn.addEventListener('click', () => (film.paused ? film.play() : film.pause()));
-    const muteBtn = theater.querySelector('[data-film-mute]');
-    function setMuteIcon() {
-      muteBtn.querySelector('[data-waves]').style.display = film.muted ? 'none' : '';
-      muteBtn.setAttribute('aria-label', film.muted ? 'Unmute' : 'Mute');
-    }
     muteBtn.addEventListener('click', () => { film.muted = !film.muted; setMuteIcon(); });
     const ccBtn = theater.querySelector('[data-film-cc]');
     ccBtn.addEventListener('click', () => {
-      const track = film.textTracks[0];
-      if (!track) return;
+      const track = film.textTracks[0]; if (!track) return;
       const on = track.mode !== 'showing';
       track.mode = on ? 'showing' : 'hidden';
-      ccBtn.setAttribute('aria-pressed', String(on));
-      ccBtn.style.borderColor = on ? 'var(--gold)' : '';
+      ccBtn.setAttribute('aria-pressed', String(on)); ccBtn.style.borderColor = on ? 'var(--gold)' : '';
     });
     const seek = theater.querySelector('[data-film-progress]');
-    seek.addEventListener('click', (e) => {
-      const r = seek.getBoundingClientRect();
-      film.currentTime = ((e.clientX - r.left) / r.width) * (film.duration || 0);
-    });
+    seek.addEventListener('click', (e) => { const r = seek.getBoundingClientRect(); film.currentTime = ((e.clientX - r.left) / r.width) * (film.duration || 0); });
     seek.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') film.currentTime = Math.min(film.duration || 0, film.currentTime + 5);
       if (e.key === 'ArrowLeft') film.currentTime = Math.max(0, film.currentTime - 5);
     });
 
-    // Click-to-play overlays (install walkthrough).
     document.querySelectorAll('[data-clickplay]').forEach((box) => {
-      const v = box.querySelector('video');
-      const cover = box.querySelector('.clickplay');
+      const v = box.querySelector('video'), cover = box.querySelector('.clickplay');
       cover.addEventListener('click', () => { cover.classList.add('hide'); v.play().catch(() => {}); });
       v.addEventListener('play', () => cover.classList.add('hide'));
     });
 
-    // Copy buttons for install commands.
     document.querySelectorAll('[data-copy]').forEach((b) => {
       b.addEventListener('click', async () => {
         const text = b.parentElement.querySelector('code').textContent;
@@ -777,49 +582,36 @@
       });
     });
 
-    // Provider lattice: spokes from the icon to each provider node.
     (function lattice() {
-      const box = document.querySelector('.lattice');
-      const g = document.getElementById('spokes');
-      const providers = [
-        ['Claude Code', '#d97757'], ['Codex', '#10a37f'], ['OpenCode', '#f0883e'], ['Grok', '#cfd4dc'], ['Cursor', '#00b4d8'],
-        ['Gemini', '#4285f4'], ['Antigravity', '#7c5cff'], ['Kimi', '#25c8a8'], ['Hermes', '#dfa843']
-      ];
+      const box = document.querySelector('.lattice'), g = document.getElementById('spokes');
+      const providers = [['Claude Code', '#d97757'], ['Codex', '#10a37f'], ['OpenCode', '#f0883e'], ['Grok', '#cfd4dc'], ['Cursor', '#00b4d8'],
+        ['Gemini', '#4285f4'], ['Antigravity', '#7c5cff'], ['Kimi', '#25c8a8'], ['Hermes', '#dfa843']];
       providers.forEach(([name, color], i) => {
         const a = (i / providers.length) * Math.PI * 2 - Math.PI / 2;
-        const x = 50 + Math.cos(a) * 38, y = 50 + Math.sin(a) * 38;
         for (const pulse of [false, true]) {
           const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', 50 + Math.cos(a) * 13); line.setAttribute('y1', 50 + Math.sin(a) * 13);
+          line.setAttribute('x1', 50 + Math.cos(a) * 14); line.setAttribute('y1', 50 + Math.sin(a) * 14);
           line.setAttribute('x2', 50 + Math.cos(a) * 33); line.setAttribute('y2', 50 + Math.sin(a) * 33);
           if (pulse) { line.setAttribute('class', 'pulse'); line.style.animationDelay = (-i * 0.17) + 's'; line.setAttribute('stroke-opacity', '0.75'); }
           else line.setAttribute('stroke-opacity', '0.16');
           g.appendChild(line);
         }
         const n = document.createElement('div');
-        n.className = 'node'; n.style.left = x + '%'; n.style.top = y + '%'; n.style.setProperty('--c', color);
+        n.className = 'node'; n.style.left = (50 + Math.cos(a) * 38) + '%'; n.style.top = (50 + Math.sin(a) * 38) + '%'; n.style.setProperty('--c', color);
         n.innerHTML = '<i></i>' + name;
         box.appendChild(n);
       });
     })();
 
-    // Tour chapters.
     const CHAPTERS = [
-      ['install', 'Install your AI agents', 'Claude Code, Codex, OpenCode and Grok: one command each.', '1:27'],
-      ['workspace', 'Your workspace', 'Projects, the canvas, and jumping between them.', '0:22'],
-      ['agents', 'Launch your agents', 'Start Claude, Codex and more, then hand them work.', '0:42'],
-      ['command', 'The command bar', 'Ctrl+K for everything, and one message for every agent.', '0:28'],
-      ['panels', 'Arrange your space', 'Move, maximize, tuck away and inspect panels.', '0:33'],
-      ['voice', 'Voice commands', 'Hold Ctrl+Shift+V and just say it.', '0:29'],
-      ['missions', 'Missions & the Council', 'Hand over whole outcomes; ask several models at once.', '0:30'],
-      ['changes', 'Changes, tests & previews', 'Review diffs, run tests and preview your app live.', '0:32'],
-      ['media', 'Music & the Universe', 'A player that follows you, and a globe of builders.', '0:26'],
-      ['settings', 'Make it yours', 'Themes, backdrops, and where to replay this tour.', '0:23']
+      ['install', 'Install your AI agents', '1:27'], ['workspace', 'Your workspace', '0:22'], ['agents', 'Launch your agents', '0:42'],
+      ['command', 'The command bar', '0:28'], ['panels', 'Arrange your space', '0:33'], ['voice', 'Voice commands', '0:29'],
+      ['missions', 'Missions & the Council', '0:30'], ['changes', 'Changes, tests & previews', '0:32'], ['media', 'Music & the Universe', '0:26'],
+      ['settings', 'Make it yours', '0:23']
     ];
-    const list = document.getElementById('chapters');
-    const player = document.getElementById('tourPlayer');
+    const list = document.getElementById('chapters'), player = document.getElementById('tourPlayer');
     function load(i, autoplay) {
-      const [id] = CHAPTERS[i];
+      const id = CHAPTERS[i][0];
       player.innerHTML = '';
       player.src = './media/tour/' + id + '.mp4';
       player.poster = './media/tour/' + id + '.jpg';
@@ -830,20 +622,16 @@
       list.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', String(i === j)));
       if (autoplay) player.play().catch(() => {});
     }
-    CHAPTERS.forEach(([id, title, blurb, dur], i) => {
+    CHAPTERS.forEach(([id, title, dur], i) => {
       const li = document.createElement('li');
-      li.innerHTML = '<button type="button"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><span><div class="t"></div><div class="b"></div></span><span class="d"></span></button>';
+      li.innerHTML = '<button type="button"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="t"></span><span class="d"></span></button>';
       li.querySelector('.t').textContent = title;
-      li.querySelector('.b').textContent = blurb;
       li.querySelector('.d').textContent = dur;
       li.querySelector('button').addEventListener('click', () => load(i, true));
       list.appendChild(li);
     });
     load(0, false);
-    player.addEventListener('ended', () => {
-      const i = Number(player.dataset.index) + 1;
-      if (i < CHAPTERS.length) load(i, true);
-    });
+    player.addEventListener('ended', () => { const i = Number(player.dataset.index) + 1; if (i < CHAPTERS.length) load(i, true); });
 
     // ── Live founder-seats counter ───────────────────────────────────────────
     // Data comes from the Stripe-backed Cloudflare Worker (see

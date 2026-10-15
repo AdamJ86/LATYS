@@ -10,7 +10,8 @@ Static site for **latys.app**. No build step — plain HTML/CSS/JS.
 - `icon.png` — favicon (the app icon).
 - `media/` — trailer, hero backdrop, feature loops, narrated tour chapters
   (+ captions), icons and the share image. Regenerate from the app repo:
-  `python scripts/landing/trailer.py .artifacts/landing/out/trailer.mp4 --poster .artifacts/landing/out/trailer-poster.jpg`
+  `python scripts/landing/clean_icon.py`, `node scripts/landing/community-clip.mjs`
+  (with the demo app served), `python scripts/landing/trailer.py .artifacts/landing/out/trailer.mp4 --poster .artifacts/landing/out/trailer-poster.jpg`
   then `python scripts/landing/media.py landing`.
 - `latys-latest.json` — the update feed the app polls (`UPDATE_FEED_URL` in
   `shared/constants/index.ts` points at `https://latys.app/latys-latest.json`).
