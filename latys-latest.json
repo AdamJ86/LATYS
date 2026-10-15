@@ -1,5 +1,5 @@
 {
-  "version": "0.1.57",
+  "version": "0.1.58",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "A brand-new cinematic onboarding: a full-screen welcome, quick setup, and a nine-chapter video tour of LATYS (agents, the command bar, voice commands, missions, reviews and previews, music, the Universe and settings). Watch it again any time from Settings > General. Also: command history now shows just what you typed."
+  "notes": "The video tour is now fully narrated, and if you set up LATYS before the tour existed, a one-time card offers it to you (it's also in Settings > General). LATYS now also checks for updates while it's running, not just at launch."
 }
