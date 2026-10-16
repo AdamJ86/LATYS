@@ -1,5 +1,5 @@
 {
-  "version": "0.1.62",
+  "version": "0.1.63",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "A brand-new Vibe Coding Universe. The community chat has its own look: floating glass panels that follow your theme, message bubbles, replies, reactions, pins, image uploads, GIFs, a full emoji picker, slash commands, group chats and a Ctrl+K jump search. The globe is now a cinematic, real-time Earth: day and night from the live sun, glowing city lights, drifting clouds, an atmosphere glow, light-beam markers for everyone online and comets between cities. Also fixes the globe flickering black and blank emoji in chat."
+  "notes": "Fixes the Universe top bar: Chat, Globe and Voice are clickable again and the bar no longer sits under the window's minimize, maximize and close buttons. Community presence is more reliable: you're online as soon as LATYS starts (no need to open the Universe first), you stay online while LATYS is minimized or behind other windows, and if your profile is hidden the Universe now tells you, with a one-click Show me online. Location sharing retries if the first lookup fails, and your own globe pin only shows when others can see it."
 }
