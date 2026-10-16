@@ -1,5 +1,5 @@
 {
-  "version": "0.1.63",
+  "version": "0.1.64",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Fixes the Universe top bar: Chat, Globe and Voice are clickable again and the bar no longer sits under the window's minimize, maximize and close buttons. Community presence is more reliable: you're online as soon as LATYS starts (no need to open the Universe first), you stay online while LATYS is minimized or behind other windows, and if your profile is hidden the Universe now tells you, with a one-click Show me online. Location sharing retries if the first lookup fails, and your own globe pin only shows when others can see it."
+  "notes": "Fixes the dashboard toolbar freezing after you leave the Universe: Dev, Build, Test, Release, the project and social buttons work again after going back to the dashboard."
 }
