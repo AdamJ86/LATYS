@@ -1,5 +1,5 @@
 {
-  "version": "0.1.61",
+  "version": "0.1.62",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Security update: voice and automation now always need your OK. Approvals by voice only work on mission steps; agents skip their approval prompts only when you choose hands-off. Codex keeps its sandbox unless you opt in, mission snapshots no longer commit to your branch, and the app is hardened against tampering."
+  "notes": "A brand-new Vibe Coding Universe. The community chat has its own look: floating glass panels that follow your theme, message bubbles, replies, reactions, pins, image uploads, GIFs, a full emoji picker, slash commands, group chats and a Ctrl+K jump search. The globe is now a cinematic, real-time Earth: day and night from the live sun, glowing city lights, drifting clouds, an atmosphere glow, light-beam markers for everyone online and comets between cities. Also fixes the globe flickering black and blank emoji in chat."
 }
