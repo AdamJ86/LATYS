@@ -139,15 +139,28 @@ video::cue { background: rgba(0, 0, 0, 0.8); color: var(--parchment); font-famil
 .prose ul { padding-left: 22px; margin: 12px 0; display: grid; gap: 8px; }
 .prose strong { color: var(--parchment); font-weight: 600; }
 /* Founder seats: ten leaves off the tree, filled live from Stripe */
-.leaves { display: flex; gap: 8px; margin: 22px 0 12px; }
-.leaves svg { width: 30px; height: 40px; overflow: visible; transform: rotate(var(--r)); transform-origin: 50% 100%; }
+.leaves { display: grid; grid-template-columns: repeat(10, 26px); gap: 8px 6px; margin: 22px 0 12px; }
+.leaves svg { width: 26px; height: 34px; overflow: visible; transform: rotate(var(--r)); transform-origin: 50% 100%; }
 .leaves .blade { fill: none; stroke: rgba(236, 227, 211, 0.32); stroke-width: 1.4; stroke-dasharray: 2.5 2.5; transition: fill 240ms, stroke 240ms; }
 .leaves .rib { stroke: rgba(236, 227, 211, 0.22); stroke-width: 1.2; }
 .leaves .taken .blade { fill: var(--c); stroke: var(--c); stroke-dasharray: none; }
 .leaves .taken .rib { stroke: rgba(0, 0, 0, 0.35); }
 .leaves .grow { animation: leaf 480ms var(--ease) both; }
 @keyframes leaf { from { opacity: 0; transform: rotate(calc(var(--r) - 24deg)) scale(0.3); } }
-@media (max-width: 420px) { .leaves { gap: 3px; } .leaves svg { width: 24px; height: 32px; } }
+@media (max-width: 420px) { .leaves { grid-template-columns: repeat(10, 22px); gap: 6px 4px; } .leaves svg { width: 22px; height: 29px; } }
+
+/* Price step: the 20 licenses at $79, then $109 */
+.step { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); align-items: center; margin: 18px 0 4px; border: 1px solid var(--rule); border-radius: var(--radius); }
+.step > div { padding: 12px 14px; }
+.step span { display: block; font-size: 13px; color: var(--bark); }
+.step b { display: block; font: 600 22px/1.2 var(--sans); color: var(--parchment); }
+.step .now { box-shadow: inset 0 -2px 0 var(--lichen); border-radius: var(--radius) 0 0 var(--radius); }
+.step .next b { color: var(--bark); }
+.step svg { width: 40px; height: 14px; color: var(--rule-strong); }
+.step.moved .now b { color: var(--bark); text-decoration: line-through; }
+.step.moved .now { box-shadow: none; }
+.step.moved .next { box-shadow: inset 0 -2px 0 var(--gold); }
+.step.moved .next b { color: var(--parchment); }
 .legal { padding-top: clamp(48px, 7vw, 88px); }
 .legal .meta { color: var(--bark); font-size: 15px; margin: 14px 0 32px; }
 .legal .summary { border-left: 2px solid var(--gold); padding: 4px 0 4px 20px; font-size: 18px; color: var(--parchment); max-width: 64ch; }

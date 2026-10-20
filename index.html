@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./site.css?v=3" />
+  <link rel="stylesheet" href="./site.css?v=4" />
   <link rel="preload" as="image" href="./media/hero-backdrop.jpg?v=2" />
   <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
   <style>
@@ -203,10 +203,15 @@
         <div class="close">
           <div>
             <h2>LATYS license</h2>
-            <div class="price" style="margin-top:18px">$79<small>once, no subscription</small></div>
+            <div class="price" style="margin-top:18px"><span data-price>$79</span><small>once, no subscription</small></div>
+            <div class="step" data-step>
+              <div class="now"><span data-sold-text="Sold out">First 20 licenses</span><b>$79</b></div>
+              <svg viewBox="0 0 40 14" aria-hidden="true"><path d="M2 7h34m-6-5 6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              <div class="next"><span data-sold-text="Now">After that</span><b>$109</b></div>
+            </div>
             <div class="leaves" data-leaves></div>
-            <div class="seatline">Founder run closed: 8 founders</div>
-            <p>Pay once and keep every future update. Thank you to the 8 founders who backed LATYS first.</p>
+            <div class="seatline" data-seats-text>20 licenses at $79</div>
+            <p data-sold-text="Pay once and keep every future update.">Only 20 licenses sell at $79. Then the price goes up to $109. Pay once and keep every future update.</p>
             <a class="btn btn-line" href="./pricing.html">See what's included</a>
           </div>
           <div>
@@ -238,7 +243,7 @@
     <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
   </footer>
 
-  <script src="./site.js?v=3"></script>
+  <script src="./site.js?v=4"></script>
   <script>
     // Hero: the tree fades in only once it is really playing.
     const tree = document.querySelector('.stage video');

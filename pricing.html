@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LATYS pricing: $79, paid once</title>
-  <meta name="description" content="LATYS costs $79, paid once, with every future update included. No subscription; you use your own AI accounts." />
+  <title>LATYS pricing</title>
+  <meta name="description" content="The first 20 LATYS licenses are $79, paid once, with every future update. Then the price goes up to $109." />
   <meta name="theme-color" content="#000000" />
   <meta property="og:title" content="LATYS pricing" />
   <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./site.css?v=3" />
+  <link rel="stylesheet" href="./site.css?v=4" />
   <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
   <style>
     .offer { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px 72px; padding: clamp(56px, 9vw, 112px) 0 clamp(48px, 6vw, 72px); border-bottom: 1px solid var(--rule); align-items: start; }
@@ -59,22 +59,26 @@
       <section class="offer">
         <div>
           <h1>Pay once. Keep every update.</h1>
-          <p class="lede">LATYS is $79, paid once. There's no subscription, and every future update is included.</p>
+          <p class="lede" data-sold-text="LATYS is $109, paid once. There's no subscription, and every future update is included.">The first 20 licenses are $79. After that, LATYS goes up to $109. Either way you pay once, with no subscription, and every future update is included.</p>
           <p class="quiet" style="margin-top:18px">LATYS doesn't include AI usage. You connect your own Claude, ChatGPT, Gemini or other accounts, and each provider bills you directly.</p>
         </div>
         <div class="ticket">
           <h2>LATYS license</h2>
-          <div class="amount"><b>$79</b><span>one time</span></div>
+          <div class="amount"><b data-price>$79</b><span>one time</span></div>
+          <div class="step" data-step>
+            <div class="now"><span data-sold-text="Sold out">First 20 licenses</span><b>$79</b></div>
+            <svg viewBox="0 0 40 14" aria-hidden="true"><path d="M2 7h34m-6-5 6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            <div class="next"><span data-sold-text="Now">After that</span><b>$109</b></div>
+          </div>
           <div class="leaves" data-leaves></div>
-          <div class="seatline">Founder run closed: 8 founders</div>
-          <p class="next">Thank you to the 8 founders who backed LATYS first.</p>
+          <div class="seatline" data-seats-text>20 licenses at $79</div>
           <ul>
             <li>The full LATYS app for Windows</li>
             <li>Every future update</li>
             <li>The Vibe Coding Universe community</li>
             <li>Works offline, no account needed</li>
           </ul>
-          <a class="btn btn-gold" href="https://buy.stripe.com/9B65kDfrt9LD9s892saIM02">Buy LATYS, $79</a>
+          <a class="btn btn-gold" data-buy href="https://buy.stripe.com/9B65kDfrt9LD9s892saIM02">Buy LATYS, $79</a>
           <p class="small">Checkout by Stripe. Your license key arrives by email.</p>
         </div>
       </section>
@@ -88,8 +92,10 @@
           <dd>Yes. LATYS runs the official tools, like Claude Code or Codex, signed in with your accounts. Some agents can also use an API key. Your usage and costs stay between you and each provider.</dd>
           <dt>How do I get my license key?</dt>
           <dd>Stripe emails it after you pay. Paste it into LATYS and you're done. The key is checked on your computer, so LATYS doesn't need to contact a server to run.</dd>
+          <dt>Will the price go up?</dt>
+          <dd>Yes. Only 20 licenses sell at $79. After the 20th, LATYS is $109. Whatever you pay, you keep your license and every update.</dd>
           <dt>Is the $10 founder price still available?</dt>
-          <dd>No. The founder run closed with 8 founders. They keep their license and every update, and LATYS is now $79 for everyone.</dd>
+          <dd>No. The founder run closed with 8 founders, who keep their license and every update.</dd>
           <dt>Can I get a refund?</dt>
           <dd>If something isn't working, email <a href="mailto:ajamespt86@gmail.com">ajamespt86@gmail.com</a> within 14 days and we'll try to make it right. Refunds are at our discretion; see the <a href="./terms.html">terms</a>.</dd>
           <dt>Is there a Mac version?</dt>
@@ -115,6 +121,6 @@
     <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
   </footer>
 
-  <script src="./site.js?v=3"></script>
+  <script src="./site.js?v=4"></script>
 </body>
 </html>
