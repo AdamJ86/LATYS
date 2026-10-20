@@ -27,12 +27,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./site.css?v=4" />
+  <link rel="stylesheet" href="./site.css?v=5" />
   <link rel="preload" as="image" href="./media/hero-backdrop.jpg?v=2" />
   <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
   <style>
     /* The plate: the tree drawn like a specimen, each branch labelled with an agent. */
     .plate { position: relative; overflow: hidden; padding-top: 8px; }
+    .zoom { transform-origin: 50% 42%; }
     .stage { position: relative; left: 50%; transform: translateX(-50%); height: clamp(340px, calc(100svh - var(--bar) - 250px), 820px); aspect-ratio: 16 / 9; }
     .stage video, .stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .stage video { opacity: 0; transition: opacity 900ms ease; }
@@ -54,31 +55,45 @@
     .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
     .caption .quiet { font-size: 14.5px; margin-top: 16px; }
 
+    /* The reel: the film. On wide screens it grows out of the tree while the
+       opening scene is pinned (html.cine, set by scenes.js). */
+    .reel { padding-top: clamp(80px, 11vw, 140px); }
+    .reel .frame { width: min(100%, 1080px); margin: 0 auto; }
+    .reel-note { text-align: center; color: var(--bark); font-size: 15px; margin: 16px auto 0; }
+    .film video { object-fit: contain; background: #000; }
+    .film .play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; cursor: pointer; background: rgba(0, 0, 0, 0.3); }
+    .film .play span { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--parchment); color: #000; font-weight: 600; font-size: 15px; transition: transform 160ms var(--ease), background 100ms; }
+    .film .play:hover span { background: #fff; transform: scale(1.04); }
+    .film.on .play { display: none; }
+    html.cine .scene { height: 290vh; }
+    html.cine .pin { position: sticky; top: var(--bar); height: calc(100svh - var(--bar)); overflow: hidden; }
+    html.cine .plate, html.cine .zoom, html.cine .reel .frame { will-change: transform, opacity; }
+    html.cine .reel { position: absolute; inset: 0; padding: 0 var(--gutter); display: grid; place-content: center; }
+    html.cine .reel .frame { width: min(1080px, 84vw, calc((100svh - var(--bar) - 120px) * 16 / 9)); }
+
     section.band { padding-top: clamp(80px, 11vw, 140px); }
     .split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px 56px; align-items: start; }
     .split > header p { margin-top: 14px; color: var(--bark); }
 
-    /* The film */
-    .film { position: relative; }
-    .film video { object-fit: contain; background: #000; }
-    .film .play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; cursor: pointer; background: rgba(0, 0, 0, 0.35); }
-    .film .play span { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 18px 0 14px; border-radius: var(--radius); background: var(--parchment); color: #000; font-weight: 600; font-size: 15px; transition: background 100ms; }
-    .film .play:hover span { background: #fff; }
-    .film.on .play { display: none; }
+    /* What you do in it: the screen holds still while each feature scrolls past */
+    .story { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 0 56px; align-items: start; }
+    .beats { padding: 12vh 0 26vh; }
+    .beat { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.26; transition: opacity 500ms var(--ease); }
+    .beat.on { opacity: 1; }
+    .beat h3 { font-size: clamp(28px, 2.7vw, 38px); }
+    .beat p { color: var(--bark); margin-top: 10px; font-size: 18px; max-width: 32ch; }
+    .screen { position: sticky; top: calc(var(--bar) + 16vh); }
+    .screen .frame video { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms ease; }
+    .screen .frame video.on { opacity: 1; }
+    .screen .note { position: absolute; left: 12px; bottom: 12px; padding: 3px 9px; border-radius: 6px; font-size: 12.5px; color: var(--parchment); background: rgba(0, 0, 0, 0.7); opacity: 0; transition: opacity 300ms; }
+    .screen .note.on { opacity: 1; }
+    .ticks { display: flex; gap: 6px; margin-top: 14px; }
+    .ticks i { flex: 1; height: 2px; border-radius: 1px; background: var(--rule-strong); transition: background 400ms; }
+    .ticks i.on { background: var(--gold); }
 
-    /* What you do in it: one stage, a list of things to show on it */
-    .viewer { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px 56px; align-items: start; margin-top: 40px; }
-    .tabs { display: grid; border-top: 1px solid var(--rule); }
-    .tabs button { display: block; width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 16px 0 16px 18px; cursor: pointer; position: relative; }
-    .tabs button::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 2px; background: transparent; transition: background 100ms; }
-    .tabs button[aria-selected="true"]::before { background: var(--gold); }
-    .tabs b { display: block; font: 400 21px/1.25 var(--serif); color: var(--bark); transition: color 100ms; }
-    .tabs button:hover b, .tabs button[aria-selected="true"] b { color: var(--parchment); }
-    .tabs span { display: block; margin-top: 4px; font-size: 15.5px; color: var(--bark); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 240ms var(--ease), opacity 160ms; }
-    .tabs button[aria-selected="true"] span { max-height: 90px; opacity: 1; }
-    .viewer .frame video { transition: opacity 160ms ease; }
-    .viewer .frame video.swap { opacity: 0; }
-    .viewer .note { position: absolute; left: 12px; bottom: 12px; padding: 3px 9px; border-radius: 6px; font-size: 12.5px; color: var(--parchment); background: rgba(0, 0, 0, 0.7); }
+    /* The statement: words light up as you read down the page */
+    .say { font: 400 clamp(32px, 4.6vw, 68px)/1.12 var(--serif); letter-spacing: -0.015em; color: var(--parchment); max-width: 24ch; }
+    .say .w { display: inline; }
 
     /* Roster */
     .roster { width: 100%; border-collapse: collapse; font-size: 16px; }
@@ -87,7 +102,7 @@
     .roster td:first-child { color: var(--parchment); font-weight: 600; }
     .roster i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 12px; background: var(--c); }
     .roster td:last-child { text-align: right; }
-    .facts { display: grid; gap: 18px; margin-top: 28px; }
+    .facts { display: grid; gap: 18px; margin-top: 20px; }
     .facts p { color: var(--bark); font-size: 16px; }
     .facts strong { color: var(--parchment); font-weight: 600; }
 
@@ -104,10 +119,11 @@
     @media (max-width: 900px) {
       .callouts { display: none; }
       .stage { height: auto; width: 150vw; }
-      .caption, .split, .viewer, .close { grid-template-columns: minmax(0, 1fr); }
+      .caption, .split, .story, .close { grid-template-columns: minmax(0, 1fr); }
       .close > div + div { border-left: 0; border-top: 1px solid var(--rule); }
-      .tabs span { max-height: none; opacity: 1; }
-      .viewer .frame { order: -1; }
+      .screen { order: -1; top: 96px; z-index: 2; background: var(--ground); padding: 8px 0 12px; }
+      .beats { padding: 6vh 0 18vh; }
+      .beat { min-height: 42vh; }
     }
     @media (max-width: 520px) {
       .roster td:nth-child(2) { display: none; }
@@ -116,6 +132,7 @@
     @media (prefers-reduced-motion: reduce) {
       .callouts line { stroke-dashoffset: 0; }
       .callouts text { opacity: 1; }
+      .beat { opacity: 1; }
     }
   </style>
 </head>
@@ -134,36 +151,39 @@
   </header>
 
   <main>
-    <section class="plate" aria-labelledby="h">
-      <div class="stage">
-        <img src="./media/hero-backdrop.jpg?v=2" alt="" width="1920" height="1080" />
-        <video src="./media/hero-backdrop.mp4?v=2" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
-        <svg class="callouts" viewBox="0 0 1920 1080" aria-hidden="true" id="callouts"></svg>
-      </div>
-      <div class="page caption">
-        <h1 id="h">Run every coding agent from one window.</h1>
-        <div>
-          <p class="lede">LATYS is a Windows app for the AI coding tools you already use. Open them side by side, talk to them by voice, and check what they changed before it ships.</p>
-          <div class="actions">
-            <a class="btn btn-gold" href="./download.html">Download for Windows <span class="v" data-version></span></a>
-            <a class="link" href="#film">Watch the film</a>
+    <section class="scene" id="scene">
+      <div class="pin">
+        <div class="plate" aria-labelledby="h">
+          <div class="zoom">
+            <div class="stage">
+              <img src="./media/hero-backdrop.jpg?v=2" alt="" width="1920" height="1080" />
+              <video src="./media/hero-backdrop.mp4?v=2" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
+              <svg class="callouts" viewBox="0 0 1920 1080" aria-hidden="true" id="callouts"></svg>
+            </div>
           </div>
-          <p class="quiet">Works with Claude Code, Codex, Gemini, Grok, OpenCode, Cursor, Antigravity, Kimi and Hermes.</p>
+          <div class="page caption">
+            <h1 id="h">Run every coding agent from one window.</h1>
+            <div>
+              <p class="lede">LATYS is a Windows app for the AI coding tools you already use. Open them side by side, talk to them by voice, and check what they changed before it ships.</p>
+              <div class="actions">
+                <a class="btn btn-gold" href="./download.html">Download for Windows <span class="v" data-version></span></a>
+                <a class="link" href="#film" data-to-film>Watch the film</a>
+              </div>
+              <p class="quiet">Works with Claude Code, Codex, Gemini, Grok, OpenCode, Cursor, Antigravity, Kimi and Hermes.</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <section class="band" id="film" aria-labelledby="film-h">
-      <div class="page split">
-        <header>
-          <h2 id="film-h">See it working</h2>
-          <p>84 seconds, filmed in the real app. Turn your sound on.</p>
-        </header>
-        <div class="frame film" id="filmBox">
-          <video id="filmVideo" src="./media/trailer.mp4?v=4" poster="./media/trailer-poster.jpg?v=4" preload="none" playsinline aria-label="The LATYS film">
-            <track kind="captions" src="./media/trailer.vtt?v=4" srclang="en" label="English" />
-          </video>
-          <button class="play" type="button" id="filmPlay"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></svg>Play the film, 1:24</span></button>
+        <div class="reel" id="film">
+          <div>
+            <div class="frame film" id="filmBox">
+              <video id="filmVideo" src="./media/trailer.mp4?v=4" poster="./media/trailer-poster.jpg?v=4" preload="none" playsinline aria-label="The LATYS film">
+                <track kind="captions" src="./media/trailer.vtt?v=4" srclang="en" label="English" />
+              </video>
+              <button class="play" type="button" id="filmPlay"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></svg>Play the film, 1:24</span></button>
+            </div>
+            <p class="reel-note">Filmed in the real app. Turn your sound on.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -171,22 +191,29 @@
     <section class="band" id="features" aria-labelledby="features-h">
       <div class="page">
         <h2 id="features-h">What you do in it</h2>
-        <div class="viewer">
-          <div class="tabs" role="tablist" aria-label="Features" id="tabs"></div>
-          <div class="frame" role="tabpanel" id="stagePanel">
-            <video id="stageVideo" muted loop playsinline preload="none"></video>
-            <span class="note" id="stageNote" hidden>Sample conversation</span>
+        <div class="story">
+          <div class="beats" id="beats"></div>
+          <div class="screen" aria-hidden="true">
+            <div class="frame" id="screen">
+              <span class="note" id="screenNote">Sample conversation</span>
+            </div>
+            <div class="ticks" id="ticks"></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="band" aria-label="How LATYS uses AI">
+      <div class="page">
+        <p class="say" data-say>LATYS doesn't resell AI. It runs the official tools you already pay for, on your own machine, signed in as you.</p>
       </div>
     </section>
 
     <section class="band" id="agents" aria-labelledby="agents-h">
       <div class="page split">
         <header>
-          <h2 id="agents-h">Uses the AI you already pay for</h2>
+          <h2 id="agents-h">Nine agents, one window</h2>
           <div class="facts">
-            <p><strong>LATYS doesn't resell AI.</strong> It starts each provider's official command-line tool on your computer, signed in with your own account.</p>
             <p><strong>Your code stays local.</strong> Projects, prompts and keys stay on your machine. Keys are encrypted with Windows' own secure storage.</p>
             <p><strong>Each provider bills you directly,</strong> under their own plans and terms.</p>
           </div>
@@ -243,7 +270,11 @@
     <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
   </footer>
 
-  <script src="./site.js?v=4"></script>
+  <script src="./site.js?v=5"></script>
+  <script src="./vendor/lenis.min.js?v=1.3.27"></script>
+  <script src="./vendor/gsap.min.js?v=3.15.0"></script>
+  <script src="./vendor/ScrollTrigger.min.js?v=3.15.0"></script>
+  <script src="./smooth.js?v=1"></script>
   <script>
     // Hero: the tree fades in only once it is really playing.
     const tree = document.querySelector('.stage video');
@@ -296,7 +327,7 @@
       filmBox.classList.add('on'); film.controls = true; film.play().catch(() => {});
     });
 
-    // Feature viewer
+    // What you do in it: the feature crossing the middle of the screen owns the video.
     const FEATURES = [
       ['Agents', 'Launch Claude Code, Codex, Gemini and the rest, each in its own live terminal panel.', 'loop-agents', 2],
       ['Voice', 'Hold Ctrl+Shift+V and say what you want. Local voice mode keeps your speech on your computer.', 'loop-voice', 2],
@@ -305,46 +336,51 @@
       ['Universe', 'Chat, react and pair up by voice with other builders, and see who is working right now on a live globe.', 'community', 4],
       ['Themes', 'Switch themes and cinematic backdrops in one click.', 'loop-themes', 2]
     ];
-    const tabs = document.getElementById('tabs'), stage = document.getElementById('stageVideo'), note = document.getElementById('stageNote');
-    let current = -1, inView = false;
-    function show(i, focus) {
-      if (i === current) return;
-      current = i;
-      [...tabs.children].forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; });
-      if (focus) tabs.children[i].focus();
-      const [title, , file, v] = FEATURES[i];
-      document.getElementById('stagePanel').setAttribute('aria-labelledby', 'tab-' + i);
-      stage.classList.add('swap');
-      if (!stage.poster) stage.poster = './media/' + file + '.jpg?v=' + v;
-      setTimeout(() => {
-        stage.poster = './media/' + file + '.jpg?v=' + v;
-        stage.src = './media/' + file + '.mp4?v=' + v;
-        stage.setAttribute('aria-label', title);
-        note.hidden = file !== 'community';
-        if (inView) stage.play().catch(() => {});
-        stage.classList.remove('swap');
-      }, 160);
+    const beats = document.getElementById('beats'), screen = document.getElementById('screen');
+    const ticks = document.getElementById('ticks'), note = document.getElementById('screenNote');
+    const clips = FEATURES.map(([title, text, file, v], i) => {
+      const beat = document.createElement('article');
+      beat.className = 'beat';
+      beat.innerHTML = '<h3></h3><p></p>';
+      beat.querySelector('h3').textContent = title;
+      beat.querySelector('p').textContent = text;
+      beat.dataset.i = i;
+      beats.append(beat);
+      const v2 = document.createElement('video');
+      v2.muted = true; v2.loop = true; v2.playsInline = true; v2.preload = 'none';
+      v2.poster = './media/' + file + '.jpg?v=' + v;
+      v2.dataset.src = './media/' + file + '.mp4?v=' + v;
+      screen.insertBefore(v2, note);
+      ticks.append(document.createElement('i'));
+      return { beat, video: v2, file };
+    });
+    let active = -1, storyVisible = false;
+    const load = (c) => { if (c && !c.video.src) c.video.src = c.video.dataset.src; };
+    function activate(i) {
+      if (i === active) return;
+      active = i;
+      clips.forEach((c, j) => {
+        const on = j === i;
+        c.beat.classList.toggle('on', on);
+        c.video.classList.toggle('on', on);
+        ticks.children[j].classList.toggle('on', on);
+        if (on) { load(c); if (storyVisible) c.video.play().catch(() => {}); }
+        else c.video.pause();
+      });
+      load(clips[i + 1]);
+      note.classList.toggle('on', clips[i].file === 'community');
     }
-    FEATURES.forEach(([title, text], i) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.role = 'tab'; b.id = 'tab-' + i; b.setAttribute('aria-controls', 'stagePanel');
-      b.innerHTML = '<b></b><span></span>';
-      b.querySelector('b').textContent = title;
-      b.querySelector('span').textContent = text;
-      b.addEventListener('click', () => show(i));
-      tabs.append(b);
-    });
-    tabs.addEventListener('keydown', (e) => {
-      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (d) { e.preventDefault(); show((current + d + FEATURES.length) % FEATURES.length, true); }
-      if (e.key === 'Home') { e.preventDefault(); show(0, true); }
-      if (e.key === 'End') { e.preventDefault(); show(FEATURES.length - 1, true); }
-    });
-    show(0);
+    const beatIo = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) activate(Number(e.target.dataset.i));
+    }, { rootMargin: '-48% 0px -48% 0px' });
+    clips.forEach((c) => beatIo.observe(c.beat));
     new IntersectionObserver(([e]) => {
-      inView = e.isIntersecting;
-      if (inView) stage.play().catch(() => {}); else stage.pause();
-    }, { threshold: 0.3 }).observe(stage);
+      storyVisible = e.isIntersecting;
+      const c = clips[active];
+      if (c) storyVisible ? c.video.play().catch(() => {}) : c.video.pause();
+    }, { threshold: 0.2 }).observe(screen);
+    activate(0);
   </script>
+  <script src="./scenes.js?v=1"></script>
 </body>
 </html>

@@ -49,6 +49,11 @@
     });
   }
   paintLeaves(SEATS_TOTAL, 0, false);
+  // Leaves grow when the card comes into view, not while it is off screen.
+  const leafIo = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); leafIo.unobserve(e.target); }
+  }, { threshold: 0.4 });
+  $$('[data-leaves]').forEach((box) => leafIo.observe(box));
 
   function paintSeats(d) {
     const total = (d && d.total) || SEATS_TOTAL;

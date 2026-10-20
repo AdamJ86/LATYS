@@ -16,6 +16,14 @@ Static site for **latys.app**. No build step — plain HTML/CSS/JS.
 - `site.css` / `site.js` — shared tokens, title bar + status strip chrome,
   version feed, founder seats, copy buttons. Bump the `?v=` query on every page
   when you change them.
+- `smooth.js` — Lenis smooth scrolling on every page (off for reduced motion).
+- `scenes.js` — the overview's scroll scenes (GSAP ScrollTrigger): the pinned
+  opening where the film grows out of the tree, and the statement that lights
+  up word by word. Wide screens only for the pinned scene. Animate transform
+  and opacity only; never scale a playing `<video>` (it drops frames), which is
+  why the tree is swapped for a canvas still while the scene moves.
+- `vendor/` — self-hosted GSAP 3.15.0 + ScrollTrigger (GSAP standard no-charge
+  license) and Lenis 1.3.27 (MIT), copied from their npm packages.
 - `privacy.html` / `terms.html` — legal pages linked from the footer.
 - `remote.html` — the phone remote (`latys.app/remote`).
 - `icon.png` — favicon (the app icon).
