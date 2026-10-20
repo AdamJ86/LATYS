@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LATYS guide: ten short chapters</title>
+  <meta name="description" content="Learn LATYS in ten short videos: installing agents, the workspace, voice commands, missions, reviewing changes and more." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="The LATYS guide" />
+  <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
+  <link rel="icon" type="image/png" href="./icon.png?v=5" />
+  <link rel="apple-touch-icon" href="./media/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./site.css?v=1" />
+  <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
+  <style>
+    .guide { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px 56px; padding-top: clamp(40px, 6vw, 72px); align-items: start; }
+    .toc { position: sticky; top: calc(var(--bar) + 24px); }
+    .toc h1 { font-size: clamp(30px, 3vw, 38px); }
+    .toc > p { color: var(--bark); font-size: 15.5px; margin: 10px 0 22px; }
+    .toc ol { list-style: none; border-top: 1px solid var(--rule); }
+    .toc a { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--bark); transition: color 100ms; }
+    .toc a:hover { color: var(--parchment); }
+    .toc a[aria-current="true"] { color: var(--parchment); }
+    .toc .n { font: 600 14px/1 var(--sans); color: var(--bark); }
+    .toc a[aria-current="true"] .n { color: var(--gold); }
+    .toc .t { font-size: 15.5px; font-weight: 500; }
+    .toc .d { font: 13px var(--mono); color: var(--bark); }
+
+    .player .frame video { object-fit: contain; background: #000; }
+    .chapter-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; margin-top: 26px; }
+    .chapter-head h2 { font-size: clamp(26px, 2.6vw, 34px); }
+    .chapter-head p { color: var(--bark); margin-top: 6px; }
+    .pager { display: flex; gap: 10px; }
+
+    .transcript { margin-top: 30px; border-top: 1px solid var(--rule); padding-top: 22px; }
+    .transcript summary { font: 600 15px var(--sans); color: var(--bark); margin-bottom: 10px; cursor: pointer; width: max-content; }
+    .transcript summary:hover { color: var(--parchment); }
+    .cue { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; width: 100%; text-align: left; padding: 8px 10px; margin: 0 -10px; border: 0; border-radius: 6px; background: none; cursor: pointer; color: var(--bark); line-height: 1.55; transition: background 100ms, color 100ms; }
+    .cue:hover { background: var(--soil); color: var(--parchment); }
+    .cue.now { color: var(--parchment); background: var(--soil); }
+    .cue time { font: 13px/1.9 var(--mono); color: var(--bark); }
+    .cue.said span { font-family: var(--serif); color: var(--parchment); }
+
+    @media (max-width: 900px) {
+      .guide { grid-template-columns: minmax(0, 1fr); }
+      .toc { position: static; }
+      .player { order: -1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="titlebar">
+    <div class="page">
+      <a class="brand" href="./index.html" aria-label="LATYS home"><img src="./media/latys-icon.png?v=2" alt="" width="26" height="26" /><span>LATYS</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="./index.html">Overview</a>
+        <a href="./guide.html" aria-current="page">Guide</a>
+        <a href="./changelog.html">Changelog</a>
+        <a href="./pricing.html">Pricing</a>
+      </nav>
+      <a class="btn btn-gold btn-sm" href="./download.html">Download</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page guide">
+      <aside class="toc">
+        <h1>The guide</h1>
+        <p>Ten chapters, about six minutes in all. The same tour plays inside the app on first launch.</p>
+        <ol id="toc"></ol>
+      </aside>
+
+      <article class="player">
+        <div class="frame"><video id="player" controls playsinline preload="metadata"></video></div>
+        <div class="chapter-head">
+          <div>
+            <h2 id="title">Install your AI agents</h2>
+            <p id="blurb"></p>
+          </div>
+          <div class="pager">
+            <button class="btn btn-line btn-sm" type="button" id="prev">Previous</button>
+            <button class="btn btn-line btn-sm" type="button" id="next">Next chapter</button>
+          </div>
+        </div>
+        <details class="transcript" id="transcript" open>
+          <summary>Transcript</summary>
+          <div id="cues"></div>
+        </details>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="strip">
+      <div class="page">
+        <span class="cell"><span class="mono" data-version>v0.1</span></span>
+        <span class="cell">Windows 10 and 11</span>
+        <span class="cell" data-seats><span class="dot"></span><span data-seats-text>10 founder seats</span></span>
+        <span class="cell grow"></span>
+        <a class="cell" href="./privacy.html">Privacy</a>
+        <a class="cell" href="./terms.html">Terms</a>
+        <a class="cell" href="mailto:ajamespt86@gmail.com">Contact</a>
+        <a class="cell" href="./remote.html">Phone remote</a>
+      </div>
+    </div>
+    <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
+  </footer>
+
+  <script src="./site.js?v=1"></script>
+  <script>
+    // Same chapters, order and blurbs as the in-app tour (src/components/onboarding/tourChapters.ts).
+    const CHAPTERS = [
+      ['install', 'Install your AI agents', 'Claude Code, Codex, OpenCode and Grok: one command each.', '1:27'],
+      ['workspace', 'Your workspace', 'Projects, the canvas, and jumping between them.', '0:22'],
+      ['agents', 'Launch your agents', 'Start Claude, Codex and more, then hand them work.', '0:42'],
+      ['command', 'The command bar', 'Ctrl+K for everything, and one message for every agent.', '0:28'],
+      ['panels', 'Arrange your space', 'Move, maximize, tuck away and inspect panels.', '0:33'],
+      ['voice', 'Voice commands', 'Hold Ctrl+Shift+V and just say it.', '0:29'],
+      ['missions', 'Missions and the Council', 'Hand over whole outcomes, or ask several models at once.', '0:30'],
+      ['changes', 'Changes, tests and previews', 'Review diffs, run tests and preview your app live.', '0:32'],
+      ['media', 'Music and the Universe', 'A player that follows you, and a globe of builders.', '0:26'],
+      ['settings', 'Make it yours', 'Themes, backdrops, and where to replay this tour.', '0:23']
+    ];
+    const toc = document.getElementById('toc'), player = document.getElementById('player'), cuesBox = document.getElementById('cues');
+    let index = 0, cues = [];
+
+    CHAPTERS.forEach(([id, title, , dur], i) => {
+      const li = document.createElement('li');
+      li.innerHTML = '<a><span class="n"></span><span class="t"></span><span class="d"></span></a>';
+      const a = li.firstChild;
+      a.href = '#' + id;
+      a.querySelector('.n').textContent = i + 1;
+      a.querySelector('.t').textContent = title;
+      a.querySelector('.d').textContent = dur;
+      toc.append(li);
+    });
+
+    const secs = (t) => { const p = t.split(':').map(Number); return p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1]; };
+    const clock = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+
+    async function loadTranscript(id) {
+      cuesBox.textContent = '';
+      cues = [];
+      try {
+        const text = await (await fetch('./media/tour/' + id + '.vtt?v=2')).text();
+        for (const block of text.replace(/\r/g, '').split(/\n\n+/)) {
+          const m = block.match(/([\d:.]+)\s+-->\s+([\d:.]+)[^\n]*\n([\s\S]+)/);
+          if (!m) continue;
+          const start = secs(m[1]), end = secs(m[2]), line = m[3].replace(/<[^>]+>/g, '').trim();
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'cue' + (/^[“"]/.test(line) ? ' said' : '');
+          b.innerHTML = '<time></time><span></span>';
+          b.querySelector('time').textContent = clock(start);
+          b.querySelector('span').textContent = line;
+          b.addEventListener('click', () => { player.currentTime = start; player.play().catch(() => {}); });
+          cuesBox.append(b);
+          cues.push({ start, end, el: b });
+        }
+      } catch { cuesBox.textContent = 'The transcript could not load. Captions are still available in the player.'; }
+    }
+
+    function load(i, autoplay) {
+      index = i;
+      const [id, title, blurb] = CHAPTERS[i];
+      player.innerHTML = '';
+      player.poster = './media/tour/' + id + '.jpg?v=2';
+      player.src = './media/tour/' + id + '.mp4?v=2';
+      const tr = document.createElement('track');
+      tr.kind = 'captions'; tr.src = './media/tour/' + id + '.vtt?v=2'; tr.srclang = 'en'; tr.label = 'English';
+      player.append(tr);
+      player.setAttribute('aria-label', title);
+      document.getElementById('title').textContent = title;
+      document.getElementById('blurb').textContent = blurb;
+      document.title = title + ' | LATYS guide';
+      toc.querySelectorAll('a').forEach((a, j) => a.setAttribute('aria-current', String(i === j)));
+      document.getElementById('prev').disabled = i === 0;
+      document.getElementById('next').hidden = i === CHAPTERS.length - 1;
+      loadTranscript(id);
+      if (autoplay) player.play().catch(() => {});
+    }
+
+    // On phones the transcript starts folded so the chapter list stays close.
+    if (matchMedia('(max-width: 900px)').matches) document.getElementById('transcript').open = false;
+
+    const fromHash = () => Math.max(0, CHAPTERS.findIndex((c) => '#' + c[0] === location.hash));
+    window.addEventListener('hashchange', () => load(fromHash(), true));
+    document.getElementById('prev').addEventListener('click', () => { if (index > 0) location.hash = CHAPTERS[index - 1][0]; });
+    document.getElementById('next').addEventListener('click', () => { if (index < CHAPTERS.length - 1) location.hash = CHAPTERS[index + 1][0]; });
+    player.addEventListener('ended', () => { if (index < CHAPTERS.length - 1) location.hash = CHAPTERS[index + 1][0]; });
+    player.addEventListener('timeupdate', () => {
+      const t = player.currentTime;
+      for (const c of cues) c.el.classList.toggle('now', t >= c.start && t < c.end);
+    });
+    load(fromHash(), false);
+  </script>
+</body>
+</html>

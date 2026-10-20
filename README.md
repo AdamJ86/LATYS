@@ -3,8 +3,19 @@
 Static site for **latys.app**. No build step — plain HTML/CSS/JS.
 
 ## Files
-- `index.html` — landing page: hero, the film, features, bring-your-own-AI,
-  get started (agent install commands), the narrated tour, community, pricing.
+- `index.html` — overview: the labelled tree plate, the film, the feature
+  viewer, supported agents, founder license.
+- `download.html` — installer, SmartScreen steps, agent install commands
+  (`latys.app/download` resolves here on GitHub Pages).
+- `guide.html` — the ten tour chapters with clickable transcripts built from
+  `media/tour/*.vtt`. Keep `CHAPTERS` in step with
+  `src/components/onboarding/tourChapters.ts`.
+- `changelog.html` — release notes read live from the GitHub releases API,
+  falling back to `latys-latest.json`.
+- `pricing.html` — founder license, live seat counter, questions.
+- `site.css` / `site.js` — shared tokens, title bar + status strip chrome,
+  version feed, founder seats, copy buttons. Bump the `?v=` query on every page
+  when you change them.
 - `privacy.html` / `terms.html` — legal pages linked from the footer.
 - `remote.html` — the phone remote (`latys.app/remote`).
 - `icon.png` — favicon (the app icon).

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LATYS — Your AI Command Center</title>
-  <meta name="description" content="Every AI coding agent, one command center. Run Claude Code, Codex, OpenCode, Grok and more side by side, on your own AI accounts. $10 lifetime founder license." />
-  <meta name="theme-color" content="#050505" />
-  <meta property="og:title" content="LATYS — Your AI Command Center" />
-  <meta property="og:description" content="Every AI coding agent. One command center." />
+  <title>LATYS: every coding agent in one window</title>
+  <meta name="description" content="LATYS is a Windows app that runs Claude Code, Codex, Gemini, Grok, OpenCode and more side by side, on your own AI accounts. Voice control, missions, diffs and tests in one place." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="LATYS" />
+  <meta property="og:description" content="Run every coding agent from one window." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://latys.app" />
   <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
@@ -16,692 +16,333 @@
   <meta name="twitter:image" content="https://latys.app/media/og.jpg?v=3" />
   <link rel="icon" type="image/png" href="./icon.png?v=5" />
   <link rel="apple-touch-icon" href="./media/apple-touch-icon.png?v=2" />
+  <script>
+    // Old single-page anchors (shared links, the app) land on their new pages.
+    (function () {
+      var map = { '#pricing': './pricing.html', '#download': './download.html', '#start': './download.html#agents', '#tour': './guide.html', '#community': '#features', '#byo': '#agents' };
+      var to = map[location.hash];
+      if (to && to.charAt(0) === '.') location.replace(to);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./site.css?v=1" />
+  <link rel="preload" as="image" href="./media/hero-backdrop.jpg?v=2" />
+  <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
   <style>
-    :root {
-      --bg: #050505;
-      --panel: rgba(22, 19, 17, 0.6);
-      --gold: #e8b662;
-      --gold-soft: #f3d39b;
-      --copper: #c99e68;
-      --sage: #8a9460;
-      --cream: #f0e6d6;
-      --text: #e6dccd;
-      --muted: #a09587;
-      --faint: #6b6259;
-      --line: rgba(232, 182, 98, 0.14);
-      --line-strong: rgba(232, 182, 98, 0.32);
-      --maxw: 1200px;
-      --display: "Exo 2", Inter, system-ui, sans-serif;
-      --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
-      --ease: cubic-bezier(.2, .8, .2, 1);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
-    img, video { display: block; max-width: 100%; }
-    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
-    @media (max-width: 520px) { .wrap { padding: 0 16px; } }
+    /* The plate: the tree drawn like a specimen, each branch labelled with an agent. */
+    .plate { position: relative; overflow: hidden; padding-top: 8px; }
+    .stage { position: relative; left: 50%; transform: translateX(-50%); height: clamp(340px, calc(100svh - var(--bar) - 250px), 820px); aspect-ratio: 16 / 9; }
+    .stage video, .stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .stage video { opacity: 0; transition: opacity 900ms ease; }
+    .stage video.live { opacity: 1; }
+    .callouts { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .callouts line { stroke: rgba(236, 227, 211, 0.45); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 700ms var(--ease) forwards; }
+    .callouts circle { animation: pop 300ms var(--ease) both; }
+    .callouts text { font-family: var(--sans); opacity: 0; animation: fade 500ms ease forwards; }
+    .callouts .n { font-size: 31px; font-weight: 600; fill: var(--parchment); }
+    .callouts .m { font-size: 23px; fill: var(--bark); }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes fade { to { opacity: 1; } }
+    @keyframes pop { from { opacity: 0; transform: scale(0.2); } }
+    .callouts circle { transform-box: fill-box; transform-origin: center; }
 
-    .grain { position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: 0.03; background-image: radial-gradient(rgba(255,255,255,0.7) 0.5px, transparent 0.5px); background-size: 3px 3px; }
+    .caption { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 64px; align-items: start; padding-top: 28px; padding-bottom: 8px; }
+    .caption h1 { font-size: clamp(36px, 3.6vw, 54px); }
+    .caption .lede { margin-bottom: 22px; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+    .caption .quiet { font-size: 14.5px; margin-top: 16px; }
 
-    /* Nav */
-    header.nav { position: fixed; inset: 0 0 auto 0; z-index: 60; border-bottom: 1px solid transparent; transition: background .4s, border-color .4s; }
-    header.nav.solid { background: rgba(5,5,5,0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--line); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { width: 34px; height: 34px; filter: drop-shadow(0 0 10px rgba(232,182,98,0.45)); }
-    .wordmark { font-family: var(--display); font-weight: 200; letter-spacing: 0.42em; color: var(--cream); font-size: 17px; }
-    .nav-links { display: flex; align-items: center; gap: 30px; }
-    .nav-links a.link { color: var(--muted); font-size: 14px; font-weight: 500; transition: color .2s; }
-    .nav-links a.link:hover { color: var(--cream); }
+    section.band { padding-top: clamp(80px, 11vw, 140px); }
+    .split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px 56px; align-items: start; }
+    .split > header p { margin-top: 14px; color: var(--bark); }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 600 14.5px Inter, sans-serif; padding: 11px 20px; border-radius: 12px; cursor: pointer;
-      transition: transform .2s var(--ease), box-shadow .25s, background .25s, border-color .25s; border: 1px solid transparent; white-space: nowrap; background: none; color: inherit; }
-    .btn-primary { color: #1c1306; background: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--copper)); box-shadow: 0 10px 30px -10px rgba(232,182,98,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -12px rgba(232,182,98,0.85), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .btn-ghost { color: var(--cream); border-color: rgba(240,230,214,0.2); background: rgba(5,5,5,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .btn-ghost:hover { border-color: var(--gold); background: rgba(232,182,98,0.08); transform: translateY(-2px); }
-    .btn-lg { padding: 15px 28px; font-size: 16px; border-radius: 14px; }
-    .btn .ver { font-weight: 500; opacity: 0.65; font-size: 0.86em; }
+    /* The film */
+    .film { position: relative; }
+    .film video { object-fit: contain; background: #000; }
+    .film .play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; cursor: pointer; background: rgba(0, 0, 0, 0.35); }
+    .film .play span { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 18px 0 14px; border-radius: var(--radius); background: var(--parchment); color: #000; font-weight: 600; font-size: 15px; transition: background 100ms; }
+    .film .play:hover span { background: #fff; }
+    .film.on .play { display: none; }
 
-    /* Hero: the Rainbow Tree on the right, the brand on the left */
-    .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; isolation: isolate; padding: 110px 0 80px; background: #000; }
-    .hero-bg { position: absolute; top: 0; bottom: 0; right: -6%; width: 78%; height: 100%; object-fit: cover; object-position: center; z-index: -2; opacity: 0; transition: opacity 1.6s ease; }
-    .hero-bg.ready { opacity: 1; }
-    .hero-shade { position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: linear-gradient(90deg, #000 0%, #000 22%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 62%),
-                  linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 12%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 74%, var(--bg) 100%); }
-    .hero-copy { max-width: 560px; }
-    .hero-icon { position: relative; width: 168px; height: 168px; margin-left: -6px; }
-    .hero-icon::before { content: ""; position: absolute; inset: -38%; border-radius: 50%; background: radial-gradient(closest-side, rgba(232,182,98,0.42), rgba(232,182,98,0.1) 55%, transparent); filter: blur(6px); z-index: -1; animation: breathe 6s ease-in-out infinite; }
-    .hero-icon img { width: 100%; height: 100%; filter: drop-shadow(0 0 2px rgba(255,214,150,0.55)) drop-shadow(0 24px 40px rgba(0,0,0,0.75)); }
-    @keyframes breathe { 0%,100% { opacity: .75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
-    .hero-word { font-family: var(--display); font-weight: 200; font-size: clamp(46px, 7vw, 88px); letter-spacing: 0.4em; color: var(--cream); line-height: 1; margin-top: 28px; text-shadow: 0 0 40px rgba(232,182,98,0.3); }
-    .hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.22; color: var(--cream); margin-top: 26px; }
-    .hero h1 .gold { color: var(--gold-soft); }
-    .hero .sub { margin-top: 14px; font-size: 16.5px; color: rgba(240,230,214,0.7); max-width: 470px; }
-    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-    .hero-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 20px; }
-    .tiny { font-size: 12.5px; color: rgba(240,230,214,0.5); }
-    .tiny a { color: var(--gold-soft); border-bottom: 1px solid rgba(243,211,155,0.3); }
-    .hero .tiny { margin-top: 16px; max-width: 460px; }
-    .hero-copy > * { animation: rise 1.1s var(--ease) both; }
-    .hero-copy > :nth-child(2) { animation-delay: .1s; } .hero-copy > :nth-child(3) { animation-delay: .2s; }
-    .hero-copy > :nth-child(4) { animation-delay: .3s; } .hero-copy > :nth-child(5) { animation-delay: .4s; }
-    .hero-copy > :nth-child(6) { animation-delay: .5s; } .hero-copy > :nth-child(7) { animation-delay: .6s; }
-    @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-    .scroll-cue { position: absolute; left: 50%; bottom: 26px; margin-left: -12px; width: 24px; height: 38px; border-radius: 14px; border: 1.5px solid rgba(240,230,214,0.3); }
-    .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--gold); animation: cue 1.8s ease-in-out infinite; }
-    @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+    /* What you do in it: one stage, a list of things to show on it */
+    .viewer { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 32px 56px; align-items: start; margin-top: 40px; }
+    .tabs { display: grid; border-top: 1px solid var(--rule); }
+    .tabs button { display: block; width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 16px 0 16px 18px; cursor: pointer; position: relative; }
+    .tabs button::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 2px; background: transparent; transition: background 100ms; }
+    .tabs button[aria-selected="true"]::before { background: var(--gold); }
+    .tabs b { display: block; font: 400 21px/1.25 var(--serif); color: var(--bark); transition: color 100ms; }
+    .tabs button:hover b, .tabs button[aria-selected="true"] b { color: var(--parchment); }
+    .tabs span { display: block; margin-top: 4px; font-size: 15.5px; color: var(--bark); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 240ms var(--ease), opacity 160ms; }
+    .tabs button[aria-selected="true"] span { max-height: 90px; opacity: 1; }
+    .viewer .frame video { transition: opacity 160ms ease; }
+    .viewer .frame video.swap { opacity: 0; }
+    .viewer .note { position: absolute; left: 12px; bottom: 12px; padding: 3px 9px; border-radius: 6px; font-size: 12.5px; color: var(--parchment); background: rgba(0, 0, 0, 0.7); }
 
-    /* Seats */
-    .seats-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 100px; border: 1px solid rgba(240,230,214,0.18); background: rgba(5,5,5,0.5); font-size: 12.5px; font-weight: 600; color: var(--gold-soft); }
-    .seats-pill.sold-out { color: #e6927e; border-color: rgba(217,83,79,0.4); }
-    .seats-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
-    .seats-dot::before, .seats-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sage); }
-    .seats-dot::after { animation: seatsPing 1.8s ease-out infinite; }
-    @keyframes seatsPing { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(2.6); opacity: 0; } }
-    .sold-out .seats-dot::before, .sold-out .seats-dot::after { background: #d9534f; }
+    /* Roster */
+    .roster { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .roster th { text-align: left; font-weight: 500; font-size: 14px; color: var(--bark); padding: 0 0 10px; border-bottom: 1px solid var(--rule-strong); }
+    .roster td { padding: 13px 0; border-bottom: 1px solid var(--rule); color: var(--bark); }
+    .roster td:first-child { color: var(--parchment); font-weight: 600; }
+    .roster i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 12px; background: var(--c); }
+    .roster td:last-child { text-align: right; }
+    .facts { display: grid; gap: 18px; margin-top: 28px; }
+    .facts p { color: var(--bark); font-size: 16px; }
+    .facts strong { color: var(--parchment); font-weight: 600; }
 
-    /* Sections */
-    section { padding: 110px 0; position: relative; }
-    .head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
-    .tag { font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-    h2 { font-family: var(--display); font-weight: 300; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.1; color: var(--cream); }
-    .head h2 { margin-top: 12px; }
-    .head p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+    /* Close */
+    .close { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--rule); border-radius: 12px; }
+    .close > div { padding: clamp(24px, 4vw, 44px); }
+    .close > div + div { border-left: 1px solid var(--rule); }
+    .close h2 { font-size: clamp(26px, 2.6vw, 34px); }
+    .close p { color: var(--bark); margin: 12px 0 24px; }
+    .price { font: 500 64px/1 var(--sans); letter-spacing: -0.02em; color: var(--parchment); }
+    .price small { font: 500 16px var(--sans); color: var(--bark); margin-left: 8px; }
+    .meter { height: 6px; border-radius: 3px; background: var(--soil-2); overflow: hidden; margin: 18px 0 8px; max-width: 320px; }
+    .meter i { display: block; height: 100%; width: 0; background: var(--lichen); transition: width 600ms var(--ease); }
+    .sold .meter i { background: #d9534f; }
+    .seatline { font-size: 14.5px; color: var(--parchment); }
 
-    /* Film */
-    .theater { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--line-strong);
-      box-shadow: 0 60px 140px -50px rgba(232,182,98,0.45), 0 30px 80px -30px rgba(0,0,0,0.9); }
-    .theater video { width: 100%; height: 100%; object-fit: cover; }
-    .theater-ui { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(0,0,0,0), rgba(0,0,0,0.45)); transition: opacity .4s; }
-    .theater.playing .theater-ui { opacity: 0; pointer-events: none; }
-    .play-big { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px 12px 12px; border-radius: 100px; cursor: pointer; background: rgba(5,5,5,0.55); border: 1px solid rgba(240,230,214,0.25);
-      color: var(--cream); font: 600 15px Inter, sans-serif; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .25s var(--ease), border-color .25s; }
-    .play-big:hover { transform: scale(1.04); border-color: var(--gold); }
-    .play-big .disc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #1c1306; box-shadow: 0 0 30px rgba(232,182,98,0.6); }
-    .theater-bar { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; gap: 10px; align-items: center; opacity: 0; transition: opacity .3s; }
-    .theater.playing:hover .theater-bar, .theater.playing:focus-within .theater-bar { opacity: 1; }
-    .icon-btn { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; cursor: pointer; color: var(--cream); background: rgba(5,5,5,0.6); border: 1px solid rgba(240,230,214,0.18); }
-    .icon-btn:hover { border-color: var(--gold); }
-    .progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(240,230,214,0.18); overflow: hidden; cursor: pointer; }
-    .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-soft)); }
-
-    /* Feature rows */
-    .rows { display: grid; gap: 130px; }
-    .row { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 72px; align-items: center; }
-    .row.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); }
-    .row.flip .shot { order: 2; }
-    .shot { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; background: #0b0a09; border: 1px solid var(--line);
-      box-shadow: 0 40px 90px -45px rgba(0,0,0,0.95), 0 30px 80px -55px rgba(232,182,98,0.55); }
-    .shot video, .shot img { width: 100%; height: 100%; object-fit: cover; }
-    .shot .label { position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 100px; font-size: 11.5px; font-weight: 600; color: rgba(240,230,214,0.8); background: rgba(5,5,5,0.65); border: 1px solid rgba(240,230,214,0.14); }
-    .copy .kicker { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-    .copy h3 { font-family: var(--display); font-weight: 300; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; color: var(--cream); margin-top: 12px; }
-    .copy p { color: var(--muted); margin-top: 14px; font-size: 17px; max-width: 420px; }
-    kbd { font-family: var(--mono); font-size: 0.82em; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line-strong); background: rgba(232,182,98,0.07); color: var(--gold-soft); }
-
-    /* Bring your own AI */
-    .byo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
-    .lattice { position: relative; aspect-ratio: 1; max-width: 500px; width: 100%; margin: 0 auto; }
-    .lattice svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lattice .core { position: absolute; left: 50%; top: 50%; width: 24%; transform: translate(-50%, -50%); filter: drop-shadow(0 0 30px rgba(232,182,98,0.55)); }
-    .node { position: absolute; transform: translate(-50%, -50%); padding: 8px 13px; border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap; background: rgba(18,15,13,0.9); border: 1px solid var(--line-strong); }
-    .node i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; background: var(--c); box-shadow: 0 0 10px var(--c); }
-    .pulse { stroke-dasharray: 1.2 2; animation: flow 1.4s linear infinite; }
-    @keyframes flow { to { stroke-dashoffset: -6.4; } }
-
-    /* Get started */
-    .start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
-    .agents { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
-    .agent { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; background: var(--panel); transition: border-color .25s; }
-    .agent:hover { border-color: var(--line-strong); }
-    .agent-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .agent-name { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--cream); }
-    .agent-name i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
-    .agent-head a { font-size: 13px; color: var(--muted); transition: color .2s; }
-    .agent-head a:hover { color: var(--gold-soft); }
-    .cmd { margin-top: 10px; display: flex; align-items: stretch; border-radius: 10px; border: 1px solid rgba(240,230,214,0.1); background: #0a0908; overflow: hidden; }
-    .cmd code { flex: 1; min-width: 0; padding: 10px 13px; font: 13px/1.5 var(--mono); color: #e9dcc6; overflow-wrap: anywhere; }
-    .cmd code::before { content: "PS> "; color: var(--faint); }
-    .cmd button { flex: none; border: 0; border-left: 1px solid rgba(240,230,214,0.1); background: rgba(232,182,98,0.06); color: var(--gold-soft); font: 600 12.5px Inter, sans-serif; padding: 0 14px; cursor: pointer; transition: background .2s; }
-    .cmd button:hover { background: rgba(232,182,98,0.16); }
-    .cmd button.done { color: #b3bd86; }
-    .then { margin-top: 8px; font-size: 13px; color: var(--muted); }
-    .then b { color: var(--text); font-weight: 600; }
-    .then a { color: var(--gold-soft); }
-    .side { position: sticky; top: 96px; }
-    .clickplay { position: absolute; inset: 0; display: grid; place-items: center; cursor: pointer; background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.5)); border: 0; transition: opacity .3s; }
-    .clickplay.hide { opacity: 0; pointer-events: none; }
-    .clickplay .play-big { pointer-events: none; }
-
-    /* Tour */
-    .tour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-    .tour .theater video { object-fit: contain; }
-    .chapters { list-style: none; display: grid; gap: 4px; }
-    .chapters button { width: 100%; display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: center; padding: 11px 14px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: var(--text); cursor: pointer; font: inherit; text-align: left; transition: background .2s, border-color .2s; }
-    .chapters button:hover { background: rgba(232,182,98,0.06); }
-    .chapters button[aria-current="true"] { background: rgba(232,182,98,0.1); border-color: var(--line-strong); }
-    .chapters .num { font: 500 12px var(--mono); color: var(--faint); }
-    .chapters button[aria-current="true"] .num { color: var(--gold); }
-    .chapters .t { font-weight: 500; color: var(--cream); font-size: 15px; }
-    .chapters .d { font: 12px var(--mono); color: var(--faint); }
-    video::cue { background: rgba(5,5,5,0.78); color: #f0e6d6; font-family: Inter, sans-serif; }
-
-    /* Pricing */
-    .price-card { max-width: 440px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 22px; padding: 40px 34px; text-align: center; position: relative; box-shadow: 0 30px 90px -40px rgba(232,182,98,0.45); }
-    .price-card .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #1c1306; font-size: 11.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; white-space: nowrap; }
-    .price-card .amount { font-family: var(--display); font-size: 72px; font-weight: 300; color: var(--cream); line-height: 1; margin: 10px 0 6px; }
-    .price-card .amount span { font-size: 24px; color: var(--muted); }
-    .price-card .lifetime { color: var(--sage); font-weight: 600; font-size: 14px; letter-spacing: .04em; }
-    .price-card ul { list-style: none; text-align: left; margin: 24px 0; display: grid; gap: 10px; }
-    .price-card ul li { display: flex; gap: 11px; color: var(--text); font-size: 15px; }
-    .price-card ul li .ck2 { color: var(--gold); flex: none; }
-    .seats { margin: 16px 0 2px; }
-    .seats-row { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 13.5px; font-weight: 600; color: var(--gold-soft); }
-    .seats-bar { margin-top: 9px; height: 6px; border-radius: 100px; background: rgba(232,182,98,0.14); border: 1px solid var(--line); overflow: hidden; }
-    .seats-fill { height: 100%; width: 0%; border-radius: 100px; background: linear-gradient(90deg, var(--sage), var(--gold)); transition: width .8s var(--ease); }
-    .seats.sold-out .seats-row { color: #e6927e; }
-    .seats.sold-out .seats-fill { background: #d9534f; }
-    .price-rise { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 2px; padding: 7px 14px; border-radius: 100px; background: rgba(232,182,98,0.1); border: 1px solid var(--line); color: var(--gold-soft); font-size: 13px; font-weight: 600; line-height: 1.3; }
-    .price-rise strong { color: var(--cream); }
-    .price-rise-arrow { display: inline-flex; color: var(--gold); font-weight: 800; }
-    .price-rise.urgent { border-color: rgba(232,182,98,0.5); animation: riseGlow 1.7s ease-in-out infinite; }
-    .price-rise.urgent .price-rise-arrow { animation: riseBob 1.2s ease-in-out infinite; }
-    .price-rise.closed { background: rgba(232,182,98,0.16); border-color: rgba(232,182,98,0.5); color: var(--cream); }
-    @keyframes riseGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(232,182,98,0); } 50% { box-shadow: 0 0 20px 0 rgba(232,182,98,0.32); } }
-    @keyframes riseBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-    .price-card .amount.rising { color: var(--gold); animation: pricePulse .55s ease; }
-    @keyframes pricePulse { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
-    .price-card.closed { border-color: rgba(232,182,98,0.45); box-shadow: 0 0 44px -8px rgba(232,182,98,0.28); }
-    .price-card.closed .badge { background: var(--gold); color: #1a1410; }
-    .btn.disabled { opacity: .55; pointer-events: none; filter: grayscale(.35); }
-
-    /* Finale + footer */
-    .finale { text-align: center; padding: 130px 0 120px; overflow: hidden; }
-    .finale .halo { position: absolute; left: 50%; top: 50%; width: 900px; height: 520px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(232,182,98,0.16), transparent); pointer-events: none; }
-    .finale img { width: 120px; height: 120px; margin: 0 auto 26px; filter: drop-shadow(0 0 2px rgba(255,214,150,0.5)) drop-shadow(0 0 34px rgba(232,182,98,0.5)); }
-    .finale .cta-row { justify-content: center; }
-    footer { border-top: 1px solid var(--line); padding: 40px 0 36px; }
-    .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
-    .foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
-    .foot-links a { color: var(--muted); font-size: 14px; transition: color .2s; }
-    .foot-links a:hover { color: var(--cream); }
-    .smallprint { color: var(--faint); font-size: 12px; text-align: center; margin-top: 24px; }
-
-    /* Reveal */
-    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s var(--ease); }
-    .reveal.in { opacity: 1; transform: none; }
-
-    @media (max-width: 960px) {
-      .nav-links .link { display: none; }
-      .hero { align-items: flex-end; text-align: center; padding-bottom: 70px; }
-      .hero-bg { right: 0; width: 100%; opacity: 0; }
-      .hero-bg.ready { opacity: 0.7; }
-      .hero-shade { background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.75) 60%, var(--bg) 100%); }
-      .hero-copy { margin: 0 auto; }
-      .hero-icon { margin: 0 auto; width: 132px; height: 132px; }
-      .hero .sub, .hero .tiny { margin-left: auto; margin-right: auto; }
-      .cta-row, .hero-meta { justify-content: center; }
-      .row, .row.flip, .byo, .start, .tour { grid-template-columns: minmax(0, 1fr); gap: 30px; }
-      .row.flip .shot { order: 0; }
-      .rows { gap: 90px; }
-      .side { position: static; }
-      section { padding: 84px 0; }
-      .scroll-cue { display: none; }
+    @media (max-width: 900px) {
+      .callouts { display: none; }
+      .stage { height: auto; width: 150vw; }
+      .caption, .split, .viewer, .close { grid-template-columns: minmax(0, 1fr); }
+      .close > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+      .tabs span { max-height: none; opacity: 1; }
+      .viewer .frame { order: -1; }
     }
     @media (max-width: 520px) {
-      .btn-lg { width: 100%; }
-      .node { font-size: 11px; padding: 6px 9px; }
-      .price-card { padding: 36px 22px; }
-      .play-big { padding: 8px 16px 8px 8px; font-size: 14px; }
-      .play-big .disc { width: 38px; height: 38px; }
+      .roster td:nth-child(2) { display: none; }
+      .roster th:nth-child(2) { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-      .reveal { opacity: 1; transform: none; }
-      .hero-bg { opacity: 1; }
+      .callouts line { stroke-dashoffset: 0; }
+      .callouts text { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-
-  <header class="nav" id="nav">
-    <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="LATYS home"><img src="./media/latys-icon.png?v=2" alt="" width="34" height="34" /><span class="wordmark">LATYS</span></a>
-      <nav class="nav-links" aria-label="Primary">
-        <a class="link" href="#film">Film</a>
-        <a class="link" href="#features">Features</a>
-        <a class="link" href="#start">Get started</a>
-        <a class="link" href="#tour">Tour</a>
-        <a class="link" href="#pricing">Pricing</a>
-        <a class="btn btn-primary" href="#top">Download</a>
+  <header class="titlebar">
+    <div class="page">
+      <a class="brand" href="./index.html" aria-label="LATYS home"><img src="./media/latys-icon.png?v=2" alt="" width="26" height="26" /><span>LATYS</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="./index.html" aria-current="page">Overview</a>
+        <a href="./guide.html">Guide</a>
+        <a href="./changelog.html">Changelog</a>
+        <a href="./pricing.html">Pricing</a>
       </nav>
+      <a class="btn btn-gold btn-sm" href="./download.html">Download</a>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <video class="hero-bg" src="./media/hero-backdrop.mp4?v=2" poster="./media/hero-backdrop.jpg?v=2" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="hero-copy">
-          <div class="hero-icon"><img src="./media/latys-icon.png?v=2" alt="LATYS icon" width="168" height="168" /></div>
-          <div class="hero-word">LATYS</div>
-          <h1>Every AI coding agent.<br /><span class="gold">One command center.</span></h1>
-          <p class="sub">Claude Code, Codex, OpenCode and Grok, side by side. On your own AI accounts.</p>
-          <div class="cta-row" id="download">
-            <a class="btn btn-primary btn-lg" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-              Download for Windows <span class="ver" data-version></span>
-            </a>
-            <button class="btn btn-ghost btn-lg" type="button" data-watch>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>
-              Watch the film
-            </button>
+  <main>
+    <section class="plate" aria-labelledby="h">
+      <div class="stage">
+        <img src="./media/hero-backdrop.jpg?v=2" alt="" width="1920" height="1080" />
+        <video src="./media/hero-backdrop.mp4?v=2" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
+        <svg class="callouts" viewBox="0 0 1920 1080" aria-hidden="true" id="callouts"></svg>
+      </div>
+      <div class="page caption">
+        <h1 id="h">Run every coding agent from one window.</h1>
+        <div>
+          <p class="lede">LATYS is a Windows app for the AI coding tools you already use. Open them side by side, talk to them by voice, and check what they changed before it ships.</p>
+          <div class="actions">
+            <a class="btn btn-gold" href="./download.html">Download for Windows <span class="v" data-version></span></a>
+            <a class="link" href="#film">Watch the film</a>
           </div>
-          <div class="hero-meta">
-            <div class="seats-pill" data-seats><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
-            <span class="tiny">$10 lifetime · no subscription</span>
-          </div>
-          <p class="tiny">Early unsigned build: Windows may show a SmartScreen notice. Download only from latys.app or the official <a href="https://github.com/adamj86/LATYS/releases/latest">GitHub release</a>.</p>
+          <p class="quiet">Works with Claude Code, Codex, Gemini, Grok, OpenCode, Cursor, Antigravity, Kimi and Hermes.</p>
         </div>
       </div>
-      <a class="scroll-cue" href="#film" aria-label="Scroll to the film"></a>
     </section>
 
-    <section id="film" style="padding-top:60px">
-      <div class="wrap">
-        <div class="head reveal"><div class="tag">The film</div><h2>See it in action</h2></div>
-        <div class="theater reveal" id="theater">
-          <video id="trailer" src="./media/trailer.mp4?v=4" poster="./media/trailer-poster.jpg?v=4" muted loop playsinline preload="metadata" aria-label="LATYS film">
+    <section class="band" id="film" aria-labelledby="film-h">
+      <div class="page split">
+        <header>
+          <h2 id="film-h">See it working</h2>
+          <p>84 seconds, filmed in the real app. Turn your sound on.</p>
+        </header>
+        <div class="frame film" id="filmBox">
+          <video id="filmVideo" src="./media/trailer.mp4?v=4" poster="./media/trailer-poster.jpg?v=4" preload="none" playsinline aria-label="The LATYS film">
             <track kind="captions" src="./media/trailer.vtt?v=4" srclang="en" label="English" />
           </video>
-          <div class="theater-ui">
-            <button class="play-big" type="button" data-film-play>
-              <span class="disc"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg></span>
-              Play with sound
-            </button>
-          </div>
-          <div class="theater-bar">
-            <button class="icon-btn" type="button" data-film-toggle aria-label="Pause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
-            <div class="progress" data-film-progress role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" tabindex="0"><i></i></div>
-            <button class="icon-btn" type="button" data-film-cc aria-label="Captions" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M17 10.2a2.2 2.2 0 1 0 0 3.6"/></svg></button>
-            <button class="icon-btn" type="button" data-film-mute aria-label="Mute"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" data-waves/></svg></button>
-          </div>
+          <button class="play" type="button" id="filmPlay"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></svg>Play the film, 1:24</span></button>
         </div>
       </div>
     </section>
 
-    <section id="features">
-      <div class="wrap rows">
-        <div class="row">
-          <div class="shot reveal"><video data-loop src="./media/loop-agents.mp4?v=2" poster="./media/loop-agents.jpg?v=2" muted loop playsinline preload="none" aria-label="Launching an agent"></video></div>
-          <div class="copy reveal"><div class="kicker">Agents</div><h3>Every agent,<br />side by side.</h3><p>Launch Claude Code, Codex, OpenCode, Grok and more, each in its own live session.</p></div>
-        </div>
-        <div class="row flip">
-          <div class="shot reveal"><video data-loop src="./media/loop-voice.mp4?v=2" poster="./media/loop-voice.jpg?v=2" muted loop playsinline preload="none" aria-label="Voice commands"></video></div>
-          <div class="copy reveal"><div class="kicker">Voice</div><h3>Just say it.</h3><p>Hold <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>V</kbd> and talk. Speech stays on your machine.</p></div>
-        </div>
-        <div class="row">
-          <div class="shot reveal"><video data-loop src="./media/loop-missions.mp4?v=2" poster="./media/loop-missions.jpg?v=2" muted loop playsinline preload="none" aria-label="Starting a mission"></video></div>
-          <div class="copy reveal"><div class="kicker">Missions</div><h3>Hand off<br />the whole job.</h3><p>Describe the outcome. LATYS runs the agents until it's done.</p></div>
-        </div>
-        <div class="row flip">
-          <div class="shot reveal"><video data-loop src="./media/loop-review.mp4?v=2" poster="./media/loop-review.jpg?v=2" muted loop playsinline preload="none" aria-label="Reviewing changes"></video></div>
-          <div class="copy reveal"><div class="kicker">Review &amp; ship</div><h3>Review. Test.<br />Ship.</h3><p>Diffs, real test results and a live preview, right next to your agents.</p></div>
-        </div>
-        <div class="row" id="community">
-          <div class="shot reveal"><video data-loop src="./media/community.mp4?v=4" poster="./media/community.jpg?v=4" muted loop playsinline preload="none" aria-label="The Vibe Coding Universe: community chat and the live globe"></video><span class="label">Sample conversation</span></div>
-          <div class="copy reveal"><div class="kicker">Community</div><h3>A universe<br />of builders.</h3><p>Chat, react and pair up in voice. See who&rsquo;s building right now on a live globe.</p></div>
-        </div>
-        <div class="row flip">
-          <div class="shot reveal"><video data-loop src="./media/loop-themes.mp4?v=2" poster="./media/loop-themes.jpg?v=2" muted loop playsinline preload="none" aria-label="Themes and backdrops"></video></div>
-          <div class="copy reveal"><div class="kicker">Make it yours</div><h3>Set the scene.</h3><p>Themes and cinematic backdrops, one click away.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="byo">
-      <div class="wrap byo">
-        <div class="lattice reveal" aria-hidden="true">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs><radialGradient id="lg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b662" stop-opacity="0.9"/><stop offset="100%" stop-color="#e8b662" stop-opacity="0.15"/></radialGradient></defs>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="url(#lg)" stroke-width="0.35" stroke-opacity="0.35" stroke-dasharray="1 2"/>
-            <g stroke="#e8b662" stroke-width="0.45" stroke-linecap="round" id="spokes"></g>
-          </svg>
-          <img class="core" src="./media/latys-icon.png?v=2" alt="" />
-        </div>
-        <div class="copy reveal"><div class="kicker">Bring your own AI</div><h3>Your AI.<br />Your keys.</h3><p>LATYS runs the official tools you already use. Your code and credentials never leave your machine.</p></div>
-      </div>
-    </section>
-
-    <section id="start">
-      <div class="wrap">
-        <div class="head reveal"><div class="tag">Get started</div><h2>Set up in minutes</h2><p>One PowerShell command per agent.</p></div>
-        <div class="start">
-          <div class="agents">
-            <div class="agent reveal" style="--c:#d97757">
-              <div class="agent-head"><div class="agent-name"><i></i>Claude Code</div><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Docs ↗</a></div>
-              <div class="cmd"><code>irm https://claude.ai/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>claude</b> to sign in.</p>
-            </div>
-            <div class="agent reveal" style="--c:#10a37f">
-              <div class="agent-head"><div class="agent-name"><i></i>Codex</div><a href="https://github.com/openai/codex" target="_blank" rel="noopener">Docs ↗</a></div>
-              <div class="cmd"><code>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>codex</b> to sign in.</p>
-            </div>
-            <div class="agent reveal" style="--c:#f0883e">
-              <div class="agent-head"><div class="agent-name"><i></i>OpenCode</div><a href="https://opencode.ai/docs/" target="_blank" rel="noopener">Docs ↗</a></div>
-              <div class="cmd"><code>npm install -g opencode-ai</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a>. Then run <b>opencode</b> and type <b>/connect</b>.</p>
-            </div>
-            <div class="agent reveal" style="--c:#cfd4dc">
-              <div class="agent-head"><div class="agent-name"><i></i>Grok</div><a href="https://x.ai/build" target="_blank" rel="noopener">Docs ↗</a></div>
-              <div class="cmd"><code>irm https://x.ai/cli/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
-              <p class="then">Then run <b>grok login</b>.</p>
-            </div>
-          </div>
-          <div class="side reveal">
-            <div class="shot" data-clickplay>
-              <video src="./media/tour/install.mp4?v=2" poster="./media/tour/install.jpg?v=2" playsinline preload="none" controls aria-label="Install walkthrough">
-                <track kind="captions" src="./media/tour/install.vtt?v=2" srclang="en" label="English" />
-              </video>
-              <button class="clickplay" type="button" aria-label="Play the install walkthrough"><span class="play-big"><span class="disc"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg></span>Walkthrough · 1:27</span></button>
-            </div>
+    <section class="band" id="features" aria-labelledby="features-h">
+      <div class="page">
+        <h2 id="features-h">What you do in it</h2>
+        <div class="viewer">
+          <div class="tabs" role="tablist" aria-label="Features" id="tabs"></div>
+          <div class="frame" role="tabpanel" id="stagePanel">
+            <video id="stageVideo" muted loop playsinline preload="none"></video>
+            <span class="note" id="stageNote" hidden>Sample conversation</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="tour">
-      <div class="wrap">
-        <div class="head reveal"><div class="tag">The tour</div><h2>Ten short chapters</h2></div>
-        <div class="tour">
-          <div class="theater reveal"><video id="tourPlayer" controls playsinline preload="none" poster="./media/tour/install.jpg?v=2" aria-label="LATYS tour chapter"></video></div>
-          <ol class="chapters reveal" id="chapters"></ol>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="wrap">
-        <div class="head reveal"><div class="tag">Pricing</div><h2>One price. Forever.</h2></div>
-        <div class="price-card reveal">
-          <span class="badge" data-badge>Founder</span>
-          <div class="lifetime">LIFETIME ACCESS</div>
-          <div class="amount"><span>$</span><b data-amount>10</b></div>
-          <div style="color:var(--muted);font-size:14px">one-time · pay with Stripe</div>
-          <div class="price-rise" data-price-rise><span class="price-rise-arrow">↑</span><span>Rises to <strong>$79</strong> when the founder run sells out</span></div>
-          <div class="seats" data-seats>
-            <div class="seats-row"><span class="seats-dot"></span><span data-seats-text>Only 10 founder seats</span></div>
-            <div class="seats-bar"><div class="seats-fill" data-seats-fill></div></div>
+    <section class="band" id="agents" aria-labelledby="agents-h">
+      <div class="page split">
+        <header>
+          <h2 id="agents-h">Uses the AI you already pay for</h2>
+          <div class="facts">
+            <p><strong>LATYS doesn't resell AI.</strong> It starts each provider's official command-line tool on your computer, signed in with your own account.</p>
+            <p><strong>Your code stays local.</strong> Projects, prompts and keys stay on your machine. Keys are encrypted with Windows' own secure storage.</p>
+            <p><strong>Each provider bills you directly,</strong> under their own plans and terms.</p>
           </div>
-          <ul>
-            <li><span class="ck2">✓</span> The full LATYS app for Windows</li>
-            <li><span class="ck2">✓</span> All future updates</li>
-            <li><span class="ck2">✓</span> Community access</li>
-            <li><span class="ck2">✓</span> Offline license, no account</li>
-          </ul>
-          <a class="btn btn-primary btn-lg" data-buy style="width:100%" href="https://buy.stripe.com/28E3cv2EHe1T0VC1A0aIM01">Become a founder — $10</a>
-          <p style="color:var(--muted);font-size:12.5px;margin-top:14px">Your license key is emailed after purchase.</p>
-        </div>
+        </header>
+        <table class="roster">
+          <thead><tr><th scope="col">Agent</th><th scope="col">Made by</th><th scope="col"><span class="sr">Setup</span></th></tr></thead>
+          <tbody id="roster"></tbody>
+        </table>
       </div>
     </section>
 
-    <section class="finale">
-      <div class="halo" aria-hidden="true"></div>
-      <div class="wrap reveal">
-        <img src="./media/latys-icon.png?v=2" alt="" width="120" height="120" />
-        <h2>Ready when you are.</h2>
-        <div class="cta-row">
-          <a class="btn btn-primary btn-lg" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-            Download for Windows <span class="ver" data-version></span>
-          </a>
-          <a class="btn btn-ghost btn-lg" href="#pricing">Founder license — $10</a>
+    <section class="band" aria-label="Get LATYS">
+      <div class="page">
+        <div class="close">
+          <div data-seats>
+            <h2>Founder license</h2>
+            <div class="price" style="margin-top:18px">$10<small>once, no subscription</small></div>
+            <div class="meter"><i data-seats-fill></i></div>
+            <div class="seatline" data-seats-text>10 founder seats</div>
+            <p>The price goes up to $79 when the founder seats are gone. Founders keep every future update.</p>
+            <a class="btn btn-line" href="./pricing.html">See what's included</a>
+          </div>
+          <div>
+            <h2>Up and running in minutes</h2>
+            <p>Download the installer, add one agent with a single PowerShell command, and you're working. The guide walks through the rest in ten short videos.</p>
+            <div class="actions">
+              <a class="btn btn-gold" href="./download.html">Download for Windows <span class="v" data-version></span></a>
+              <a class="link" href="./guide.html">Open the guide</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">
-      <div class="foot">
-        <a class="brand" href="#top"><img src="./media/latys-icon.png?v=2" alt="LATYS" width="28" height="28" /><span class="wordmark" style="font-size:15px">LATYS</span></a>
-        <div class="foot-links">
-          <a href="#features">Features</a><a href="#tour">Tour</a><a href="#pricing">Pricing</a>
-          <a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="mailto:ajamespt86@gmail.com">Contact</a>
-        </div>
-        <div class="foot-links" style="color:var(--muted);font-size:13.5px">© <span id="yr">2026</span> LATYS</div>
+    <div class="strip">
+      <div class="page">
+        <span class="cell"><span class="mono" data-version>v0.1</span></span>
+        <span class="cell">Windows 10 and 11</span>
+        <span class="cell" data-seats><span class="dot"></span><span data-seats-text>10 founder seats</span></span>
+        <span class="cell grow"></span>
+        <a class="cell" href="./privacy.html">Privacy</a>
+        <a class="cell" href="./terms.html">Terms</a>
+        <a class="cell" href="mailto:ajamespt86@gmail.com">Contact</a>
+        <a class="cell" href="./remote.html">Phone remote</a>
       </div>
-      <p class="smallprint">LATYS runs on your own AI accounts; their costs and terms apply. Product names are trademarks of their owners.</p>
     </div>
+    <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
   </footer>
 
+  <script src="./site.js?v=1"></script>
   <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
+    // Hero: the tree fades in only once it is really playing.
+    const tree = document.querySelector('.stage video');
+    const live = () => tree.classList.add('live');
+    if (tree.readyState >= 3) live(); else tree.addEventListener('playing', live, { once: true });
 
-    const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Hero backdrop fades in once it is actually playing (no flash of a frozen frame).
-    const heroBg = document.querySelector('.hero-bg');
-    const showBg = () => heroBg.classList.add('ready');
-    if (heroBg.readyState >= 3) showBg(); else heroBg.addEventListener('playing', showBg, { once: true });
-    setTimeout(showBg, 2500);
-
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-    fetch('./latys-latest.json', { cache: 'no-store' }).then((r) => r.json()).then((d) => {
-      if (d && d.version) document.querySelectorAll('[data-version]').forEach((el) => { el.textContent = 'v' + d.version; });
-    }).catch(() => {});
-
-    // Loops play only while on screen.
-    const loopIo = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        const v = e.target;
-        if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
-      }
-    }, { threshold: 0.35 });
-    document.querySelectorAll('video[data-loop]').forEach((v) => loopIo.observe(v));
-
-    // The film: silent preview on screen; "Play with sound" restarts it with audio.
-    const theater = document.getElementById('theater');
-    const film = document.getElementById('trailer');
-    const filmBar = theater.querySelector('[data-film-progress] i');
-    let filmWithSound = false;
-    new IntersectionObserver((entries) => {
-      for (const e of entries) e.isIntersecting ? film.play().catch(() => {}) : film.pause();
-    }, { threshold: 0.4 }).observe(film);
-    const muteBtn = theater.querySelector('[data-film-mute]');
-    const setMuteIcon = () => {
-      muteBtn.querySelector('[data-waves]').style.display = film.muted ? 'none' : '';
-      muteBtn.setAttribute('aria-label', film.muted ? 'Unmute' : 'Mute');
-    };
-    function playFilmWithSound() {
-      filmWithSound = true; film.loop = false; film.currentTime = 0; film.muted = false;
-      theater.classList.add('playing');
-      film.play().catch(() => { film.muted = true; film.play().catch(() => {}); });
-      setMuteIcon();
-    }
-    theater.querySelector('[data-film-play]').addEventListener('click', playFilmWithSound);
-    document.querySelector('[data-watch]').addEventListener('click', () => {
-      document.getElementById('film').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      playFilmWithSound();
-    });
-    film.addEventListener('click', () => { if (!filmWithSound) playFilmWithSound(); else film.paused ? film.play() : film.pause(); });
-    film.addEventListener('timeupdate', () => { filmBar.style.width = (film.currentTime / (film.duration || 1)) * 100 + '%'; });
-    film.addEventListener('ended', () => {
-      filmWithSound = false; film.muted = true; film.loop = true; theater.classList.remove('playing');
-      film.currentTime = 0; film.play().catch(() => {});
-    });
-    const toggleBtn = theater.querySelector('[data-film-toggle]');
-    const pauseSvg = toggleBtn.innerHTML;
-    const playSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
-    film.addEventListener('play', () => { toggleBtn.innerHTML = pauseSvg; toggleBtn.setAttribute('aria-label', 'Pause'); });
-    film.addEventListener('pause', () => { toggleBtn.innerHTML = playSvg; toggleBtn.setAttribute('aria-label', 'Play'); });
-    toggleBtn.addEventListener('click', () => (film.paused ? film.play() : film.pause()));
-    muteBtn.addEventListener('click', () => { film.muted = !film.muted; setMuteIcon(); });
-    const ccBtn = theater.querySelector('[data-film-cc]');
-    ccBtn.addEventListener('click', () => {
-      const track = film.textTracks[0]; if (!track) return;
-      const on = track.mode !== 'showing';
-      track.mode = on ? 'showing' : 'hidden';
-      ccBtn.setAttribute('aria-pressed', String(on)); ccBtn.style.borderColor = on ? 'var(--gold)' : '';
-    });
-    const seek = theater.querySelector('[data-film-progress]');
-    seek.addEventListener('click', (e) => { const r = seek.getBoundingClientRect(); film.currentTime = ((e.clientX - r.left) / r.width) * (film.duration || 0); });
-    seek.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') film.currentTime = Math.min(film.duration || 0, film.currentTime + 5);
-      if (e.key === 'ArrowLeft') film.currentTime = Math.max(0, film.currentTime - 5);
-    });
-
-    document.querySelectorAll('[data-clickplay]').forEach((box) => {
-      const v = box.querySelector('video'), cover = box.querySelector('.clickplay');
-      cover.addEventListener('click', () => { cover.classList.add('hide'); v.play().catch(() => {}); });
-      v.addEventListener('play', () => cover.classList.add('hide'));
-    });
-
-    document.querySelectorAll('[data-copy]').forEach((b) => {
-      b.addEventListener('click', async () => {
-        const text = b.parentElement.querySelector('code').textContent;
-        try { await navigator.clipboard.writeText(text); b.textContent = 'Copied'; b.classList.add('done'); }
-        catch { b.textContent = 'Select & copy'; }
-        setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('done'); }, 1800);
-      });
-    });
-
-    (function lattice() {
-      const box = document.querySelector('.lattice'), g = document.getElementById('spokes');
-      const providers = [['Claude Code', '#d97757'], ['Codex', '#10a37f'], ['OpenCode', '#f0883e'], ['Grok', '#cfd4dc'], ['Cursor', '#00b4d8'],
-        ['Gemini', '#4285f4'], ['Antigravity', '#7c5cff'], ['Kimi', '#25c8a8'], ['Hermes', '#dfa843']];
-      providers.forEach(([name, color], i) => {
-        const a = (i / providers.length) * Math.PI * 2 - Math.PI / 2;
-        for (const pulse of [false, true]) {
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', 50 + Math.cos(a) * 14); line.setAttribute('y1', 50 + Math.sin(a) * 14);
-          line.setAttribute('x2', 50 + Math.cos(a) * 33); line.setAttribute('y2', 50 + Math.sin(a) * 33);
-          if (pulse) { line.setAttribute('class', 'pulse'); line.style.animationDelay = (-i * 0.17) + 's'; line.setAttribute('stroke-opacity', '0.75'); }
-          else line.setAttribute('stroke-opacity', '0.16');
-          g.appendChild(line);
-        }
-        const n = document.createElement('div');
-        n.className = 'node'; n.style.left = (50 + Math.cos(a) * 38) + '%'; n.style.top = (50 + Math.sin(a) * 38) + '%'; n.style.setProperty('--c', color);
-        n.innerHTML = '<i></i>' + name;
-        box.appendChild(n);
-      });
-    })();
-
-    const CHAPTERS = [
-      ['install', 'Install your AI agents', '1:27'], ['workspace', 'Your workspace', '0:22'], ['agents', 'Launch your agents', '0:42'],
-      ['command', 'The command bar', '0:28'], ['panels', 'Arrange your space', '0:33'], ['voice', 'Voice commands', '0:29'],
-      ['missions', 'Missions & the Council', '0:30'], ['changes', 'Changes, tests & previews', '0:32'], ['media', 'Music & the Universe', '0:26'],
-      ['settings', 'Make it yours', '0:23']
+    const AGENTS = [
+      // name, maker, colour, branch point on the 1920x1080 plate, side, label y
+      ['Claude Code', 'Anthropic', '#d97757', 790, 130, 'l', 140],
+      ['Antigravity', 'Google', '#8b6dff', 640, 300, 'l', 300],
+      ['Gemini', 'Google', '#4c8df6', 505, 430, 'l', 450],
+      ['Hermes', 'Nous Research', '#dfa843', 530, 615, 'l', 610],
+      ['OpenCode', 'Open source', '#f0883e', 1200, 230, 'r', 190],
+      ['Kimi', 'Moonshot AI', '#25c8a8', 1255, 325, 'r', 330],
+      ['Codex', 'OpenAI', '#10a37f', 1090, 450, 'r', 470],
+      ['Grok', 'xAI', '#cfd4dc', 1235, 565, 'r', 610],
+      ['Cursor', 'Anysphere', '#00b4d8', 1195, 780, 'r', 770]
     ];
-    const list = document.getElementById('chapters'), player = document.getElementById('tourPlayer');
-    function load(i, autoplay) {
-      const id = CHAPTERS[i][0];
-      player.innerHTML = '';
-      player.src = './media/tour/' + id + '.mp4?v=2';
-      player.poster = './media/tour/' + id + '.jpg?v=2';
-      const tr = document.createElement('track');
-      tr.kind = 'captions'; tr.src = './media/tour/' + id + '.vtt?v=2'; tr.srclang = 'en'; tr.label = 'English';
-      player.appendChild(tr);
-      player.dataset.index = i;
-      list.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', String(i === j)));
-      if (autoplay) player.play().catch(() => {});
-    }
-    CHAPTERS.forEach(([id, title, dur], i) => {
-      const li = document.createElement('li');
-      li.innerHTML = '<button type="button"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="t"></span><span class="d"></span></button>';
-      li.querySelector('.t').textContent = title;
-      li.querySelector('.d').textContent = dur;
-      li.querySelector('button').addEventListener('click', () => load(i, true));
-      list.appendChild(li);
+    const SETUP = { 'Claude Code': 1, Codex: 1, OpenCode: 1, Grok: 1 };
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.getElementById('callouts');
+    const el = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+    AGENTS.forEach(([name, maker, color, x, y, side, ly], i) => {
+      const left = side === 'l';
+      const tx = left ? 370 : 1550;
+      const delay = 350 + i * 90;
+      const line = el('line', { x1: x, y1: y, x2: left ? tx + 14 : tx - 14, y2: ly - 8, pathLength: 1 });
+      line.style.animationDelay = delay + 'ms';
+      const dot = el('circle', { cx: x, cy: y, r: 8, fill: color, stroke: '#ece3d3', 'stroke-width': 2.5 });
+      dot.style.animationDelay = delay + 'ms';
+      const n = el('text', { x: tx, y: ly, class: 'n', 'text-anchor': left ? 'end' : 'start' });
+      n.textContent = name;
+      const m = el('text', { x: tx, y: ly + 31, class: 'm', 'text-anchor': left ? 'end' : 'start' });
+      m.textContent = maker;
+      n.style.animationDelay = m.style.animationDelay = (delay + 300) + 'ms';
+      svg.append(line, dot, n, m);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td><i></i></td><td></td><td></td>';
+      tr.querySelector('i').style.setProperty('--c', color);
+      tr.cells[0].append(name);
+      tr.cells[1].textContent = maker;
+      if (SETUP[name]) tr.cells[2].innerHTML = '<a class="link" href="./download.html#agents">Setup</a>';
+      document.getElementById('roster').append(tr);
     });
-    load(0, false);
-    player.addEventListener('ended', () => { const i = Number(player.dataset.index) + 1; if (i < CHAPTERS.length) load(i, true); });
 
-    // ── Live founder-seats counter ───────────────────────────────────────────
-    // Data comes from the Stripe-backed Cloudflare Worker (see
-    // community/SEATS-COUNTER-SETUP.md). Until SEATS_ENDPOINT is set, the page
-    // keeps the static "Only 10 founder seats" label.
-    const SEATS_ENDPOINT = 'https://latys-seats.latys.workers.dev';
-    const SEATS_TOTAL = 10;
-    const NEXT_PRICE = 79;   // founder price rises to this once the run sells out
-    const URGENT_AT = 4;     // start the "almost gone" pulse at/under this many seats
+    // The film plays with sound only when asked.
+    const filmBox = document.getElementById('filmBox'), film = document.getElementById('filmVideo');
+    document.getElementById('filmPlay').addEventListener('click', () => {
+      filmBox.classList.add('on'); film.controls = true; film.play().catch(() => {});
+    });
 
-    // Count the headline price up 10 → NEXT_PRICE when the run sells out (once).
-    let priceRolled = false;
-    function rollPriceUp() {
-      if (priceRolled) return; priceRolled = true;
-      const el = document.querySelector('[data-amount]');
-      if (!el) return;
-      const amount = el.closest('.amount');
-      if (amount) amount.classList.add('rising');
-      const start = 10, end = NEXT_PRICE, dur = 1300, t0 = performance.now();
-      (function tick(now) {
-        const p = Math.min(1, (now - t0) / dur);
-        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
-        el.textContent = Math.round(start + (end - start) * eased);
-        if (p < 1) requestAnimationFrame(tick);
-      })(performance.now());
+    // Feature viewer
+    const FEATURES = [
+      ['Agents', 'Launch Claude Code, Codex, Gemini and the rest, each in its own live terminal panel.', 'loop-agents', 2],
+      ['Voice', 'Hold Ctrl+Shift+V and say what you want. Local voice mode keeps your speech on your computer.', 'loop-voice', 2],
+      ['Missions', 'Describe the outcome you want, and LATYS keeps the agents working until it is done.', 'loop-missions', 2],
+      ['Review', 'Diffs, test results and a live preview of your app sit next to the agents that made them.', 'loop-review', 2],
+      ['Universe', 'Chat, react and pair up by voice with other builders, and see who is working right now on a live globe.', 'community', 4],
+      ['Themes', 'Switch themes and cinematic backdrops in one click.', 'loop-themes', 2]
+    ];
+    const tabs = document.getElementById('tabs'), stage = document.getElementById('stageVideo'), note = document.getElementById('stageNote');
+    let current = -1, inView = false;
+    function show(i, focus) {
+      if (i === current) return;
+      current = i;
+      [...tabs.children].forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; });
+      if (focus) tabs.children[i].focus();
+      const [title, , file, v] = FEATURES[i];
+      document.getElementById('stagePanel').setAttribute('aria-labelledby', 'tab-' + i);
+      stage.classList.add('swap');
+      if (!stage.poster) stage.poster = './media/' + file + '.jpg?v=' + v;
+      setTimeout(() => {
+        stage.poster = './media/' + file + '.jpg?v=' + v;
+        stage.src = './media/' + file + '.mp4?v=' + v;
+        stage.setAttribute('aria-label', title);
+        note.hidden = file !== 'community';
+        if (inView) stage.play().catch(() => {});
+        stage.classList.remove('swap');
+      }, 160);
     }
-
-    function paintSeats(total, left, soldOut) {
-      const t = total || SEATS_TOTAL;
-      const l = Math.max(0, left == null ? t : left);
-      document.querySelectorAll('[data-seats-text]').forEach((el) => {
-        el.textContent = soldOut ? 'Founder run — sold out' : (l + ' of ' + t + ' founder seats left');
-      });
-      const pct = t ? Math.round(((t - l) / t) * 100) : 0;
-      document.querySelectorAll('[data-seats-fill]').forEach((el) => { el.style.width = pct + '%'; });
-      document.querySelectorAll('[data-seats]').forEach((el) => el.classList.toggle('sold-out', !!soldOut));
-
-      // Live price-rise indicator — gets urgent as the run nears sellout.
-      const urgent = !soldOut && l > 0 && l <= URGENT_AT;
-      document.querySelectorAll('[data-price-rise]').forEach((el) => {
-        if (soldOut) {
-          el.classList.remove('urgent'); el.classList.add('closed');
-          el.innerHTML = '<span>Founder run ended — lifetime is now <strong>$' + NEXT_PRICE + '</strong></span>';
-        } else {
-          el.classList.toggle('urgent', urgent);
-          el.innerHTML = urgent
-            ? '<span class="price-rise-arrow">↑</span><span>Only <strong>' + l + ' left</strong> at $10 — then it rises to <strong>$' + NEXT_PRICE + '</strong></span>'
-            : '<span class="price-rise-arrow">↑</span><span>Rises to <strong>$' + NEXT_PRICE + '</strong> when the founder run sells out</span>';
-        }
-      });
-
-      if (soldOut) {
-        rollPriceUp();
-        document.querySelectorAll('[data-badge]').forEach((b) => { b.textContent = 'Founder price closed'; });
-        document.querySelectorAll('.price-card').forEach((c) => c.classList.add('closed'));
-        document.querySelectorAll('[data-buy]').forEach((b) => {
-          b.classList.add('disabled'); b.removeAttribute('href'); b.textContent = 'Sold out — founder run closed';
-        });
-      }
-    }
-    async function refreshSeats() {
-      if (!SEATS_ENDPOINT) return; // not wired yet → keep the static label
-      try {
-        const r = await fetch(SEATS_ENDPOINT, { cache: 'no-store' });
-        const d = await r.json();
-        paintSeats(d.total, d.left, d.soldOut);
-      } catch (e) { /* keep last value on any hiccup */ }
-    }
-    refreshSeats();
-    setInterval(refreshSeats, 30000);
+    FEATURES.forEach(([title, text], i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.role = 'tab'; b.id = 'tab-' + i; b.setAttribute('aria-controls', 'stagePanel');
+      b.innerHTML = '<b></b><span></span>';
+      b.querySelector('b').textContent = title;
+      b.querySelector('span').textContent = text;
+      b.addEventListener('click', () => show(i));
+      tabs.append(b);
+    });
+    tabs.addEventListener('keydown', (e) => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); show((current + d + FEATURES.length) % FEATURES.length, true); }
+      if (e.key === 'Home') { e.preventDefault(); show(0, true); }
+      if (e.key === 'End') { e.preventDefault(); show(FEATURES.length - 1, true); }
+    });
+    show(0);
+    new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      if (inView) stage.play().catch(() => {}); else stage.pause();
+    }, { threshold: 0.3 }).observe(stage);
   </script>
 </body>
 </html>

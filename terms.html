@@ -3,77 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LATYS — Terms of Service</title>
-  <link rel="icon" type="image/png" href="./icon.png" />
+  <title>LATYS Terms of Service</title>
+  <meta name="description" content="The terms for using LATYS and the founder license." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/png" href="./icon.png?v=5" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root { --bg:#0a0908; --copper:#e8b662; --copper-soft:#f3d39b; --sage:#8a9460; --cream:#ede3d2; --text:#e9e0d1; --muted:#9c9184; --line:rgba(201,158,104,0.16); }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; -webkit-font-smoothing:antialiased; }
-    .wrap { max-width:760px; margin:0 auto; padding:0 24px; }
-    header { border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(11,10,12,0.7); backdrop-filter:blur(12px); }
-    .nav { display:flex; align-items:center; gap:10px; height:62px; }
-    .nav a { display:flex; align-items:center; gap:10px; color:var(--cream); text-decoration:none; font-family:"Exo 2"; font-weight:200; letter-spacing:0.42em; }
-    .nav a.back { margin-left:auto; font-family:Inter; font-weight:600; letter-spacing:0; font-size:14px; color:var(--muted); }
-    .nav a.back:hover { color:var(--cream); }
-    main { padding:54px 0 90px; }
-    h1 { font-family:"Exo 2"; font-size:42px; color:var(--cream); font-weight:300; }
-    .meta { color:var(--muted); font-size:14px; margin:10px 0 30px; font-style:italic; }
-    h2 { font-family:"Exo 2"; color:var(--cream); font-size:22px; margin:34px 0 10px; font-weight:400; }
-    p, li { color:var(--text); font-size:15.5px; }
-    ul { padding-left:22px; margin:10px 0; display:grid; gap:7px; }
-    a.inline { color:var(--copper); }
-    strong { color:var(--cream); }
-    footer { border-top:1px solid var(--line); padding:30px 0; color:var(--muted); font-size:13.5px; text-align:center; }
-  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./site.css?v=1" />
+  <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
-  <header><div class="wrap nav">
-    <a href="./index.html"><img src="./media/latys-icon.png?v=2" width="28" height="28" alt="" style="filter:drop-shadow(0 0 8px rgba(232,182,98,0.35))" />
-      <span>LATYS</span></a>
-    <a class="back" href="./index.html">← Back to home</a>
-  </div></header>
+  <header class="titlebar">
+    <div class="page">
+      <a class="brand" href="./index.html" aria-label="LATYS home"><img src="./media/latys-icon.png?v=2" alt="" width="26" height="26" /><span>LATYS</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="./index.html">Overview</a>
+        <a href="./guide.html">Guide</a>
+        <a href="./changelog.html">Changelog</a>
+        <a href="./pricing.html">Pricing</a>
+      </nav>
+      <a class="btn btn-gold btn-sm" href="./download.html">Download</a>
+    </div>
+  </header>
 
-  <main><div class="wrap">
-    <h1>Terms of Service</h1>
-    <p class="meta">Last updated: June 21, 2026 · Operated by Adam James ("we", "us"). Contact: ajamespt86@gmail.com</p>
-    <p>By installing or using LATYS, you agree to these terms. If you don't agree, don't use the app.</p>
+  <main>
+    <div class="page">
+      <article class="prose legal">
+        <h1>Terms of Service</h1>
+        <p class="meta">Last updated: June 21, 2026 · Operated by Adam James ("we", "us"). Contact: ajamespt86@gmail.com</p>
+        <p>By installing or using LATYS, you agree to these terms. If you don't agree, don't use the app.</p>
 
-    <h2>1. What you're buying</h2>
-    <p>LATYS is a desktop application. The <strong>founder license is a one-time US$10 purchase for lifetime access</strong> to the app for you, the buyer. You are paying for the LATYS software and access to its founder community — <strong>not</strong> for AI usage.</p>
+        <h2>1. What you're buying</h2>
+        <p>LATYS is a desktop application. The <strong>founder license is a one-time US$10 purchase for lifetime access</strong> to the app for you, the buyer. You are paying for the LATYS software and access to its founder community — <strong>not</strong> for AI usage.</p>
 
-    <h2>2. Bring your own AI</h2>
-    <p>LATYS orchestrates AI coding agents using <strong>your own</strong> AI provider accounts, subscriptions, API keys, or CLI logins. <strong>You are solely responsible for your AI providers' costs, usage, and terms.</strong> We do not provide AI compute and do not pay for your AI usage.</p>
+        <h2>2. Bring your own AI</h2>
+        <p>LATYS orchestrates AI coding agents using <strong>your own</strong> AI provider accounts, subscriptions, API keys, or CLI logins. <strong>You are solely responsible for your AI providers' costs, usage, and terms.</strong> We do not provide AI compute and do not pay for your AI usage.</p>
 
-    <h2>3. Acceptable use</h2>
-    <p>You agree not to:</p>
-    <ul>
-      <li>Use LATYS for unlawful purposes or to violate your AI providers' terms.</li>
-      <li>Abuse, harass, threaten, or harm other community members; post illegal, hateful, or infringing content (including GIFs); or spam.</li>
-      <li>Reverse engineer the licensing to use the app without a valid license, or resell/redistribute the app or license keys.</li>
-    </ul>
-    <p>We may suspend or remove community access for violations, including removing content and blocking accounts.</p>
+        <h2>3. Acceptable use</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Use LATYS for unlawful purposes or to violate your AI providers' terms.</li>
+          <li>Abuse, harass, threaten, or harm other community members; post illegal, hateful, or infringing content (including GIFs); or spam.</li>
+          <li>Reverse engineer the licensing to use the app without a valid license, or resell/redistribute the app or license keys.</li>
+        </ul>
+        <p>We may suspend or remove community access for violations, including removing content and blocking accounts.</p>
 
-    <h2>4. The community</h2>
-    <p>The community is optional. Content you post is your responsibility. We provide block and report tools and may moderate at our discretion, but we don't pre-screen content and aren't responsible for what other members post.</p>
+        <h2>4. The community</h2>
+        <p>The community is optional. Content you post is your responsibility. We provide block and report tools and may moderate at our discretion, but we don't pre-screen content and aren't responsible for what other members post.</p>
 
-    <h2>5. Licenses and refunds</h2>
-    <p>A license is tied to the purchasing customer. Because this is a low-cost digital product delivered as a key, <strong>refunds are at our discretion</strong> — contact ajamespt86@gmail.com within 14 days if something isn't working and we'll try to make it right.</p>
+        <h2>5. Licenses and refunds</h2>
+        <p>A license is tied to the purchasing customer. Because this is a low-cost digital product delivered as a key, <strong>refunds are at our discretion</strong> — contact ajamespt86@gmail.com within 14 days if something isn't working and we'll try to make it right.</p>
 
-    <h2>6. No warranty</h2>
-    <p>LATYS is provided <strong>"as is" without warranties</strong> of any kind. It can run commands and edit files on your machine; you are responsible for using its approval/safety controls and for backing up your work. We are not liable for data loss, AI costs, or damages arising from use, to the maximum extent permitted by law.</p>
+        <h2>6. No warranty</h2>
+        <p>LATYS is provided <strong>"as is" without warranties</strong> of any kind. It can run commands and edit files on your machine; you are responsible for using its approval/safety controls and for backing up your work. We are not liable for data loss, AI costs, or damages arising from use, to the maximum extent permitted by law.</p>
 
-    <h2>7. Beta software</h2>
-    <p>LATYS is early founder-beta software. Features may change, break, or be removed.</p>
+        <h2>7. Beta software</h2>
+        <p>LATYS is early founder-beta software. Features may change, break, or be removed.</p>
 
-    <h2>8. Governing law</h2>
-    <p>These terms are governed by the laws of the State of Missouri, United States, without regard to conflict-of-law rules.</p>
+        <h2>8. Governing law</h2>
+        <p>These terms are governed by the laws of the State of Missouri, United States, without regard to conflict-of-law rules.</p>
 
-    <h2>9. Changes</h2>
-    <p>We may update these terms; continued use after changes means you accept them.</p>
-  </div></main>
+        <h2>9. Changes</h2>
+        <p>We may update these terms; continued use after changes means you accept them.</p>
+      </article>
+    </div>
+  </main>
 
-  <footer>© 2026 LATYS · <a class="inline" href="./privacy.html" style="color:var(--muted)">Privacy</a></footer>
+  <footer>
+    <div class="strip">
+      <div class="page">
+        <span class="cell"><span class="mono" data-version>v0.1</span></span>
+        <span class="cell">Windows 10 and 11</span>
+        <span class="cell" data-seats><span class="dot"></span><span data-seats-text>10 founder seats</span></span>
+        <span class="cell grow"></span>
+        <a class="cell" href="./privacy.html">Privacy</a>
+        <a class="cell" href="./terms.html">Terms</a>
+        <a class="cell" href="mailto:ajamespt86@gmail.com">Contact</a>
+        <a class="cell" href="./remote.html">Phone remote</a>
+      </div>
+    </div>
+    <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
+  </footer>
+
+  <script src="./site.js?v=1"></script>
 </body>
 </html>

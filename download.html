@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download LATYS for Windows</title>
+  <meta name="description" content="Download LATYS for Windows 10 and 11, then install Claude Code, Codex, OpenCode or Grok with one PowerShell command each." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="Download LATYS" />
+  <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
+  <link rel="icon" type="image/png" href="./icon.png?v=5" />
+  <link rel="apple-touch-icon" href="./media/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./site.css?v=1" />
+  <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
+  <style>
+    .get { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 64px; align-items: end; }
+    .get .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 30px; }
+    .file { border: 1px solid var(--rule); border-radius: 12px; padding: 22px 24px; display: grid; gap: 14px; font-size: 15.5px; }
+    .file dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; }
+    .file dt { color: var(--bark); }
+    .file dd { color: var(--parchment); }
+    .file .notes { color: var(--bark); border-top: 1px solid var(--rule); padding-top: 14px; }
+
+    .steps { counter-reset: step; display: grid; gap: 0; margin-top: 8px; }
+    .step { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 0 8px; padding: 36px 0; border-bottom: 1px solid var(--rule); }
+    .step::before { counter-increment: step; content: counter(step); font: 600 28px/1 var(--sans); color: var(--gold); padding-top: 4px; }
+    .step h2 { font-size: clamp(24px, 2.4vw, 30px); }
+    .step p { color: var(--bark); margin-top: 10px; }
+    .step ol { margin: 14px 0 0 20px; display: grid; gap: 6px; color: var(--parchment); }
+
+    .agents-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 40px; margin-top: 22px; align-items: start; }
+    .agent + .agent { margin-top: 22px; }
+    .agent h3 { font: 600 17px/1.3 var(--sans); display: flex; align-items: center; gap: 10px; }
+    .agent h3 i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+    .agent h3 a { margin-left: auto; font: 500 14px var(--sans); color: var(--bark); }
+    .agent .cmd { margin-top: 8px; }
+    .agent .then { margin-top: 6px; font-size: 14.5px; color: var(--bark); }
+    .agent .then b { color: var(--parchment); font-weight: 600; font-family: var(--mono); font-size: 0.92em; }
+    .walk { position: sticky; top: calc(var(--bar) + 24px); }
+    .walk .frame video { object-fit: contain; background: #000; }
+    .walk p { font-size: 14.5px; color: var(--bark); margin-top: 10px; }
+    .others { margin-top: 22px; font-size: 15px; color: var(--bark); }
+
+    @media (max-width: 900px) {
+      .get, .agents-grid { grid-template-columns: minmax(0, 1fr); }
+      .walk { position: static; }
+      .step { grid-template-columns: 40px minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="titlebar">
+    <div class="page">
+      <a class="brand" href="./index.html" aria-label="LATYS home"><img src="./media/latys-icon.png?v=2" alt="" width="26" height="26" /><span>LATYS</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="./index.html">Overview</a>
+        <a href="./guide.html">Guide</a>
+        <a href="./changelog.html">Changelog</a>
+        <a href="./pricing.html">Pricing</a>
+      </nav>
+      <a class="btn btn-gold btn-sm" href="./download.html" aria-current="page">Download</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page">
+      <header class="masthead get">
+        <div>
+          <h1>Download LATYS</h1>
+          <p class="lede">One installer for Windows 10 and 11. It sets itself up in a few seconds and tells you when an update is ready.</p>
+          <div class="actions">
+            <a class="btn btn-gold" href="https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe">Download LATYS-setup.exe <span class="v" data-version></span></a>
+            <a class="link" href="https://github.com/adamj86/LATYS/releases/latest">View on GitHub</a>
+          </div>
+        </div>
+        <div class="file">
+          <dl>
+            <dt>Version</dt><dd class="mono" data-version>Latest</dd>
+            <dt>System</dt><dd>Windows 10 or 11, 64-bit</dd>
+            <dt>Installs to</dt><dd class="mono" style="overflow-wrap:anywhere">%LOCALAPPDATA%\Programs\LATYS</dd>
+          </dl>
+          <p class="notes"><span data-notes>Release notes load from the update feed.</span> <a class="link" href="./changelog.html">All changes</a></p>
+        </div>
+      </header>
+
+      <div class="steps">
+        <section class="step">
+          <div>
+            <h2>Run the installer</h2>
+            <p>LATYS is new and not yet code-signed, so Windows may show a blue SmartScreen box the first time. To continue:</p>
+            <ol>
+              <li>Click <b>More info</b>.</li>
+              <li>Check the app name says LATYS-setup.exe, then click <b>Run anyway</b>.</li>
+            </ol>
+            <p>Only download LATYS from latys.app or the <a href="https://github.com/adamj86/LATYS/releases/latest">official GitHub release</a>. The installer adds Start menu and desktop shortcuts and appears in Add or remove programs, so you can uninstall it like any other app.</p>
+          </div>
+        </section>
+
+        <section class="step" id="agents">
+          <div>
+            <h2>Install at least one agent</h2>
+            <p>LATYS runs the official tools from each AI company. Open PowerShell, paste one command, then sign in once. LATYS finds the tool on its own.</p>
+            <div class="agents-grid">
+              <div>
+                <div class="agent" style="--c:#d97757">
+                  <h3><i></i>Claude Code <a href="https://code.claude.com/docs/en/setup" rel="noopener">Docs</a></h3>
+                  <div class="cmd"><code>irm https://claude.ai/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
+                  <p class="then">Then run <b>claude</b> to sign in.</p>
+                </div>
+                <div class="agent" style="--c:#10a37f">
+                  <h3><i></i>Codex <a href="https://github.com/openai/codex" rel="noopener">Docs</a></h3>
+                  <div class="cmd"><code>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</code><button type="button" data-copy>Copy</button></div>
+                  <p class="then">Then run <b>codex</b> to sign in.</p>
+                </div>
+                <div class="agent" style="--c:#f0883e">
+                  <h3><i></i>OpenCode <a href="https://opencode.ai/docs/" rel="noopener">Docs</a></h3>
+                  <div class="cmd"><code>npm install -g opencode-ai</code><button type="button" data-copy>Copy</button></div>
+                  <p class="then">Needs <a href="https://nodejs.org" rel="noopener">Node.js</a>. Then run <b>opencode</b> and type <b>/connect</b>.</p>
+                </div>
+                <div class="agent" style="--c:#cfd4dc">
+                  <h3><i></i>Grok <a href="https://x.ai/build" rel="noopener">Docs</a></h3>
+                  <div class="cmd"><code>irm https://x.ai/cli/install.ps1 | iex</code><button type="button" data-copy>Copy</button></div>
+                  <p class="then">Then run <b>grok login</b>.</p>
+                </div>
+                <p class="others">Gemini, Cursor, Antigravity, Kimi and Hermes install from their own sites. The Launch Agent window in LATYS links to each one.</p>
+              </div>
+              <div class="walk">
+                <div class="frame">
+                  <video src="./media/tour/install.mp4?v=2" poster="./media/tour/install.jpg?v=2" controls playsinline preload="none" aria-label="Installing agents, a walkthrough">
+                    <track kind="captions" src="./media/tour/install.vtt?v=2" srclang="en" label="English" />
+                  </video>
+                </div>
+                <p>The same steps on video, 1:27.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="step">
+          <div>
+            <h2>Open a project and start an agent</h2>
+            <p>Open a project folder and launch an agent from the toolbar. <kbd>Ctrl</kbd> <kbd>K</kbd> opens the command bar for everything else. The <a href="./guide.html">guide</a> covers the rest, from voice commands to missions, in ten short videos.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="strip">
+      <div class="page">
+        <span class="cell"><span class="mono" data-version>v0.1</span></span>
+        <span class="cell">Windows 10 and 11</span>
+        <span class="cell" data-seats><span class="dot"></span><span data-seats-text>10 founder seats</span></span>
+        <span class="cell grow"></span>
+        <a class="cell" href="./privacy.html">Privacy</a>
+        <a class="cell" href="./terms.html">Terms</a>
+        <a class="cell" href="mailto:ajamespt86@gmail.com">Contact</a>
+        <a class="cell" href="./remote.html">Phone remote</a>
+      </div>
+    </div>
+    <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
+  </footer>
+
+  <script src="./site.js?v=1"></script>
+</body>
+</html>
