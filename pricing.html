@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./site.css?v=1" />
+  <link rel="stylesheet" href="./site.css?v=2" />
   <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
   <style>
     .offer { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px 72px; padding: clamp(56px, 9vw, 112px) 0 clamp(48px, 6vw, 72px); border-bottom: 1px solid var(--rule); align-items: start; }
@@ -24,9 +24,6 @@
     .amount { display: flex; align-items: baseline; gap: 14px; margin-top: 10px; }
     .amount b { font: 500 88px/1 var(--sans); letter-spacing: -0.03em; color: var(--parchment); }
     .amount span { color: var(--bark); font-size: 16px; }
-    .meter { height: 6px; border-radius: 3px; background: var(--soil-2); overflow: hidden; margin: 22px 0 8px; }
-    .meter i { display: block; height: 100%; width: 0; background: var(--lichen); transition: width 600ms var(--ease); }
-    .sold .meter i { background: #d9534f; }
     .seatline { font-size: 15px; color: var(--parchment); font-weight: 500; }
     .next { font-size: 15px; color: var(--bark); margin-top: 4px; }
     .ticket ul { list-style: none; margin: 24px 0; display: grid; gap: 10px; border-top: 1px solid var(--rule); padding-top: 20px; }
@@ -66,9 +63,9 @@
           <p class="quiet" style="margin-top:18px">LATYS doesn't include AI usage. You connect your own Claude, ChatGPT, Gemini or other accounts, and each provider bills you directly.</p>
         </div>
         <div class="ticket" data-seats>
-          <h2 id="badge">Founder license</h2>
-          <div class="amount"><b id="amount">$10</b><span>one time</span></div>
-          <div class="meter"><i data-seats-fill></i></div>
+          <h2 data-sold-text="Founder run complete">Founder license</h2>
+          <div class="amount"><b data-price>$10</b><span>one time</span></div>
+          <div class="leaves" data-leaves></div>
           <div class="seatline" data-seats-text>10 founder seats</div>
           <p class="next" id="next">Then $79 for everyone after.</p>
           <ul>
@@ -118,20 +115,25 @@
     <div class="fineprint"><div class="page">&copy; <span data-year>2026</span> LATYS. You pay your AI providers directly, under their terms. Product names belong to their owners.</div></div>
   </footer>
 
-  <script src="./site.js?v=1"></script>
+  <script src="./site.js?v=2"></script>
   <script>
     const NEXT_PRICE = 79;
     const URGENT_AT = 4;
+    // Stripe Payment Link for the $79 license. Empty until it exists; until then
+    // a sold-out founder run shows the closed state with no checkout.
+    const STANDARD_LINK = '';
     document.addEventListener('latys:seats', ({ detail: { left, soldOut } }) => {
-      const next = document.getElementById('next');
+      const next = document.getElementById('next'), buy = document.getElementById('buy');
       if (soldOut) {
-        document.getElementById('badge').textContent = 'Founder run closed';
-        document.getElementById('amount').textContent = '$' + NEXT_PRICE;
-        next.textContent = 'The founder price has ended.';
-        const buy = document.getElementById('buy');
-        buy.textContent = 'Founder seats sold out';
-        buy.removeAttribute('href');
-        buy.setAttribute('aria-disabled', 'true');
+        next.textContent = 'Thank you to the ten founders who backed LATYS first.';
+        if (STANDARD_LINK) {
+          buy.href = STANDARD_LINK;
+          buy.textContent = 'Buy LATYS, $' + NEXT_PRICE;
+        } else {
+          buy.textContent = 'Founder seats sold out';
+          buy.removeAttribute('href');
+          buy.setAttribute('aria-disabled', 'true');
+        }
       } else {
         next.textContent = left <= URGENT_AT
           ? 'Only ' + left + ' left at $10. Then $' + NEXT_PRICE + '.'

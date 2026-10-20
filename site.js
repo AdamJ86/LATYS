@@ -17,15 +17,51 @@
   // Founder seats come from the Stripe-backed worker (community/SEATS-COUNTER-SETUP.md).
   const SEATS_ENDPOINT = 'https://latys-seats.latys.workers.dev';
   const SEATS_TOTAL = 10;
+  const NEXT_PRICE = 79; // what the license costs once the founder run sells out
+  const LEAF_COLORS = ['#e8b662', '#e2703a', '#d98aa8', '#b9c47c', '#9fb3d1', '#c4452c', '#e08f73', '#8b6dff', '#25c8a8', '#dfa843'];
+  const LEAF_TILT = [-8, 5, -3, 7, -6, 4, -5, 8, -4, 6];
+  const SVG = 'http://www.w3.org/2000/svg';
+  let leavesPainted = false;
+  function paintLeaves(total, taken, animate) {
+    $$('[data-leaves]').forEach((box) => {
+      box.setAttribute('role', 'img');
+      box.setAttribute('aria-label', taken + ' of ' + total + ' founder seats claimed');
+      while (box.children.length < total) {
+        const i = box.children.length;
+        const svg = document.createElementNS(SVG, 'svg');
+        svg.setAttribute('viewBox', '0 0 24 32');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.style.setProperty('--r', LEAF_TILT[i % LEAF_TILT.length] + 'deg');
+        svg.style.setProperty('--c', LEAF_COLORS[i % LEAF_COLORS.length]);
+        svg.innerHTML = '<path class="blade" d="M12 1C4 9 3 20 12 31C21 20 20 9 12 1Z"/><path class="rib" d="M12 6V30"/>';
+        box.append(svg);
+      }
+      [...box.children].forEach((leaf, i) => {
+        const on = i < taken;
+        if (on && animate && !leaf.classList.contains('taken')) {
+          leaf.classList.add('grow');
+          leaf.style.animationDelay = i * 70 + 'ms';
+        }
+        leaf.classList.toggle('taken', on);
+      });
+    });
+  }
+  paintLeaves(SEATS_TOTAL, 0, false);
   function paintSeats(d) {
     const total = (d && d.total) || SEATS_TOTAL;
     const left = Math.max(0, d && d.left != null ? d.left : total);
     const soldOut = !!(d && d.soldOut) || left === 0;
     $$('[data-seats-text]').forEach((el) => {
-      el.textContent = soldOut ? 'Founder run sold out' : left + ' of ' + total + ' founder seats left';
+      el.textContent = soldOut ? 'All ' + total + ' founder seats claimed' : left + ' of ' + total + ' founder seats left';
     });
-    $$('[data-seats-fill]').forEach((el) => { el.style.width = Math.round(((total - left) / total) * 100) + '%'; });
+    // Leaves grow in on the first answer only; later refreshes just recolour.
+    paintLeaves(total, soldOut ? total : total - left, !leavesPainted);
+    leavesPainted = true;
     $$('[data-seats]').forEach((el) => el.classList.toggle('sold', soldOut));
+    if (soldOut) {
+      $$('[data-price]').forEach((el) => { el.textContent = '$' + NEXT_PRICE; });
+      $$('[data-sold-text]').forEach((el) => { el.textContent = el.dataset.soldText; });
+    }
     document.dispatchEvent(new CustomEvent('latys:seats', { detail: { total, left, soldOut } }));
   }
   function refreshSeats() {
