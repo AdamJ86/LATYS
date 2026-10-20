@@ -1,5 +1,5 @@
 {
-  "version": "0.1.64",
+  "version": "0.1.65",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Fixes the dashboard toolbar freezing after you leave the Universe: Dev, Build, Test, Release, the project and social buttons work again after going back to the dashboard."
+  "notes": "Six big upgrades. Living agent orbs show what every agent is doing, and zooming out turns panels into live tiles you can fly to. Permission requests arrive as clear approval cards with a risk level (a quick spoken yes approves low and medium risk ones after a 3-second countdown), and voice commands show what LATYS heard before they run. The Time Machine (Ctrl+Shift+H) lets you scrub back through checkpoints and undo any change safely. Mission Control (Ctrl+Shift+M) shows a running mission as a live constellation. Show me how demos walk you through features in the real app. And the Agent Forge (Ctrl+Shift+F) lets you build specialist agents: give them a role, your documents to study, guardrails and exams, then put them to work and watch what they produce."
 }
