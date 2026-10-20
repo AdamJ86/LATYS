@@ -121,7 +121,7 @@
     const URGENT_AT = 4;
     // Stripe Payment Link for the $79 license. Empty until it exists; until then
     // a sold-out founder run shows the closed state with no checkout.
-    const STANDARD_LINK = '';
+    const STANDARD_LINK = 'https://buy.stripe.com/9B65kDfrt9LD9s892saIM02';
     document.addEventListener('latys:seats', ({ detail: { left, soldOut } }) => {
       const next = document.getElementById('next'), buy = document.getElementById('buy');
       if (soldOut) {
