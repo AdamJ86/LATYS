@@ -1,5 +1,5 @@
 {
-  "version": "0.1.65",
+  "version": "0.1.66",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Six big upgrades. Living agent orbs show what every agent is doing, and zooming out turns panels into live tiles you can fly to. Permission requests arrive as clear approval cards with a risk level (a quick spoken yes approves low and medium risk ones after a 3-second countdown), and voice commands show what LATYS heard before they run. The Time Machine (Ctrl+Shift+H) lets you scrub back through checkpoints and undo any change safely. Mission Control (Ctrl+Shift+M) shows a running mission as a live constellation. Show me how demos walk you through features in the real app. And the Agent Forge (Ctrl+Shift+F) lets you build specialist agents: give them a role, your documents to study, guardrails and exams, then put them to work and watch what they produce."
+  "notes": "Agent Forge: the Academy now trains agents by itself. Press Train it for me and it plans a learning path for the role, researches each topic on the web, studies that with your files, then writes its own exams from your documents and takes them. Agents also study zips of past projects and learn the look of your artwork (palette, sizes, pixel art). Launch a forged agent in any project, or keep one always on. Fixes: the Forge and Mission Control headers no longer sit under the window buttons; a crisper LATYS logo; PDF text keeps its line breaks. New tour chapter: The Agent Forge."
 }
