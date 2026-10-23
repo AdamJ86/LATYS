@@ -1,5 +1,5 @@
 {
-  "version": "0.1.70",
+  "version": "0.1.71",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Deploy in the Agent Forge now locks in what runs. A deployed agent runs exactly as you deployed it in your projects, workflows and always-on starts, while your edits to its blueprint, house rules, library and training stay a draft you can test until you redeploy. The Forge shows which edits aren't live yet, and rolling back a deployed agent makes that version live."
+  "notes": "Workflows never get stuck on a failed step: a step that reports a problem hands it to the checks after it, or the run waits with Try again or Carry on. Start a workflow from any step, and after a run, carry on or run it again from any card. Runs survive closing LATYS: they come back paused, with Resume. A new live run view: the team lights up, the camera follows the agents at work, each working card shows what its agent is doing, and a progress bar and captions tell the story. Close the Studio and the run keeps showing in a window on your project dashboard. Workflow agents now stop only the processes they started."
 }
