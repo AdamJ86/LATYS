@@ -1,5 +1,5 @@
 {
-  "version": "0.1.69",
+  "version": "0.1.70",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Workflows look cinematic: stouter cards with bigger names that stay readable zoomed out, soft glowing connectors, hand-drawn icons for every role and a crest of its own for each agent you forge. Teams with Codex now finish their steps reliably, agents never miss their first instruction, re-running a workflow can't stall, loops are always found and drawn correctly, and saved workflows can't be overwritten by a failed load. The Agent Forge reads your files more cleanly, writes better exams without repeats, and shows mastery from its exams."
+  "notes": "Deploy in the Agent Forge now locks in what runs. A deployed agent runs exactly as you deployed it in your projects, workflows and always-on starts, while your edits to its blueprint, house rules, library and training stay a draft you can test until you redeploy. The Forge shows which edits aren't live yet, and rolling back a deployed agent makes that version live."
 }
