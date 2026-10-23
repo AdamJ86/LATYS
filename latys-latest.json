@@ -1,5 +1,5 @@
 {
-  "version": "0.1.74",
+  "version": "0.1.75",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Workflows now save when you press Save (or Ctrl+S): edits, copies and new workflows stay drafts until then, so Copy no longer piles up saved workflows. The workflows menu no longer closes when you hover its buttons. Mission Mode and Night Shift are gone: Workflows is the one place to put a team of agents to work. Agent hand-offs, Council verdicts, voice and the phone remote now use workflows."
+  "notes": "The Agent Forge chapter of the welcome tour is re-recorded for the new Academy, and the tour no longer covers Mission Mode."
 }
