@@ -1,5 +1,5 @@
 {
-  "version": "0.1.73",
+  "version": "0.1.74",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "A calmer, more cinematic LATYS. Agent cards now show the agent's terminal live under one status line. Agent Forge, Workflows, Mission Control, Time Machine and Settings all open with the same scene change. Dev, Build, Test and Release are now one Run menu, layouts moved to the canvas controls, and the status bar only shows what has happened. Forge Academy opens with a summary of the agent: its version, exams passed and what to do next. Buttons and the warning and error colours now match across the app."
+  "notes": "Workflows now save when you press Save (or Ctrl+S): edits, copies and new workflows stay drafts until then, so Copy no longer piles up saved workflows. The workflows menu no longer closes when you hover its buttons. Mission Mode and Night Shift are gone: Workflows is the one place to put a team of agents to work. Agent hand-offs, Council verdicts, voice and the phone remote now use workflows."
 }
