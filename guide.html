@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LATYS guide: eleven short chapters</title>
-  <meta name="description" content="Learn LATYS in eleven short videos: installing agents, the workspace, voice commands, missions, the Agent Forge, reviewing changes and more." />
+  <title>LATYS guide: ten short chapters</title>
+  <meta name="description" content="Learn LATYS in ten short videos: installing agents, the workspace, voice commands, the Agent Forge, reviewing changes and more." />
   <meta name="theme-color" content="#000000" />
   <meta property="og:title" content="The LATYS guide" />
   <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
@@ -69,7 +69,7 @@
     <div class="page guide">
       <aside class="toc">
         <h1>The guide</h1>
-        <p>Eleven chapters, about seven minutes in all. The same tour plays inside the app on first launch.</p>
+        <p>Ten chapters, about six and a half minutes in all. The same tour plays inside the app on first launch.</p>
         <ol id="toc"></ol>
       </aside>
 
@@ -121,12 +121,13 @@
       ['command', 'The command bar', 'Ctrl+K for everything, and one message for every agent.', '0:28'],
       ['panels', 'Arrange your space', 'Move, maximize, tuck away and inspect panels.', '0:33'],
       ['voice', 'Voice commands', 'Hold Ctrl+Shift+V and just say it.', '0:29'],
-      ['missions', 'Missions and the Council', 'Hand over whole outcomes, or ask several models at once.', '0:30'],
       ['forge', 'The Agent Forge', 'Build specialists that study your work, then train and test themselves.', '1:05'],
       ['changes', 'Changes, tests and previews', 'Review diffs, run tests and preview your app live.', '0:32'],
       ['media', 'Music and the Universe', 'A player that follows you, and a globe of builders.', '0:26'],
       ['settings', 'Make it yours', 'Themes, backdrops, and where to replay this tour.', '0:23']
     ];
+    // A chapter re-recorded since gets a newer version, so it isn't served from a cache.
+    const VERSION = { forge: 3 };
     const toc = document.getElementById('toc'), player = document.getElementById('player'), cuesBox = document.getElementById('cues');
     let index = 0, cues = [];
 
@@ -148,7 +149,7 @@
       cuesBox.textContent = '';
       cues = [];
       try {
-        const text = await (await fetch('./media/tour/' + id + '.vtt?v=2')).text();
+        const text = await (await fetch('./media/tour/' + id + '.vtt?v=' + (VERSION[id] || 2))).text();
         for (const block of text.replace(/\r/g, '').split(/\n\n+/)) {
           const m = block.match(/([\d:.]+)\s+-->\s+([\d:.]+)[^\n]*\n([\s\S]+)/);
           if (!m) continue;
@@ -169,11 +170,12 @@
     function load(i, autoplay) {
       index = i;
       const [id, title, blurb] = CHAPTERS[i];
+      const v = VERSION[id] || 2;
       player.innerHTML = '';
-      player.poster = './media/tour/' + id + '.jpg?v=2';
-      player.src = './media/tour/' + id + '.mp4?v=2';
+      player.poster = './media/tour/' + id + '.jpg?v=' + v;
+      player.src = './media/tour/' + id + '.mp4?v=' + v;
       const tr = document.createElement('track');
-      tr.kind = 'captions'; tr.src = './media/tour/' + id + '.vtt?v=2'; tr.srclang = 'en'; tr.label = 'English';
+      tr.kind = 'captions'; tr.src = './media/tour/' + id + '.vtt?v=' + v; tr.srclang = 'en'; tr.label = 'English';
       player.append(tr);
       player.setAttribute('aria-label', title);
       document.getElementById('title').textContent = title;

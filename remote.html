@@ -93,27 +93,14 @@
     <div id="gateCard" class="card gate hide">
       <h2>Waiting for your approval</h2>
       <p id="gateMsg" class="muted" style="margin-top:6px"></p>
-      <div class="row">
+      <div id="gateActions" class="row hide">
         <button class="accent" onclick="cmd('approve')">Approve</button>
         <button onclick="cmd('deny')">Deny</button>
       </div>
     </div>
 
     <div class="card">
-      <div id="missionBody"></div>
-    </div>
-
-    <div id="nsCard" class="card hide">
-      <h2>Night shift</h2>
-      <p id="nsText" class="muted" style="margin-top:6px"></p>
-      <div id="nsActions" class="row hide">
-        <button class="accent" onclick="cmd('night-shift-start')">Start now</button>
-      </div>
-    </div>
-
-    <div id="briefCard" class="card hide">
-      <h2 style="color:var(--indigo)">Morning briefing</h2>
-      <p id="briefText" class="muted" style="margin-top:6px"></p>
+      <div id="runBody"></div>
     </div>
 
     <button class="unpair" onclick="unpair()">Unpair this phone</button>
@@ -178,7 +165,7 @@ function unpair() {
 
 // --- Dashboard ---------------------------------------------------------------
 async function cmd(action) {
-  const destructive = { cancel: 'Cancel the running mission? Agent terminals stay open.', rollback: 'Restore the project to the pre-mission snapshot? This cannot be undone.' }
+  const destructive = { cancel: 'Stop the running workflow? Agent terminals stay open.' }
   if (destructive[action] && !confirm(destructive[action])) return
   try {
     await fetch(`${WORKER}/command`, {
@@ -190,10 +177,11 @@ async function cmd(action) {
   } catch { alert('Could not reach the relay.') }
 }
 
-function renderMission(snap) {
+// The desktop sends the workflow run under its old name, `mission`.
+function renderRun(snap) {
   const m = snap && snap.mission
   if (!m) {
-    $('missionBody').innerHTML = `<h2>No mission running</h2><p class="muted" style="margin-top:6px">${esc(snap ? snap.spoken : 'Waiting for the cockpit…')}</p>`
+    $('runBody').innerHTML = `<h2>No workflow running</h2><p class="muted" style="margin-top:6px">${esc(snap ? snap.spoken : 'Waiting for the cockpit…')}</p>`
     return
   }
   const c = S_COLOR[m.status] || '#9aa3c0'
@@ -205,15 +193,12 @@ function renderMission(snap) {
       <span class="sdot" style="background:${S_COLOR[st.status] || '#5f6885'}"></span>
       <b>${esc(st.agent)}</b><span>${esc(st.summary || st.status)}</span>
     </div>`).join('')
-  const buttons = [
-    halted ? '<button class="accent" onclick="cmd(\'retry\')">Retry</button><button onclick="cmd(\'skip\')">Skip</button>' : '',
-    (live || halted) ? '<button class="warn-text" onclick="cmd(\'cancel\')">Cancel</button>' : '',
-    !live ? '<button class="danger-text" onclick="cmd(\'rollback\')">Roll back</button>' : ''
-  ].join('')
-  $('missionBody').innerHTML = `
+  // Phone controls only show when the desktop has them switched on.
+  const buttons = snap.controls && (live || halted) ? '<button class="warn-text" onclick="cmd(\'cancel\')">Stop</button>' : ''
+  $('runBody').innerHTML = `
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span class="pill" style="color:${c};border-color:${c}55;background:${c}1a">${esc(m.status)}</span>
-      <span class="meta">wave ${m.wave}/${m.waves} · ${m.stepsDone}/${m.stepsTotal} steps${m.iteration > 1 ? ` · attempt ${m.iteration}/${m.maxIterations}` : ''}</span>
+      <span class="meta">${m.stepsDone} of ${m.stepsTotal} steps done${m.iteration > 1 ? ` · round ${m.iteration}` : ''}</span>
     </div>
     <h2 style="margin-top:8px">${esc(m.title)}</h2>
     <div class="track"><div class="fill" style="width:${pct}%"></div></div>
@@ -238,26 +223,12 @@ async function load() {
   let snap
   try { snap = JSON.parse(body.payload) } catch { return }
 
-  renderMission(snap)
+  renderRun(snap)
 
   const gate = snap.awaitingApproval
   $('gateCard').classList.toggle('hide', !gate)
-  if (gate) $('gateMsg').textContent = gate.message
-
-  const ns = snap.nightShift
-  $('nsCard').classList.toggle('hide', !ns)
-  if (ns) {
-    $('nsText').textContent =
-      ns.shift === 'running' ? 'Running the queue now.'
-      : ns.shift === 'armed' && ns.scheduledAt ? `Armed for ${new Date(ns.scheduledAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} · ${ns.queued} queued`
-      : ns.queued ? `${ns.queued} mission${ns.queued === 1 ? '' : 's'} queued — not armed`
-      : 'Queue is empty.'
-    $('nsActions').classList.toggle('hide', !(ns.shift !== 'running' && ns.queued > 0))
-  }
-
-  const brief = snap.briefing
-  $('briefCard').classList.toggle('hide', !brief)
-  if (brief) $('briefText').textContent = brief.spoken
+  if (gate) $('gateMsg').textContent = gate.message || gate.title
+  $('gateActions').classList.toggle('hide', !(gate && snap.controls))
 }
 
 function start() {
