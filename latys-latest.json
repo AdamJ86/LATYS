@@ -1,5 +1,5 @@
 {
-  "version": "0.1.76",
+  "version": "0.1.77",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Test this workflow: a Test button at the bottom of Workflows gives your team a practice run on one of five tiny builds (a pocket app, a mini game, a landing page, a mini course or a mini research engine), as a straight run or a loop test, on light models by default. It only counts as passed when the build is really there, and you can open it straight from the result."
+  "notes": "The welcome tour is re-recorded in today's LATYS, with a new chapter on building with a team in Workflows. Local voice works out of the box again: the bundled Parakeet voice engine was missing from installers since v0.1.65. Agent cards are more accurate: a message you send to all your agents shows as each agent's task, a finished result no longer hides new work, a new agent reads Starting… then Ready, resizing a card no longer brings back old activity, and the launch command no longer flashes on a new card."
 }
