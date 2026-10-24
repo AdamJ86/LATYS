@@ -1,19 +1,19 @@
 WEBVTT
 
-00:00:00.000 --> 00:00:05.484
+00:00:00.050 --> 00:00:04.752
 Now, let's put an AI to work. Open the launcher from the dock, or press Control N.
 
-00:00:05.940 --> 00:00:12.069
+00:00:05.200 --> 00:00:11.612
 Claude Code, Codex, Cursor, Gemini. Every agent you have installed, right here, side by side.
 
-00:00:12.520 --> 00:00:16.443
+00:00:12.230 --> 00:00:15.929
 Meet Nova. Every agent gets a codename, so you can talk to it by name.
 
-00:00:19.120 --> 00:00:23.992
+00:00:17.840 --> 00:00:23.073
 Give it a task. Just say who it's for, and what you want, and LATYS gets it to the right agent.
 
-00:00:24.440 --> 00:00:30.163
+00:00:23.530 --> 00:00:29.117
 Then watch it work. Reading files, writing code, running your tests. Live, in a real terminal.
 
-00:00:36.250 --> 00:00:41.270
-When it's done, the brief shows exactly what changed. Click any file to review it.
+00:00:35.370 --> 00:00:40.440
+When it's done, its card shows exactly what changed. Click any file to review it.

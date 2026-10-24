@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LATYS guide: ten short chapters</title>
-  <meta name="description" content="Learn LATYS in ten short videos: installing agents, the workspace, voice commands, the Agent Forge, reviewing changes and more." />
+  <title>LATYS guide: eleven short chapters</title>
+  <meta name="description" content="Learn LATYS in eleven short videos: installing agents, the workspace, voice commands, workflows, the Agent Forge, reviewing changes and more." />
   <meta name="theme-color" content="#000000" />
   <meta property="og:title" content="The LATYS guide" />
   <meta property="og:image" content="https://latys.app/media/og.jpg?v=3" />
@@ -69,7 +69,7 @@
     <div class="page guide">
       <aside class="toc">
         <h1>The guide</h1>
-        <p>Ten chapters, about six and a half minutes in all. The same tour plays inside the app on first launch.</p>
+        <p>Eleven chapters, about seven minutes in all. The same tour plays inside the app on first launch.</p>
         <ol id="toc"></ol>
       </aside>
 
@@ -115,16 +115,17 @@
   <script>
     // Same chapters, order and blurbs as the in-app tour (src/components/onboarding/tourChapters.ts).
     const CHAPTERS = [
-      ['install', 'Install your AI agents', 'Claude Code, Codex, OpenCode and Grok: one command each.', '1:27'],
-      ['workspace', 'Your workspace', 'Projects, the canvas, and jumping between them.', '0:22'],
+      ['install', 'Install your AI agents', 'Claude Code, Codex, OpenCode and Grok: one command each.', '1:28'],
+      ['workspace', 'Your workspace', 'Projects, the canvas, and jumping between them.', '0:23'],
       ['agents', 'Launch your agents', 'Start Claude, Codex and more, then hand them work.', '0:42'],
-      ['command', 'The command bar', 'Ctrl+K for everything, and one message for every agent.', '0:28'],
-      ['panels', 'Arrange your space', 'Move, maximize, tuck away and inspect panels.', '0:33'],
-      ['voice', 'Voice commands', 'Hold Ctrl+Shift+V and just say it.', '0:29'],
+      ['command', 'The command bar', 'Ctrl+K for everything, and one message for every agent.', '0:29'],
+      ['panels', 'Arrange your space', 'Move, maximize, tuck away and inspect panels.', '0:34'],
+      ['voice', 'Voice commands', 'Hold Ctrl+Shift+V and just say it.', '0:30'],
+      ['workflows', 'Build with a team', 'Wire your agents into a team that plans, builds, tests and fixes.', '0:41'],
       ['forge', 'The Agent Forge', 'Build specialists that study your work, then train and test themselves.', '1:05'],
-      ['changes', 'Changes, tests and previews', 'Review diffs, run tests and preview your app live.', '0:32'],
+      ['changes', 'Changes, tests and previews', 'Review diffs, run tests and preview your app live.', '0:36'],
       ['media', 'Music and the Universe', 'A player that follows you, and a globe of builders.', '0:26'],
-      ['settings', 'Make it yours', 'Themes, backdrops, and where to replay this tour.', '0:23']
+      ['settings', 'Make it yours', 'Themes, backdrops, and where to replay this tour.', '0:24']
     ];
     // A chapter re-recorded since gets a newer version, so it isn't served from a cache.
     const VERSION = { forge: 3 };
@@ -149,7 +150,7 @@
       cuesBox.textContent = '';
       cues = [];
       try {
-        const text = await (await fetch('./media/tour/' + id + '.vtt?v=' + (VERSION[id] || 2))).text();
+        const text = await (await fetch('./media/tour/' + id + '.vtt?v=' + (VERSION[id] || 3))).text();
         for (const block of text.replace(/\r/g, '').split(/\n\n+/)) {
           const m = block.match(/([\d:.]+)\s+-->\s+([\d:.]+)[^\n]*\n([\s\S]+)/);
           if (!m) continue;
@@ -170,7 +171,7 @@
     function load(i, autoplay) {
       index = i;
       const [id, title, blurb] = CHAPTERS[i];
-      const v = VERSION[id] || 2;
+      const v = VERSION[id] || 3;
       player.innerHTML = '';
       player.poster = './media/tour/' + id + '.jpg?v=' + v;
       player.src = './media/tour/' + id + '.mp4?v=' + v;
