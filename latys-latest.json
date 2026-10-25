@@ -1,5 +1,5 @@
 {
-  "version": "0.1.77",
+  "version": "0.1.78",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "The welcome tour is re-recorded in today's LATYS, with a new chapter on building with a team in Workflows. Local voice works out of the box again: the bundled Parakeet voice engine was missing from installers since v0.1.65. Agent cards are more accurate: a message you send to all your agents shows as each agent's task, a finished result no longer hides new work, a new agent reads Starting… then Ready, resizing a card no longer brings back old activity, and the launch command no longer flashes on a new card."
+  "notes": "Picking a workflow from the menu works with a mouse again. If LATYS's window ever crashes it now reloads by itself instead of staying blank, and opening LATYS while it's already running brings back the window you have instead of starting a second copy. Codex agents in workflows always receive their task now: a long task no longer sits unsent in Codex's input box, and a first task typed before Codex is ready is sent again."
 }
