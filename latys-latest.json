@@ -1,5 +1,5 @@
 {
-  "version": "0.1.78",
+  "version": "0.1.79",
   "url": "https://github.com/adamj86/LATYS/releases/latest/download/LATYS-setup.exe",
-  "notes": "Picking a workflow from the menu works with a mouse again. If LATYS's window ever crashes it now reloads by itself instead of staying blank, and opening LATYS while it's already running brings back the window you have instead of starting a second copy. Codex agents in workflows always receive their task now: a long task no longer sits unsent in Codex's input box, and a first task typed before Codex is ready is sent again."
+  "notes": "Workflows only keep what you save: a copy or a new workflow you leave without saving no longer piles up in the list (if you changed it, LATYS asks first). Workflow step reports always land in your project folder, never inside a subfolder the step worked in. LATYS now notes why it closed, to help track down unexpected exits."
 }
