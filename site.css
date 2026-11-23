@@ -117,6 +117,11 @@ kbd { padding: 1px 6px; border: 1px solid var(--rule-strong); border-bottom-widt
 .strip a:hover { color: var(--parchment); }
 .strip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lichen); }
 .strip .sold .dot { background: #d9534f; }
+/* NVIDIA Inception membership: NVIDIA's badge artwork as supplied (it carries its own white plate and clear space) */
+.member { border-top: 1px solid var(--rule); padding: 10px 0; font-size: 13px; color: var(--bark); }
+.member .page { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.member a { display: block; flex: none; }
+.member img { display: block; width: 170px; height: auto; margin-left: -10px; }
 .fineprint { border-top: 1px solid var(--rule); padding: 14px 0 22px; font-size: 13px; color: var(--bark); }
 @media (max-width: 760px) {
   .strip .cell { padding: 0 12px 0 0; border-right: 0; min-height: 36px; }
